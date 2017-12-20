@@ -67,8 +67,8 @@
     <body>
         <div class="flex-center position-ref full-height">
             <div class="top-right links">
-                <a href="http://wura.dev/login">Login</a>
-                <a href="http://wura.dev/register">Register</a>
+                <a href="{{ route('login') }}">Login</a>
+                <a href="{{ route('register') }}">Register</a>
             </div>
 
             <div class="content">
