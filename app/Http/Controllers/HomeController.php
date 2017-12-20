@@ -36,8 +36,6 @@ class HomeController extends Controller
     }
 
     public function setstatus(Request $request) {
-        
-        // Activate, suspend, cancel
         if ($request->isMethod('post')) {
 
             $data = 0;
@@ -71,31 +69,35 @@ class HomeController extends Controller
                     break;
             }
             
-            // $book = new stdClass;
-            // $book->title = "Harry Potter and the Prisoner of Azkaban";
-            // $book->author = "J. K. Rowling";
-            // $book->publisher = "Arthur A. Levine Books";
-            // $book->amazon_link = "http://www.amazon.com/dp/0439136369/";
-
             if ($data >= 1) {
-
                 $user = Auth::user();
                 if (array_key_exists('assignedto', $recordset) && $recordset->assignedto >= 1) {
 
-                    if ($oldcarduser = null) {
-                        // Notify the former holder / user of the card that access has been revoked
-                        // $oldcarduser
+                    if (!empty($oldcarduser)) {
+                        $recordset = DB::table('drivers')->where('id', $oldcarduser->assignedto)->first();
 
-                        // 'title' => $manager,
-                        //     'message' => $password,                        
-                        //     'greeting' => $greeting,
+                        // Notify the former holder / user of the card that access has been revoked.
+                        $title = "Your access to card " . $oldcarduser->cardnos . " has been deactivated.";
+                        $greeting= $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
+                        $drivermsg = "We write to officially notify you that your access to card " . $oldcarduser->cardnos . " has been deactivated.";
+                        $drivermsg .= '<br /><br />
+                            <p style="background-color:#ea3a52; border-top-left-radius:5px; border-bottom-left-radius:5px; border-top-right-radius:5px; border-bottom-right-radius:5px; background-clip: padding-box; font-size:17px; font-family: Helvetica, Arial, sans-serif; text-align:center; color:#ffffff; font-weight: bold; letter-spacing: 1px; padding-left:42px; padding-right:42px;">
+                                <span style="color: #ffffff; font-size:17px;">
+                                    <a style="color: #ffffff; text-align:center;text-decoration: none;" href="#">Please do not attempt to use this card again as it is highly illegeal.</a>
+                                </span>
+                            </p>';
+                        Mail::to($recordset->email)->send(new Notifications($title, $drivermsg, $greeting));
                     }
 
                     // Notify the new holder / user of the card of the status change.
-                    log::info($actonmodule . ' === ' . $recordset->assignedto); 
-
                     $carduser = Cards::find($recordid);
-                    // $card['Fullname'] = $carduser->cardUser[0]['firstname'] . ' ' . $carduser->cardUser[0]['middlename'] . ' ' . $carduser->cardUser[0]['lastname'];
+                    $recordset = DB::table('drivers')->where('id', $carduser->assignedto)->first();
+
+                    // Notify the former holder / user of the card that access has been revoked.
+                    $title = "Your access to card ". $oldcarduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    $greeting= $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
+                    $drivermsg = "We write to officially notify you that your access to card " . $oldcarduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    Mail::to($recordset->email)->send(new Notifications($title, $drivermsg, $greeting));
                 } else {
                     // A driver's status was just modified. Duly notify the Driver.
                     $title = "Your account has been " . str_replace('eed', 'ed', $recordset->status . 'ed');

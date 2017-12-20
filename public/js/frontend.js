@@ -18061,12 +18061,12 @@ $(document).ready(function () {
                 "id": $(this).data('id')
             });
 
-            var SelectedText = $(this).find('option:selected').text();
             settings.url = window.location.protocol + '//' + window.location.hostname + '/setstatus';
 
             $.ajax(settings).done(function (response) {
                 if (response.status.toLowerCase() === 'success') {
-                    $(this).html(SelectedText);
+                    //$(this).html(SelectedText);
+                    var SelectedText = $(this).find('option:selected').text();
                     Notify(wurafleet.toastType.Success, 'Card has been successfully assigned to ' + SelectedText);
                 }
             });

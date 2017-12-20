@@ -145,7 +145,7 @@
                 <div id="frame" class="empty">
 
                     <br />
-                    
+
                     <table width="100%" bgcolor="#eeeeee" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
                         <tbody>
                             <tr>
@@ -255,26 +255,11 @@
                                                                             </tr>
                                                                             <tr>
                                                                                 <td style="font-family: Helvetica, Arial, sans-serif; font-weight: normal; font-size:14px; color: #0E0E0E; line-height:18px; text-align:center;">
-                                                                                {{ $drivermsg }}
+                                                                                {!! $drivermsg !!}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td width="100%" height="20" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td align="center">
-                                                                                    <table height="40" align="center" valign="middle" border="0" cellpadding="0" cellspacing="0" class="tablet-button" style="border-collapse:separate;">
-                                                                                        <tbody>
-                                                                                            <tr>
-                                                                                                <td width="auto" align="center" valign="middle" height="40" style="background-color:#ea3a52; border-top-left-radius:5px; border-bottom-left-radius:5px; border-top-right-radius:5px; border-bottom-right-radius:5px; background-clip: padding-box; font-size:17px; font-family: Helvetica, Arial, sans-serif; text-align:center; color:#ffffff; font-weight: bold; letter-spacing: 1px; padding-left:42px; padding-right:42px;">
-                                                                                                    <span style="color: #ffffff; font-size:17px;">
-                                                                                                        <a style="color: #ffffff; text-align:center;text-decoration: none;" href="#">Confirm my email</a>
-                                                                                                    </span>
-                                                                                                </td>
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td width="100%" height="24" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
