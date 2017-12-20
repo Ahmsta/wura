@@ -23,8 +23,9 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-
+        $url = $this->app['url'];
+        // Force the application URL
+        $url->forceRootUrl(config('app.url'));
         parent::boot();
     }
 
@@ -38,8 +39,6 @@ class RouteServiceProvider extends ServiceProvider
         $this->mapApiRoutes();
 
         $this->mapWebRoutes();
-
-        //
     }
 
     /**

@@ -144,67 +144,7 @@
 
                 <div id="frame" class="empty">
 
-                    <table width="100%" bgcolor="#eeeeee" cellpadding="0" cellspacing="0" border="0" id="backgroundTable" class="emhide">
-
-                        <tbody>
-                            
-                            <tr>
-
-                                <td align="center">
-
-                                    <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-
-                                        <tbody>
-                                            
-                                            <tr>
-
-                                                <td align="center">
-
-                                                    <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="devicewidth">
-
-                                                        <tbody>
-                                                            
-                                                            <tr>
-
-                                                                <td width="100%" height="7" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-
-                                                            </tr>
-
-                                                            <tr>
-
-                                                                <td align="right" valign="middle" style="font-family: Helvetica, Arial, sans-serif; font-size: 10px; color: #999999;">
-
-                                                                    Want to read this email in your browser? <a style="text-decoration: none; color: #ea3a52;">click here</a>
-
-                                                                </td>
-
-                                                            </tr>
-
-                                                            <tr>
-
-                                                                <td width="100%" height="7" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
-
-                                                            </tr>
-
-                                                        </tbody>
-                                                    
-                                                    </table>
-
-                                                </td>
-
-                                            </tr>
-
-                                        </tbody>
-                                    
-                                    </table>
-
-                                </td>
-                            
-                            </tr>
-
-                        </tbody>
-
-                    </table>
+                    <br />
 
                     <table width="100%" bgcolor="#eeeeee" cellpadding="0" cellspacing="0" border="0" id="backgroundTable">
                         <tbody>
