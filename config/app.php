@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'WuraFleet'),
+    'name' => env('APP_NAME', 'WuraFleet.com'),
 
     /*
     |--------------------------------------------------------------------------
