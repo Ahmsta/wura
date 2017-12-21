@@ -18067,6 +18067,7 @@ $(document).ready(function () {
                 if (response.status.toLowerCase() === 'success') {
                     //$(this).html(SelectedText);
                     var SelectedText = $(this).find('option:selected').text();
+                    alert(SelectedText);
                     Notify(wurafleet.toastType.Success, 'Card has been successfully assigned to ' + SelectedText);
                 }
             });
