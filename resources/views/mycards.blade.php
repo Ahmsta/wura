@@ -39,7 +39,7 @@
                                     @case('suspend')
                                     @case('activate')
                                         <a href="#" id="assignedto" data-id="{{ $card->id }}" data-type="select" data-pk="{{ $card->assignedto }}" data-source="/getdrivers" 
-                                        data-value="{{ $card->assignedto }}" data-title="Select Driver" class="editable editable-click">{{ $card->Fullname }}</a>
+                                        data-value="{{ $card->assignedto }}" data-title="Select Driver" class="assignedto editable editable-click">{{ $card->Fullname }}</a>
                                         @break
 
                                     @default

@@ -17954,28 +17954,14 @@ toastr.options = {
 };
 
 var wurafleet = {
+    temp: '',
     toastType: {
         Info: 'info',
         Error: 'error',
         Success: 'success',
         Warning: 'warning'
     },
-    toastTitle: 'Wurafleet Notification Service',
-    Action: '',
-    BaseAPIUrl: 'api/v1/',
-    Url: {
-        current: '/purchaseorders/new',
-        item_details: '/purchaseorders/itemdetails',
-        vat_list: '/purchaseorders/vatlist',
-        uploadfiles: '/journalentries/uploadfiles'
-    },
-    local: {
-        key: '',
-        uri: '',
-        rename: ''
-    },
-    DynamicHeader: '',
-    DynamicModalBody: ''
+    toastTitle: 'Wurafleet Notification Service'
 };
 
 $(document).ready(function () {
@@ -18047,9 +18033,15 @@ $(document).ready(function () {
         toastr[toastType](toastMessage, wurafleet.toastTitle);
     }
 
-    $('#assignedto').editable({
+    // $(document).on("change", editable, function() {
+    //     var new_value = editable.input.$input[0].value;
+    //     alert(new_value);
+    // });
+
+    var editable = $('.assignedto').editable({
         'mode': 'inline',
         showbuttons: true,
+        emptytext: "No Driver has been registered",
         validate: function validate(value) {
             if ($.trim(value) == '') {
                 return 'This field is required';
@@ -18060,21 +18052,21 @@ $(document).ready(function () {
                 "module": 'cardowner',
                 "id": $(this).data('id')
             });
-
+            console.log($('.editable-input').find(':selected').text());
+            wurafleet.temp = $('.editable-input').find(':selected').text();
             settings.url = window.location.protocol + '//' + window.location.hostname + '/setstatus';
-
             $.ajax(settings).done(function (response) {
                 if (response.status.toLowerCase() === 'success') {
-                    //$(this).html(SelectedText);
-                    var SelectedText = $(this).find('option:selected').text();
-                    alert(SelectedText);
-                    Notify(wurafleet.toastType.Success, 'Card has been successfully assigned to ' + SelectedText);
+                    console.log($('.editable-input').find(':selected').text());
+                    Notify(wurafleet.toastType.Success, 'Card has been successfully assigned to ' + wurafleet.temp);
                 }
             });
         }
     });
 
     $('.callback').on('click', function () {
+        // Disable button.
+        $(this).attr("disabled", "disabled");
         var _module = $(this).data('module');
         settings.data = JSON.stringify({
             "id": $(this).data('id'),
@@ -18112,6 +18104,8 @@ $(document).ready(function () {
                     $('.callback[data-status="' + response.id + '"]').html(_cardStatus);
                 }
 
+                // Enable button.
+                $('.callback[data-id="' + response.id + '"]').removeAttr("disabled");
                 Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');
             }
         });

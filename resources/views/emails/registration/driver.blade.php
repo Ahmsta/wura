@@ -170,7 +170,7 @@
 
                                                                             <tr>
                                                                             <td width="100%" align="center" valign="middle" class="devicewidthinner" style="text-align:center;">
-                                                                                <img width="100" border="0" height="100" alt="Wura Logo" style="display:block; border:none; outline:none; text-decoration:none;" src="https://infinite-waters-82683.herokuapp.com/images/logo.jpg" class="bigimage" />
+                                                                                <img width="100" border="0" height="70" alt="Wura Logo" style="display:block; border:none; outline:none; text-decoration:none;" src="https://infinite-waters-82683.herokuapp.com/images/logo.jpg" class="bigimage" />
                                                                             </td>
                                                                             </tr>
                                                                             <tr>
