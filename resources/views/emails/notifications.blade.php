@@ -164,9 +164,9 @@
                                                                                 <td width="100%" height="30" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td width="100%" align="center" valign="middle" class="devicewidthinner" style="text-align:center;">
-                                                                                    <img width="600" border="0" height="203" alt="Wura Logo" style="display:block; border:none; outline:none; text-decoration:none;" src="https://infinite-waters-82683.herokuapp.com/images/logo.jpg" class="bigimage">    
-                                                                                </td>
+                                                                            <td width="100%" align="center" valign="middle" class="devicewidthinner" style="text-align:center;">
+                                                                                <img width="100" border="0" height="100" alt="Wura Logo" style="display:block; border:none; outline:none; text-decoration:none;" src="https://infinite-waters-82683.herokuapp.com/images/logo.jpg" class="bigimage">    
+                                                                            </td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td width="100%" height="28" style="font-size:1px; line-height:1px; mso-line-height-rule: exactly;">&nbsp;</td>
