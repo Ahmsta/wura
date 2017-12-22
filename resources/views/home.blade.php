@@ -157,11 +157,16 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-support fa-5x"></i>
+                            <i class="fa fa-frown-o fa-5x"></i>
                         </div>
                         <div class="col-xs-9 text-right">
-                            <div class="huge">13</div>
-                            <div>Support Tickets!</div>
+                            <div class="huge">{{ $dashboardinfo->pendingcardrequest }}</div>
+                            <div>Card(s) Request</div>
+                        </div>
+                        <br />
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ $dashboardinfo->disputedcards }}</div>
+                            <div>Disputed Card(s)</div>
                         </div>
                     </div>
                 </div>

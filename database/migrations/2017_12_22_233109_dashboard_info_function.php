@@ -18,7 +18,8 @@ class DashboardInfoFunction extends Migration
             CREATE OR REPLACE FUNCTION dashboard_info (userid INT) RETURNS TABLE (
                 expiredcards bigint, deletedcards bigint,
                 activecards bigint, inactivedcards bigint,
-                activedrivers bigint, inactivedrivers bigint
+                activedrivers bigint, inactivedrivers bigint,
+                pendingcardrequest bigint, disputedcards bigint
             ) 
             AS $$
             BEGIN
@@ -32,7 +33,10 @@ class DashboardInfoFunction extends Migration
             (select count(*) from cards where holder = userid and status = 'Activate') activecards,
             (select count(*) from cards where holder = userid and status = 'Suspend') inactivedcards,
             (select count(*) from cards where holder = userid and status = 'Expired') expiredcards,
-            (select count(*) from cards where holder = userid and status = 'Deleted' and deleted_at is null) deletedcards
+            (select count(*) from cards where holder = userid and status = 'Deleted' and deleted_at is not null) deletedcards,
+            (select count(*) from cards where holder = userid and status = 'Processing Request') pendingcardrequest,
+            (select count(*) from cards where holder = userid and status = 'Disputed') disputedcards
+            
             from drivers where \"belongsTo\" = userid and status = 'Activate';
             
             END; $$ 
@@ -48,6 +52,6 @@ class DashboardInfoFunction extends Migration
      */
     public function down()
     {
-        //
+        DB::unprepared("DROP FUNCTION dashboard_info");
     }
 }
