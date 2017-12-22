@@ -33,8 +33,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        // ['valid_until', '>=', Carbon::today()],
         DB::table('cards')
             ->where('valid_until', '<', Carbon::now())
             ->update(['status' => 'Expired']);

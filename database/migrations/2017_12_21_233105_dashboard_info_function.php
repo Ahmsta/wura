@@ -16,21 +16,27 @@ class DashboardInfoFunction extends Migration
     {
         DB::unprepared("
             CREATE OR REPLACE FUNCTION dashboard_info (userid INT) RETURNS TABLE (
+                expiredcards bigint, deletedcards bigint,
                 activecards bigint, inactivedcards bigint,
-            activedrivers bigint, inactivedrivers bigint
+                activedrivers bigint, inactivedrivers bigint
             ) 
             AS $$
             BEGIN
-                RETURN QUERY 
-                
-                select count(*) activedrivers,
+            RETURN QUERY 
+            
+            -- Do not return cards that have expired and cards that have been deleted
+            -- update cards set status = 'Expired' where valid_until < current_timestamp;
+            
+            select count(*) activedrivers,
             (select count(*) from drivers where \"belongsTo\" = userid and status <> 'Activate' and deleted_at is null) inactivedrivers,
             (select count(*) from cards where holder = userid and status = 'Activate') activecards,
-            (select count(*) from cards where holder = userid and status = 'Suspend') inactivedcards
+            (select count(*) from cards where holder = userid and status = 'Suspend') inactivedcards,
+            (select count(*) from cards where holder = userid and status = 'Expired') expiredcards,
+            (select count(*) from cards where holder = userid and status = 'Deleted' and deleted_at is null) deletedcards
             from drivers where \"belongsTo\" = userid and status = 'Activate';
             
             END; $$ 
-                
+            
             LANGUAGE 'plpgsql';
         ");
     }
