@@ -42,4 +42,13 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Models\Cards', 'holder', 'id');
     }
+
+    public function ValidCards() {
+        $result = self::with(['Cards' => function($q) {
+            //$q->select('id', 'name');
+            $q->where('status', '<>', 'Expired');
+        }])                    
+    ->get();
+    return $result;    
+    }
 }

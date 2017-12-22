@@ -36,8 +36,8 @@ class CorporateUser extends Mailable //implements ShouldQueue
         $facebook = env('facebook_url'); 
         $linkedin = env('linkedin_url');
         $googleplus = env('googleplus_url');
-        $walletUrl = env('APP_URL') . '/wallet';        
-        $driversUrl = env('APP_URL') . '/drivers';
+        $walletUrl = env('APP_URL') . 'wallet';        
+        $driversUrl = env('APP_URL') . 'drivers';
 
         $greeting = trim($this->user->firstname . ' ' . $this->user->lastname);
         

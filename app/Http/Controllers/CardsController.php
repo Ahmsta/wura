@@ -25,7 +25,7 @@ class CardsController extends Controller
     {
         // Do not return cards that have expired and cards that have been deleted
         $cards = User::find(Auth::id());
-        
+
         foreach ($cards->Cards as $card) {
             if ($card->assignedto == 0) {
                 $card['Fullname'] = 'Yet to be assigned';
