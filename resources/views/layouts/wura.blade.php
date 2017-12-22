@@ -64,7 +64,7 @@
 
         <div class="wrapper">
 
-            <nav id="sidebar">
+            <nav id="sidebar" class="sidebar-nav navbar-collapse">
 
                 <div class="sidebar-header text-center">
                     <a class="navbar-brand" href="{{ url('/home') }}">
@@ -169,8 +169,24 @@
                     <li title="Payment Options">
                         <a href="{{ url ('forms') }}"><i class="fa fa fa-money fa-fw"></i> Payment Options</a>
                     </li>
-                    <li>
-                        <a href="{{ route('wallet') }}"><i class="fa fa-google-wallet fa-fw"></i> Wallet</a>
+                    <li class="active">
+                        <a href="#walletSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="fa fa-google-wallet fa-fw" aria-hidden="true"></i>
+                            Wallet
+                        </a>
+                        <ul class="collapse list-unstyled" id="walletSubmenu">
+                            <li>
+                                <a href="{{ route('wallet') }}">
+                                    <i class="fa fa-google-wallet fa-fw" aria-hidden="true"></i>
+                                    Add Drivers
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('wallet') }}">
+                                Moderate Drivers
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                     <li>
                         <a href="{{ url ('documentation') }}"><i class="fa fa-line-chart fa-fw"></i> Consumption History</a>
@@ -197,9 +213,10 @@
                             </button>
                         </div>
 
-                        <nav class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <nav class="collapse navbar-collapse" id="bs-example-navbar-collapse">
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
+                                    <img src="../images/blank.jpg" style="width:45px; height:45px; margin-top:-15px; padding-right:4px;" alt="{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}'s Logo'" />
                                     <span>
                                         <i class="standout">{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}</i>
                                         <br/>

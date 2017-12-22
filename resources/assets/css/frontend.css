@@ -5,6 +5,14 @@
     color: #fff;
 }
 
+.linkactive {
+    color: #7c0e3b;
+    background-color: #fff;
+    border-top: 5px solid #1e0015;
+    border-bottom: 5px solid #1e0015;
+    border-left: 5px solid #1e0015;
+}
+
 .btn-wura {
     color: white;
     background-color: #7c0e3b;

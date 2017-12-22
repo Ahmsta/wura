@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Cards;
 use App\Mail\Notifications;
@@ -32,7 +33,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+
+        // ['valid_until', '>=', Carbon::today()],
+        DB::table('cards')
+            ->where('valid_until', '<', Carbon::now())
+            ->update(['status' => 'Expired']);
+
+        $dashboardinfo = DB::select('SELECT * from "dashboard_info"(' . Auth::id() . ')');
+        return view('home', ['dashboardinfo' => $dashboardinfo[0]]);
     }
 
     public function setstatus(Request $request) {

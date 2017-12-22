@@ -18033,11 +18033,6 @@ $(document).ready(function () {
         toastr[toastType](toastMessage, wurafleet.toastTitle);
     }
 
-    // $(document).on("change", editable, function() {
-    //     var new_value = editable.input.$input[0].value;
-    //     alert(new_value);
-    // });
-
     var editable = $('.assignedto').editable({
         'mode': 'inline',
         showbuttons: true,
@@ -18046,18 +18041,15 @@ $(document).ready(function () {
             if ($.trim(value) == '') {
                 return 'This field is required';
             }
-
             settings.data = JSON.stringify({
                 "request": value,
                 "module": 'cardowner',
                 "id": $(this).data('id')
             });
-            console.log($('.editable-input').find(':selected').text());
             wurafleet.temp = $('.editable-input').find(':selected').text();
             settings.url = window.location.protocol + '//' + window.location.hostname + '/setstatus';
             $.ajax(settings).done(function (response) {
                 if (response.status.toLowerCase() === 'success') {
-                    console.log($('.editable-input').find(':selected').text());
                     Notify(wurafleet.toastType.Success, 'Card has been successfully assigned to ' + wurafleet.temp);
                 }
             });
@@ -18144,6 +18136,39 @@ $(document).ready(function () {
 $.fn.AtEnd = function () {
     return this[0].scrollTop + this.height() >= this[0].scrollHeight;
 };
+
+//Loads the correct sidebar on window load,
+//collapses the sidebar on window resize.
+// Sets the min-height of #wrapper to window size
+$(function () {
+    $(window).bind("load resize", function () {
+        topOffset = 50;
+        width = this.window.innerWidth > 0 ? this.window.innerWidth : this.screen.width;
+        if (width < 768) {
+            $('nav.navbar-collapse').addClass('collapse');
+            topOffset = 100; // 2-row-menu
+        } else {
+            $('nav.navbar-collapse').removeClass('collapse');
+        }
+
+        height = (this.window.innerHeight > 0 ? this.window.innerHeight : this.screen.height) - 1;
+        height = height - topOffset;
+        if (height < 1) height = 1;
+        if (height > topOffset) {
+            $("#wrapper").css("min-height", height + "px");
+        }
+    });
+
+    var url = window.location;
+    var element = $('li a').filter(function () {
+        return this.href == url || url.href.indexOf(this.href) == 0;
+    });
+    element.addClass('linkactive').parent().parent().addClass('in').parent();
+    element.add('<i class="fa fa-chevron-right" aria-hidden="true"></i>');
+    if (element.is('li')) {
+        element.addClass('linkactive');
+    }
+});
 
 /***/ })
 /******/ ]);

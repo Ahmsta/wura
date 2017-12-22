@@ -23,10 +23,20 @@ class CardsController extends Controller
      */
     public function index()
     {
+        // Do not return cards that have expired and cards that have been deleted
         $cards = User::find(Auth::id());
+            //->where(['status', '<>', 'Expired']);
+            //->whereNull('deleted_at');
+
+            log::info(json_encode($cards));
+
         foreach ($cards->Cards as $card) {
-            $carduser = Cards::find($card->id);
-            $card['Fullname'] = $carduser->cardUser[0]['firstname'] . ' ' . $carduser->cardUser[0]['middlename'] . ' ' . $carduser->cardUser[0]['lastname'];
+            if ($card->assignedto == 0) {
+                $card['Fullname'] = 'Yet to be assigned';
+            } else {
+                $carduser = Cards::find($card->id);
+                $card['Fullname'] = $carduser->cardUser[0]['firstname'] . ' ' . $carduser->cardUser[0]['middlename'] . ' ' . $carduser->cardUser[0]['lastname'];
+            }
         }
         return view('mycards', ['cards' => $cards->Cards]);
     }
