@@ -1,72 +1,6 @@
 @extends('layouts.wura')
 @section('content')
 
-<style>
-
-    /* Hero Widgets */
-    .hero-widget {
-        color: #31708f;
-        padding-top: 20px;
-        text-align: center;
-        padding-bottom: 20px;
-        border-color: #bce8f1;
-        background-color: #d9edf7;
-    }
-    .hero-widget .icon {
-        display: block;
-        font-size: 96px;
-        line-height: 96px;
-        margin-bottom: 10px;
-        text-align: center;
-    }
-    .hero-widget .value {
-        display: block;
-        height: 64px;
-        font-size: 64px;
-        line-height: 64px;
-        font-style: normal;
-    }
-    .hero-widget label { font-size: 17px; }
-    .hero-widget .options { margin-top: 10px; }
-
-    /* Chat Widgets */
-    .chat {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-    }
-
-    .chat li {
-        margin-bottom: 10px;
-        padding-bottom: 5px;
-        border-bottom: 1px dotted #999;
-    }
-
-    .chat li.left .chat-body {
-        margin-left: 60px;
-    }
-
-    .chat li.right .chat-body {
-        margin-right: 60px;
-    }
-
-    .chat li .chat-body p {
-        margin: 0;
-    }
-
-    .panel .slidedown .glyphicon,
-    .chat .glyphicon {
-        margin-right: 5px;
-    }
-
-    .chat-panel .panel-body {
-        height: 350px;
-        overflow-y: scroll;
-    }
-</style>
-
-<div class="container">
-
     <div class="row">
         <div class="col-lg-3 col-md-6">
             <div class="panel panel-info">
@@ -86,7 +20,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="{{ route('driversreport') }}">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -114,7 +48,35 @@
                         </div>
                     </div>
                 </div>
-                <a href="#">
+                <a href="{{ route('cardsreport') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-frown-o fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ $dashboardinfo->pendingcardrequest }}</div>
+                            <div>Card(s) Request</div>
+                        </div>
+                        <br />
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ $dashboardinfo->disputedcards }}</div>
+                            <div>Disputed Card(s)</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('cardsinfo') }}">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -142,35 +104,7 @@
                         </div>
                         </div>
                 </div>
-                <a href="#">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-success">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-frown-o fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">{{ $dashboardinfo->pendingcardrequest }}</div>
-                            <div>Card(s) Request</div>
-                        </div>
-                        <br />
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">{{ $dashboardinfo->disputedcards }}</div>
-                            <div>Disputed Card(s)</div>
-                        </div>
-                    </div>
-                </div>
-                <a href="#">
+                <a href="{{ route('expiredreport') }}">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -185,19 +119,32 @@
     <br />
 
     <div class="row">
-        <div class="col-sm-3">
-            <div class="hero-widget well well-sm">
-                <div class="icon">
-                    <h5> Last 10 successful transactions </h5>
-                    <i class="glyphicon glyphicon-user"></i>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-google-wallet fa-5x" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ $dashboardinfo->activewallets }}</div>
+                            <div>Active Wallet(s)</div>
+                        </div>
+                        <br />
+                        <div class="col-xs-9 text-right text-danger">
+                            <div class="huge">{{ $dashboardinfo->inactivewallets }}</div>
+                            <div>Inactive Wallet(s)</div>
+                        </div>
+                    </div>
                 </div>
-                <div class="text">
-                    <span class="value">3</span>
-                    <label class="text-muted">Hero Widget</label>
-                </div>
-                <div class="options">
-                    <a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-plus"></i> Primary Action</a>
-                </div>
+                <a href="{{ route('walletsummary') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-sm-3">
@@ -375,6 +322,5 @@
         </div>
 
     </div> -->
-</div>
 
 @endsection

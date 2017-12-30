@@ -6,13 +6,11 @@
     $cnt = 0;
 ?>
 
-<div class="container">
-
     <div class="row">
 
         <div class="col-md-12">
            
-            <table id='TblCards' class='table dtable table-condensed table-striped table-bordered table-hover table-bordered'>
+            <table id='TblCards' class='table table-responsive dtable table-condensed table-striped table-bordered table-hover table-bordered'>
                 <thead>
                     <tr>
                         <th> S / N </th>
@@ -73,7 +71,5 @@
         </div>
 
     </div>
-
-</div>
 
 @endsection

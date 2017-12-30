@@ -2,14 +2,14 @@
 @section('page_heading','Register New Driver')
 @section('content')
 
-<div class="container">
-
     <h3> Basic Information </h3>
+    <br />
 
-    <div class="row">
+    <div class="row"></div>
 
-        <div class="col-md-8 col-md-offset-2">
-            <form class="form-horizontal" method="POST" action="{{ route('store') }}" enctype="multipart/form-data" >
+        <div class="col-md-12">
+        
+            <form class="form-horizontal" id="driverform" name="driverform" method="POST" action="{{ route('store') }}" enctype="multipart/form-data" >
                 {{ csrf_field() }}
 
                 <div class="panel panel-default">
@@ -58,65 +58,66 @@
                             </div>
                         </div>
 
-                        <hr />
-
                         <h3> Business Information </h3>
+                        <br />
 
                         <div class="row" style="margin-bottom:10px;">
-                            <div class="col-md-6 {{ $errors->has('idnumber') ? ' has-error' : '' }}" title="Staff ID Number">
-                                @if ($errors->has('idnumber'))
-                                    <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('idnumber') }}</strong>
-                                    </span>
-                                @endif
-                                <input id="idnumber" name="idnumber" value="{{ old('idnumber') }}" type="text" placeholder="Staff ID Number" class="form-control required" />
-                            </div>
-                            <div class="col-md-6 {{ $errors->has('mobile') ? ' has-error' : '' }}" title="Mobile Number">
-                                @if ($errors->has('mobile'))
-                                    <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('mobile') }}</strong>
-                                    </span>
-                                @endif
-                                <input id="mobile" name="mobile" value="{{ old('mobile') }}" type="text" placeholder="Mobile Number" class="form-control required" />
-                            </div>
-                        </div>
-
-                        <div class="row" style="margin-bottom:10px;">
-                            <div class="col-md-6 {{ $errors->has('dateofbirth') ? ' has-error' : '' }}" title="Date Of Birth">
-                                @if ($errors->has('dateofbirth'))
-                                    <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('dateofbirth') }}</strong>
-                                    </span>
-                                @endif
-                                <input id="DOB" name="DOB" value="{{ old('dateofbirth') }}" type="date" placeholder="Date of Birth" class="form-control required" />
-                            </div>
-                            <div class="col-md-6 {{ $errors->has('email') ? ' has-error' : '' }}" title="Email Address">
-                                @if ($errors->has('email'))
-                                    <span class="help-block text-danger">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-                                <input id="email" name="email" value="{{ old('email') }}" type="text" placeholder="Email Address" class="form-control required" />
-                            </div>
-                        </div>
-                    
-                        <hr />
-
-                        <div class="row" style="margin-bottom:10px;">
-                            <div class="col-md-12">
-                                <p>
-                                    Upload Staff ID Card or means of Identification.
-                                </p>
+                            <div class="col-md-6">
                                 <input type="file" id="StaffID" name="StaffID" data-preview="IDPreview" accept="image/*" />
                                 <br />
                                 <label class="Picture" for="StaffID">
-                                    <img id="IDPreview" name="IDPreview" src="" />
+                                    <img id="IDPreview" name="IDPreview" src="" required />
                                 </label>
+                                <p style="margin-top:30px;">
+                                    Upload Staff ID Card or means of Identification.
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-md-12 form-group{{ $errors->has('idnumber') ? ' has-error' : '' }}" title="Staff ID Number">
+                                        @if ($errors->has('idnumber'))
+                                            <span class="help-block text-danger">
+                                                <strong>{{ $errors->first('idnumber') }}</strong>
+                                            </span>
+                                        @endif
+                                        <input id="idnumber" name="idnumber" value="{{ old('idnumber') }}" type="text" placeholder="Staff ID Number" class="form-control required" />
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-md-12 form-group{{ $errors->has('mobile') ? ' has-error' : '' }}" title="Mobile Number">
+                                        @if ($errors->has('mobile'))
+                                            <span class="help-block text-danger">
+                                                <strong>{{ $errors->first('mobile') }}</strong>
+                                            </span>
+                                        @endif
+                                        <input id="mobile" name="mobile" value="{{ old('mobile') }}" type="text" placeholder="Mobile Number" class="form-control required" />
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-md-12 form-group{{ $errors->has('dateofbirth') ? ' has-error' : '' }}" title="Date Of Birth">
+                                        @if ($errors->has('dateofbirth'))
+                                            <span class="help-block text-danger">
+                                                <strong>{{ $errors->first('dateofbirth') }}</strong>
+                                            </span>
+                                        @endif
+                                        <input id="DOB" name="DOB" value="{{ old('dateofbirth') }}" type="date" placeholder="Date of Birth" class="form-control required" />
+                                    </div>                             
+                                </div>
+                                <div class="row" style="margin-bottom:10px;">
+                                    <div class="col-md-12 form-group{{ $errors->has('email') ? ' has-error' : '' }}" title="Email Address">
+                                        @if ($errors->has('email'))
+                                            <span class="help-block text-danger">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                        <input id="email" name="email" value="{{ old('email') }}" type="text" placeholder="Email Address" class="form-control required" />
+                                    </div>                                
+                                </div>
                             </div>
                         </div>
 
                         <div class="row" style="margin-bottom:10px;">
-                            <button type="submit" class="btn btn-wura btn-lg pull-right">Register Driver</button>                 
+                            <button type="submit" id="butDriver" name="butDriver" data-parentform="driverform" class="btn btn-wura btn-lg">Register Driver</button>                 
                         </div>
                     </div>
 
@@ -126,7 +127,5 @@
         </div>
 
     </div>
-
-</div>
 
 @endsection

@@ -77,7 +77,7 @@
                     </button>
 
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        <svg width="70px" height="51px" style="margin-top: -15px;-o-object-fit: scale-down;object-fit: scale-down; margin-left:-73px;" viewBox="0 0 90 73" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                        <svg width="70px" height="51px" style="margin-top: -15px;-o-object-fit: scale-down;object-fit: scale-down; margin-left:0px;" viewBox="0 0 90 73" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>{{ config('app.name', 'Laravel') }}</title>
                             <desc></desc>
                             <defs></defs>

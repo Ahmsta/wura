@@ -2,12 +2,16 @@
 
 namespace App\Models;
 
+use Auth;
 use Illuminate\Notifications\Notifiable;
+use OwenIt\Auditing\Contracts\Auditable;
+use OwenIt\Auditing\Contracts\UserResolver;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable, UserResolver
 {
     use Notifiable;
+    use \OwenIt\Auditing\Auditable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +31,11 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
+    public static function resolveId()
+    {
+        return Auth::check() ? Auth::user()->getAuthIdentifier() : null;
+    }
+
     /**
      * Get the Drivers for this user.
     */
@@ -43,12 +52,19 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Cards', 'holder', 'id');
     }
 
-    public function ValidCards() {
+    /**
+     * Get all wallets owned by this user.
+    */
+    public function Wallets()
+    {
+        return $this->hasMany('App\Models\Wallets', 'belongsTo', 'id');
+    }
+
+    public static function ValidCards() {
         $result = self::with(['Cards' => function($q) {
-            //$q->select('id', 'name');
-            $q->where('status', '<>', 'Expired');
-        }])                    
-    ->get();
-    return $result;    
+            //$q->where('status', '=', 'Activate')
+              $q->where('holder', '=', 1);
+        }])->get();
+        return $result;    
     }
 }

@@ -16,24 +16,30 @@ mix.copy('vendor/components/jquery/jquery.min.js', 'public/js/');
 mix.js('vendor/twbs/bootstrap/dist/js/bootstrap.min.js', 'public/js/app.js');
 
 mix.styles('vendor/twbs/bootstrap/dist/css/bootstrap.min.css', 'public/css/app.css');
-mix.copy('vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map', 'public/css/');
+mix.copy([
+    'vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map',
+    'resources/assets/css/toastr.min.css',
+    'resources/assets/css/font-awesome.css'], 'public/css/');
 mix.copy('vendor/twbs/bootstrap/dist/fonts', 'public/fonts');
-
+mix.copy([
+    'resources/assets/js/toastr.min.js'], 'public/js');
+    
 // Utility files
 mix.copyDirectory('resources/assets/img', 'public/images');
-mix.copy('resources/assets/css/font-awesome.css', 'public/css');
 // mix.copy('resources/assets/js/bootstrap-editable.js', 'public/js');
 // mix.copy('resources/assets/css/bootstrap-editable.css', 'public/css');
 
  mix.styles([
     'vendor/twbs/bootstrap/dist/css/bootstrap.min.css',
     'resources/assets/css/bootstrap-editable.css',
+    'resources/assets/css/bootstrap-multiselect.css',
     'resources/assets/css/frontend.css'], 'public/css/frontend.css');
 
 mix.js([
    'resources/assets/js/jquery.js',
    'vendor/twbs/bootstrap/dist/js/bootstrap.min.js',
    'resources/assets/js/bootstrap-editable.js',
+   'resources/assets/js/bootstrap-multiselect.js',
    'resources/assets/js/frontend.js'], 'public/js/frontend.js');
 
 // Copy DataTables files needed over to the public folder.

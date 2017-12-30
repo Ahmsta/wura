@@ -6,9 +6,6 @@ use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
-
-use Illuminate\Support\Facades\Log;
 
 class Notifications extends Mailable //implements ShouldQueue
 {
@@ -19,6 +16,20 @@ class Notifications extends Mailable //implements ShouldQueue
     private $drivermsg;
     protected $tag = 'Notifications Email :: '; 
     const EMAIL_HEADER = 'Notification from WURAfleet';
+
+    /**
+     * The number of seconds the job can run before timing out.
+     *
+     * @var int
+     */
+    public $timeout = 120;
+
+    /**
+     * The number of times the job may be attempted.
+     *
+     * @var int
+     */
+    public $tries = 5;
 
     /**
      * Create a new message instance.

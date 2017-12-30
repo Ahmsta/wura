@@ -7,15 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Events\Registered;
 use App\Http\Validations\AuthValidation;
 use Illuminate\Support\Facades\Validator;
-// use App\Mail\Registration\Driver;
-use App\Mail\Registration\Merchants;
-use App\Mail\Registration\CorporateUser;
-use App\Mail\Registration\IndividualUser;
-
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -105,25 +99,7 @@ class RegisterController extends Controller
     public function registered(Request $request, $user)
     {
         try {
-            switch (strtolower($user['userrole'])) {
-                // case "driver":
-                //     Mail::to($user['email'])->send(new Driver($user, $request));
-                //     break;
-
-                case "merchant":
-                    Mail::to($user['email'])->send(new Merchants($user));
-                    break;
-                
-                    case "corporation":
-                    Mail::to($user['email'])->send(new CorporateUser($user));
-                    break;
-
-                case "individual":
-                    Mail::to($user['email'])->send(new IndividualUser($user));
-                    break;
-                    
-                default:
-            }
+            $this->dispatch(new \App\Jobs\SendEmails($user['email'], array('Action' => $user['userrole'], 'User' => $user)));
         } catch (Exception $e) {
             Log::info($this->tag . json_encode($e));
         }

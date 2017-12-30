@@ -7,8 +7,6 @@ use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Cards;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Validations\AuthValidation;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,6 +14,16 @@ class CardsController extends Controller
 {
     protected $tag = 'Cards :: ';
 
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+        
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +35,10 @@ class CardsController extends Controller
         $cards = User::find(Auth::id());
 
         foreach ($cards->Cards as $card) {
+            if ($card->status !== 'Activate') {
+                // Remove from the array
+            }
+
             if ($card->assignedto == 0) {
                 $card['Fullname'] = 'Yet to be assigned';
             } else {
@@ -71,61 +83,5 @@ class CardsController extends Controller
         return redirect()->action('CardsController@index');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-    */
-    public function store(Request $request)
-    {
-        // Validate the request...
-        //$this->validator($request->all())->validate();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\drivers  $drivers
-     * @return \Illuminate\Http\Response
-     */
-    public function show(drivers $drivers)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\drivers  $drivers
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(drivers $drivers)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\drivers  $drivers
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, drivers $drivers)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\drivers  $drivers
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(drivers $drivers)
-    {
-        //
-    }
 }
 

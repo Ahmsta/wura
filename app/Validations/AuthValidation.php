@@ -41,7 +41,57 @@ class AuthValidation
     }
 
     /**
-     * Validation for company register endpoint
+     * Validation for login
+     * @return mixed
+     */
+    public static function loginRules()
+    {
+        return [
+            'email' => 'required|string|email|max:255',
+            'password' => 'required|string|min:6',
+        ];
+    }
+
+    /**
+     * Validation for forgot password
+     * @return mixed
+     */
+    public static function forgotPasswordRules()
+    {
+        return [
+            'email' => 'required|string|email|max:255',
+        ];
+    }
+
+    /**
+     * Validation for Wallet Registraion
+     * @return mixed
+     */
+    public static function walletRegistrationRules()
+    {
+        return [
+            'walletname' => 'required|string|max:255',
+            'oncard' => 'required|string|max:255',
+            'amount' => 'required|string|max:255',
+            'status' => 'required|string|max:5',
+        ];
+    }
+    
+    /**
+     * Validation for Wallet Registraion
+     * @return mixed
+     */
+    public static function auditLogRules()
+    {
+        return [
+            'audit_source' => 'required|string|max:255',
+            'audit_enddate' => 'required|date',
+            'audit_startdate' => 'required|date',
+        ];
+    }
+
+    /**
+     * Validation for company register
      * @return mixed
      */
     public static function registerCompanyRules()
@@ -56,30 +106,7 @@ class AuthValidation
     }
 
     /**
-     * Validation for login endpoint
-     * @return mixed
-     */
-    public static function loginRules()
-    {
-        return [
-            'email' => 'required|string|email|max:255',
-            'password' => 'required|string|min:6',
-        ];
-    }
-
-    /**
-     * Validation for forgot password endpoint
-     * @return mixed
-     */
-    public static function forgotPasswordRules()
-    {
-        return [
-            'email' => 'required|string|email|max:255',
-        ];
-    }
-
-    /**
-     * Validation for reset password endpoint
+     * Validation for reset password
      * @return mixed
      */
     public static function resetPasswordRules()

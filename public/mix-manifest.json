@@ -4,6 +4,8 @@
     "/js/jquery.min.js": "/js/jquery.min.js",
     "/css/app.css": "/css/app.css",
     "/css/bootstrap.min.css.map": "/css/bootstrap.min.css.map",
+    "/css/toastr.min.css": "/css/toastr.min.css",
     "/css/font-awesome.css": "/css/font-awesome.css",
+    "/js/toastr.min.js": "/js/toastr.min.js",
     "/css/frontend.css": "/css/frontend.css"
 }

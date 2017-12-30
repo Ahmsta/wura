@@ -6,8 +6,6 @@
     $cnt = 0;
 ?>
 
-<div class="container">
-
     <div class="row">
 
         <div class="col-md-12">
@@ -34,7 +32,7 @@
                         ?>
                         <tr data-href="{{ $driver->id }}">
                             <td>{{ $cnt }}</td>
-                            <td> <img src="{{ $imgPath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture"  width="42" height="42"></td>
+                            <td> <img src="{{ $imgPath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-thumbnail" style="width:50px; height:50px;" /></td>
                             <td>{{ $driver->idnumber }} </td>
                             <td>{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }} </td>
                             <td>{{ $driver->mobilenumber }} </td>
@@ -59,7 +57,5 @@
         </div>
 
     </div>
-
-</div>
 
 @endsection

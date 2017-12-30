@@ -12,6 +12,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.5.*",
         "laravel/tinker": "~1.0",
+        "owen-it/laravel-auditing": "^5.0",
         "twbs/bootstrap": "^3.3.7"
     },
     "require-dev": {
