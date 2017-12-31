@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Auth;
-use Carbon\Carbon;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -56,20 +55,33 @@ class AuditController extends Controller
 
             $source = explode(",", $audit_source);
             foreach ($source as &$value) {
-                switch ($i) {
-                    case "apple":
+
+                switch (strtolower($value)) {
+                    case "user":
                         echo "i is apple";
                         break;
-                    case "bar":
+
+                    case "cards":
                         echo "i is bar";
                         break;
-                    case "cake":
+
+                    case "drivers":
                         echo "i is cake";
                         break;
+
+                    case "wallets":
+                        $wallet = \App\Models\Wallets::getAudits($audit_startdate, $audit_enddate);
+                        log::info(json_encode($wallet));
+                        break;
+
+                    case "transactions":
+                        echo "i is cake";
+                        break;
+
+                    default:
                 }
-                log::info($value);
             }
-            // Get the logs for the user.
+        // Get the logs for the user.
         // $user = Auth::user();
         //$wallet = \App\Models\Wallets::find(1);
         //$audit = $wallet->audits()->first();

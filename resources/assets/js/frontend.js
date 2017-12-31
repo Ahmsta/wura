@@ -408,9 +408,9 @@ $(document).ready(function () {
             errorList += '<li>Please enter a valid Wallet Name.</li>';
         }
 
-        // if ($('#oncard').val() === "" || $('#oncard').val().toLowerCase() === "assign to card") {
-        //     errorList += '<li>Invalid Card Selected.</li>';
-        // }
+        if ($('#oncard').val() === "null" || $('#oncard').val() === null) {
+            errorList += '<li>Kindly setup a new Card.</li>';
+        }
 
         if ($('#amount').val() === "") {
             errorList += '<li>Please enter a Valid Amount.</li>';
