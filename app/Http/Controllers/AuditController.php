@@ -9,9 +9,6 @@ use Illuminate\Support\Facades\Log;
 use App\Http\Validations\AuthValidation;
 use Illuminate\Support\Facades\Validator;
 
-use OwenIt\Auditing\Auditable;
-use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
-
 class AuditController extends Controller
 {
     protected $tag = 'AuditLog :: ';
@@ -37,8 +34,6 @@ class AuditController extends Controller
     }
 
     public function getlogs(Request $request) {
-        // {"audit_enddate":"2017-12-30","audit_source":"User,Drivers","audit_startdate":"2017-12-01"}  
-
         // Validate the request...
         $validator = Validator::make($request->all(), AuthValidation::auditLogRules());
         if ($validator->fails())
@@ -49,46 +44,42 @@ class AuditController extends Controller
         }
 
         if ($request->isMethod('post')) {
+            $auditedData = [];
             $audit_source = $request->input('audit_source');
             $audit_enddate = $request->input('audit_enddate');
             $audit_startdate = $request->input('audit_startdate');
 
             $source = explode(",", $audit_source);
             foreach ($source as &$value) {
-
                 switch (strtolower($value)) {
                     case "user":
-                        echo "i is apple";
+                        $auditedData[$value] = \App\Models\User::getAudits($audit_startdate, $audit_enddate);
                         break;
 
                     case "cards":
-                        echo "i is bar";
+                        $auditedData[$value] = \App\Models\Cards::getAudits($audit_startdate, $audit_enddate);
                         break;
 
                     case "drivers":
-                        echo "i is cake";
+                        $auditedData[$value] = \App\Models\Drivers::getAudits($audit_startdate, $audit_enddate);
                         break;
 
                     case "wallets":
-                        $wallet = \App\Models\Wallets::getAudits($audit_startdate, $audit_enddate);
-                        log::info(json_encode($wallet));
+                        $auditedData[$value] = \App\Models\Wallets::getAudits($audit_startdate, $audit_enddate);
                         break;
 
                     case "transactions":
-                        echo "i is cake";
+                        $auditedData[$value] = \App\Models\Transactions::getAudits($audit_startdate, $audit_enddate);
                         break;
 
                     default:
                 }
             }
-        // Get the logs for the user.
-        // $user = Auth::user();
-        //$wallet = \App\Models\Wallets::find(1);
-        //$audit = $wallet->audits()->first();
-        //$diff = $wallet->audits()->with('user')->get()->last();
 
-        //var_dump($audit->getMetadata(true, JSON_PRETTY_PRINT));
-        // var_dump($audit->getModified(true));
+            return response()->json([
+                'status' => "success",
+                'data' => $auditedData
+            ]);
         }
     }
 }

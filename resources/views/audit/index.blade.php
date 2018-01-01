@@ -7,6 +7,19 @@
             color: #000;
             text-align: center;
         }
+
+        .nav-tabs>li {
+            color: #01c0c8;
+            display: block;
+            position: relative;
+        }
+
+        .nav-tabs>li:hover {
+            display: block;
+            color: #01c0c8;
+            position: relative;
+            background-color: #7c0e3b;
+        }
     </style>
 
     <div class="row">
@@ -42,6 +55,16 @@
     </div>
 
     <hr />
+
+    <div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="timelineheader" name="timelineheader" style="display:none;"></ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content" id="timelinepanel" name="timelinepanel"></div>
+
+    </div>
 
     <div class="row">
         <div class="col-md-12">
@@ -172,4 +195,5 @@
             </div>
         </div>
     </div>
+
 @endsection

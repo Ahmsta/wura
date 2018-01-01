@@ -19686,6 +19686,20 @@ $(document).ready(function () {
         }
     }
 
+    function PopulatePanel(JsonObject) {
+        // var tabdetails = {
+        //     header: '<li role="presentation"><a href="#' + TabText + '" aria-controls="' + TabText + '" role="tab" data-toggle="tab">' + TabText + '</a></li>',
+        //     panel: '<div role="tabpanel" class="tab-pane active" id="' + TabText + '">...</div>'
+        // };
+        // return tabdetails;
+
+        if (!$.isEmptyObject(JsonObject)) {
+            return JSON.stringify(JsonObject);
+        } else {
+            return "There has been no content change";
+        }
+    }
+
     function checkType(file) {
         var imageType = /image.*/;
         if (!file.type.match(imageType)) {
@@ -19903,39 +19917,24 @@ $(document).ready(function () {
         settings.url = window.location.protocol + '//' + window.location.hostname + '/getlogs';
 
         $.ajax(settings).done(function (response) {
-            console.log(response);
-            //     if (response.status.toLowerCase() === 'success') {
+            if (response.status.toLowerCase() === 'success') {
 
-            //         var _display, _cardStatus;
-            //         switch (response.old_status.toLowerCase()) {
-            //             case "activate":
-            //                 _display = "Suspend";
-            //                 _cardStatus = "Activated";
-            //                 break;
-            //             case "suspend":
-            //                 _display = "Activate";
-            //                 _cardStatus = "Suspended";
-            //                 break;
-            //             case "cancel":
-            //                 _display = "Activate";
-            //                 _cardStatus = "Cancelled";
-            //                 break;
-            //             case 'processing request':
-            //                 _display = "Cancel";
-            //                 _cardStatus = "Processing Request";
-            //                 break;
-            //         }
+                // Clear the contents of the timelineheader and timelinepanel.
+                $('#timelinepanel').empty();
+                $('#timelineheader').empty();
 
-            //         // Set the Button text.
-            //         $('.callback[data-id="' + response.id + '"]').text(_display);              
-            //         if ($('.callback[data-status="' + response.id + '"]').length > 0) {
-            //             $('.callback[data-status="' + response.id + '"]').html(_cardStatus);
-            //         }
+                $.each(response.data, function (TabText, JsonObject) {
+                    $('#timelineheader').append('<li role="presentation"><a href="#' + TabText + '" aria-controls="' + TabText + '" role="tab" data-toggle="tab">' + TabText + '</a></li>');
+                    $('#timelinepanel').append('<div role="tabpanel" class="tab-pane active" id="' + TabText + '">' + PopulatePanel(JsonObject) + '</div>');
+                });
 
-            // Enable button.
-            $('#LogSearch').removeAttr("disabled");
-            Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');
-            //     }
+                $('#timelineheader').removeAttr("style");
+                $('#timelineheader a:first').tab('show');
+
+                // Enable button.
+                $('#LogSearch').removeAttr("disabled");
+                Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');
+            }
         });
     });
 
