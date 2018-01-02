@@ -62,8 +62,13 @@ class Cards extends Model implements AuditableContract
             $olddriver = \App\Models\Drivers::find($this->getOriginal('assignedto'));
             $newdriver = \App\Models\Drivers::find($this->getAttribute('assignedto'));
 
-            $data['old_values']['driver_name'] = $olddriver->firstname . ' ' . $olddriver->middlename . ' ' . $olddriver->lastname;
-            $data['new_values']['driver_name'] = $newdriver->firstname . ' ' . $newdriver->middlename . ' ' . $newdriver->lastname;
+            if ($olddriver == null) {
+                $data['old_values']['driver_name'] = 'Newly created Card.';
+                $data['new_values']['driver_name'] = 'Newly created Card.';
+            } else {
+                $data['old_values']['driver_name'] = $olddriver->firstname . ' ' . $olddriver->middlename . ' ' . $olddriver->lastname;
+                $data['new_values']['driver_name'] = $newdriver->firstname . ' ' . $newdriver->middlename . ' ' . $newdriver->lastname;
+            }
         }
 
         return $data;

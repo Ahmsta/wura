@@ -30,7 +30,11 @@
             }
 
             .navbar-default .navbar-nav>li>a {
-                color: #1e0015;
+                color: #fff;
+            }
+
+            .navbar-default .navbar-nav>li>a:hover {
+                color: #000;
             }
 
             .panel-body {

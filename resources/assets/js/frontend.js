@@ -389,12 +389,12 @@ $(document).ready(function () {
     $('#butDriver').on('click', function() {
         if ($('#passpic').get(0).files.length === 0) {
             Notify(wurafleet.toastType.Error, "No Passport Picture Selected.");
-            //return false;
+            return false;
         }
 
         if ($('#StaffID').get(0).files.length === 0) {
             Notify(wurafleet.toastType.Error, "No valid means of Identification provided.");
-            //return false;
+            return false;
         }
 
         $('#' + $(this).data('parentform')).validate();

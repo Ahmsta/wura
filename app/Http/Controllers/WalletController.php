@@ -41,7 +41,13 @@ class WalletController extends Controller
             $wallet['CardStatus'] = $carduser->status;
             $wallet['CardNumber'] = $carduser->cardnos;
             $wallet['CardExpires'] = $carduser->valid_until;
-            $wallet['Fullname'] = $carduser->cardUser[0]['firstname'] . ' ' . $carduser->cardUser[0]['middlename'] . ' ' . $carduser->cardUser[0]['lastname'];
+
+            if (empty($playerlist)) {
+                $wallet['Fullname'] = 'Yet to be assigned.';
+            } else
+            {
+                $wallet['Fullname'] = $carduser->cardUser[0]['firstname'] . ' ' . $carduser->cardUser[0]['middlename'] . ' ' . $carduser->cardUser[0]['lastname'];
+            }
         }
 
         // Get all cards that don't have a wallet assigned to them.
