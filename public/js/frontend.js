@@ -19600,6 +19600,8 @@ var wurafleet = {
     toastTitle: 'Wurafleet Notification Service'
 };
 
+var eventsMinDistance = 60;
+
 $(document).ready(function () {
 
     $.ajaxSetup({
@@ -19624,6 +19626,13 @@ $(document).ready(function () {
         if (element.is('li')) {
             element.addClass('linkactive');
         }
+    }
+
+    function SetTimeLines() {
+        // Horizontal Timeline.
+        var timelines = $('.cd-horizontal-timeline'),
+            eventsMinDistance;
+        timelines.length > 0 && initTimeline(timelines);
     }
 
     function SetDateControl() {
@@ -19686,15 +19695,89 @@ $(document).ready(function () {
         }
     }
 
-    function PopulatePanel(JsonObject) {
-        // var tabdetails = {
-        //     header: '<li role="presentation"><a href="#' + TabText + '" aria-controls="' + TabText + '" role="tab" data-toggle="tab">' + TabText + '</a></li>',
-        //     panel: '<div role="tabpanel" class="tab-pane active" id="' + TabText + '">...</div>'
-        // };
-        // return tabdetails;
+    function PopulatePanel(TabText, JsonObject) {
+        var timeline = '';
+
+        // var startDate = new Date("2015-08-04");
+        // var endDate = new Date("2015-08-12");
+
+        // var resultProductData = product_data.filter(function (a) {
+        //     var hitDates = a.ProductHits || {};
+        //     // extract all date strings
+        //     hitDates = Object.keys(hitDates);
+        //     // convert strings to Date objcts
+        //     hitDates = hitDates.map(function(date) { return new Date(date); });
+        //     // filter this dates by startDate and endDate
+        //     var hitDateMatches = hitDates.filter(function(date) { return date >= startDate && date <= endDate });
+        //     // if there is more than 0 results keep it. if 0 then filter it away
+        //     return hitDateMatches.length>0;
+        // });
 
         if (!$.isEmptyObject(JsonObject)) {
-            return JSON.stringify(JsonObject);
+            $.each(JsonObject, function (parentIndex, parentElement) {
+                var createdates = parentElement.map(function (a) {
+                    return moment(a.created_at).format("DD/MM/YYYY");
+                });
+                var uniquedates = createdates.filter(function (allItems, i, a) {
+                    return i == a.indexOf(allItems);
+                });
+
+                timeline = '    <div class="row">';
+                timeline += '        <div class="col-md-12">';
+                timeline += '        <div class="card">';
+                timeline += '            <div class="card-block">';
+                timeline += '                <section class="cd-horizontal-timeline">';
+                timeline += '                    <div class="timeline">';
+                timeline += '                        <div class="events-wrapper">';
+                timeline += '                            <div class="events" style="width:100%;">';
+                timeline += '                                <ol id="eventdates" name="eventdates">';
+                $.each(uniquedates, function (index, element) {
+                    var displaydate = moment(element.created_at).format("DD MMM");
+                    var datadate = moment(element.created_at).format("DD/MM/YYYY");
+                    if (index === 0) {
+                        timeline += '                                    <li><a href="#0" data-date="' + datadate.toString() + '" class="selected">' + displaydate.toString() + '</a></li>';
+                    } else {
+                        timeline += '                                    <li><a href="#0" data-date="' + datadate.toString() + '">' + displaydate.toString() + '</a></li>';
+                    }
+                });
+                timeline += '                                </ol>';
+                timeline += '                                <span class="filling-line" aria-hidden="true"></span>';
+                timeline += '                           </div>';
+                timeline += '                        </div>';
+                timeline += '                        <ul class="cd-timeline-navigation">';
+                timeline += '                            <li><a href="#0" class="prev inactive">Prev</a></li>';
+                timeline += '                            <li><a href="#0" class="next">Next</a></li>';
+                timeline += '                        </ul>';
+                timeline += '                    </div>';
+                timeline += '                    <div class="events-content">';
+                timeline += '                        <ol>';
+                timeline += '                            <li class="selected" data-date="03/01/2018">';
+                timeline += '                                <h2><img class="img-circle pull-left m-r-20 m-b-10" width="60" alt="user" src="../assets/images/users/1.jpg" alt="user"> Horizontal Timeline<br/><small>January 16th, 2014</small></h2>';
+                timeline += '                                <hr class="m-t-40">';
+                timeline += '                                <p class="m-t-40">';
+                timeline += '                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.';
+                timeline += '                                    <button class="btn btn-info btn-rounded btn-outline m-t-20">Read more</button>';
+                timeline += '                                </p>';
+                timeline += '                            </li>';
+                timeline += '                            <li data-date="03/03/2015">';
+                timeline += '                                <h2>Event title here</h2>';
+                timeline += '                                <em>March 3rd, 2015</em>';
+                timeline += '                                <p>';
+                timeline += '                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at, eaque hic repellendus sit dicta consequatur quae, ut harum ipsam molestias maxime non nisi reiciendis eligendi! Doloremque quia pariatur harum ea amet quibusdam quisquam, quae, temporibus dolores porro doloribus.';
+                timeline += '                                </p>';
+                timeline += '                            </li>';
+                timeline += '                        </ol>';
+                timeline += '                    </div>';
+                timeline += '                </section>';
+                timeline += '            </div>';
+                timeline += '        </div>';
+                timeline += '    </div>';
+                timeline += '</div>';
+
+                SetTimeLines();
+            });
+
+            return timeline;
         } else {
             return "There has been no content change";
         }
@@ -19918,14 +20001,13 @@ $(document).ready(function () {
 
         $.ajax(settings).done(function (response) {
             if (response.status.toLowerCase() === 'success') {
-
                 // Clear the contents of the timelineheader and timelinepanel.
                 $('#timelinepanel').empty();
                 $('#timelineheader').empty();
 
                 $.each(response.data, function (TabText, JsonObject) {
                     $('#timelineheader').append('<li role="presentation"><a href="#' + TabText + '" aria-controls="' + TabText + '" role="tab" data-toggle="tab">' + TabText + '</a></li>');
-                    $('#timelinepanel').append('<div role="tabpanel" class="tab-pane active" id="' + TabText + '">' + PopulatePanel(JsonObject) + '</div>');
+                    $('#timelinepanel').append('<div role="tabpanel" class="tab-pane active" id="' + TabText + '">' + PopulatePanel(TabText, JsonObject) + '</div>');
                 });
 
                 $('#timelineheader').removeAttr("style");
@@ -20034,17 +20116,11 @@ $(document).ready(function () {
         }
     });
 
-    // Horizontal Timeline.
-    var timelines = $('.cd-horizontal-timeline'),
-        eventsMinDistance = 60;
-
-    timelines.length > 0 && initTimeline(timelines);
-
     function initTimeline(timelines) {
         timelines.each(function () {
             var timeline = $(this),
                 timelineComponents = {};
-            //cache timeline components 
+            // cache timeline components 
             timelineComponents['timelineWrapper'] = timeline.find('.events-wrapper');
             timelineComponents['eventsWrapper'] = timelineComponents['timelineWrapper'].children('.events');
             timelineComponents['fillingLine'] = timelineComponents['eventsWrapper'].children('.filling-line');
@@ -20056,8 +20132,10 @@ $(document).ready(function () {
 
             //assign a left postion to the single events along the timeline
             setDatePosition(timelineComponents, eventsMinDistance);
+
             //assign a width to the timeline
             var timelineTotWidth = setTimelineWidth(timelineComponents, eventsMinDistance);
+
             //the timeline has been initialize - show it
             timeline.addClass('loaded');
 

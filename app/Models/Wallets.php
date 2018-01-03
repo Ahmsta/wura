@@ -35,14 +35,14 @@ class Wallets extends Model implements AuditableContract
     public function transformAudit(array $data): array
     {
         if (Arr::has($data, 'new_values.oncard')) {
-            // $cardnos = \App\Models\Cards::find($this->getOriginal('oncard'))->cardnos;
-            // if ($cardnos == null) {
-            //     $data['old_values']['card_number'] = $cardnos;
-            //     $data['new_values']['card_number'] = \App\Models\Cards::find($this->getAttribute('oncard'))->cardnos;
-            // } else {
-            //     $data['old_values']['card_number'] = $cardnos;
-            //     $data['new_values']['card_number'] = \App\Models\Cards::find($this->getAttribute('oncard'))->cardnos;
-            // }
+            $cardnos = \App\Models\Cards::find($this->getOriginal('oncard'))->cardnos;
+            if ($cardnos == null) {
+                $data['old_values']['card_number'] = $cardnos;
+                $data['new_values']['card_number'] = \App\Models\Cards::find($this->getAttribute('oncard'))->cardnos;
+            } else {
+                $data['old_values']['card_number'] = $cardnos;
+                $data['new_values']['card_number'] = \App\Models\Cards::find($this->getAttribute('oncard'))->cardnos;
+            }
         }
 
         return $data;

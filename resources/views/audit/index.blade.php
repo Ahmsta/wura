@@ -66,7 +66,7 @@
 
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="card-block">
@@ -74,7 +74,7 @@
                         <div class="timeline">
                             <div class="events-wrapper">
                                 <div class="events">
-                                    <ol>
+                                    <ol id="eventdates" name="eventdates">
                                         <li><a href="#0" data-date="16/01/2014" class="selected">16 Jan</a></li>
                                         <li><a href="#0" data-date="28/02/2014">28 Feb</a></li>
                                         <li><a href="#0" data-date="20/04/2014">20 Mar</a></li>
@@ -89,16 +89,12 @@
                                     </ol>
                                     <span class="filling-line" aria-hidden="true"></span>
                                 </div>
-                                <!-- .events -->
                             </div>
-                            <!-- .events-wrapper -->
                             <ul class="cd-timeline-navigation">
                                 <li><a href="#0" class="prev inactive">Prev</a></li>
                                 <li><a href="#0" class="next">Next</a></li>
                             </ul>
-                            <!-- .cd-timeline-navigation -->
                         </div>
-                        <!-- .timeline -->
                         <div class="events-content">
                             <ol>
                                 <li class="selected" data-date="16/01/2014">
@@ -189,11 +185,10 @@
                                 </li>
                             </ol>
                         </div>
-                        <!-- .events-content -->
                     </section>
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
 @endsection
