@@ -19633,6 +19633,31 @@ $(document).ready(function () {
         var timelines = $('.cd-horizontal-timeline'),
             eventsMinDistance;
         timelines.length > 0 && initTimeline(timelines);
+
+        // var timelineBlocks = $('.cd-timeline-block'),
+        // offset = 0.8;
+
+        // //hide timeline blocks which are outside the viewport
+        // hideBlocks(timelineBlocks, offset);
+
+        // //on scolling, show/animate timeline blocks when enter the viewport
+        // $(window).on('scroll', function(){
+        //     (!window.requestAnimationFrame) 
+        //         ? setTimeout(function(){ showBlocks(timelineBlocks, offset); }, 100)
+        //         : window.requestAnimationFrame(function(){ showBlocks(timelineBlocks, offset); });
+        // });
+
+        // function hideBlocks(blocks, offset) {
+        //     blocks.each(function(){
+        //         ( $(this).offset().top > $(window).scrollTop()+$(window).height()*offset ) && $(this).find('.cd-timeline-img, .cd-timeline-content').addClass('is-hidden');
+        //     });
+        // }
+
+        // function showBlocks(blocks, offset) {
+        //     blocks.each(function(){
+        //         ( $(this).offset().top <= $(window).scrollTop()+$(window).height()*offset && $(this).find('.cd-timeline-img').hasClass('is-hidden') ) && $(this).find('.cd-timeline-img, .cd-timeline-content').removeClass('is-hidden').addClass('bounce-in');
+        //     });
+        // }
     }
 
     function SetDateControl() {
@@ -19696,23 +19721,6 @@ $(document).ready(function () {
     }
 
     function PopulatePanel(TabText, JsonObject) {
-        var timeline = '';
-
-        // var startDate = new Date("2015-08-04");
-        // var endDate = new Date("2015-08-12");
-
-        // var resultProductData = product_data.filter(function (a) {
-        //     var hitDates = a.ProductHits || {};
-        //     // extract all date strings
-        //     hitDates = Object.keys(hitDates);
-        //     // convert strings to Date objcts
-        //     hitDates = hitDates.map(function(date) { return new Date(date); });
-        //     // filter this dates by startDate and endDate
-        //     var hitDateMatches = hitDates.filter(function(date) { return date >= startDate && date <= endDate });
-        //     // if there is more than 0 results keep it. if 0 then filter it away
-        //     return hitDateMatches.length>0;
-        // });
-
         if (!$.isEmptyObject(JsonObject)) {
             $.each(JsonObject, function (parentIndex, parentElement) {
                 var createdates = parentElement.map(function (a) {
@@ -19776,7 +19784,6 @@ $(document).ready(function () {
 
                 SetTimeLines();
             });
-
             return timeline;
         } else {
             return "There has been no content change";
@@ -20077,6 +20084,22 @@ $(document).ready(function () {
 
         // Clear all inputs of their values
         $(this).find("input,textarea,hidden").val('').end().find("input[type=checkbox], input[type=radio]").prop("checked", "").end();
+    });
+
+    $('#messageview').on('show.bs.modal', function () {
+        // Button that triggered the modal
+        var button = $('.msgbutton')[0];
+
+        // Extract title from data-title attributes
+        var m_title = $(button).data('title');
+
+        // Extract message from data-message attributes
+        var m_message = $(button).data('message');
+
+        // Update the modal's content.
+        var modal = $(this);
+        modal.find('.modal-title').html(m_title);
+        modal.find('.modal-body').html(m_message);
     });
 
     // $('.components li, .components i').on('mouseout', function() {

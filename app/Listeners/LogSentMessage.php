@@ -12,10 +12,10 @@ class LogSentMessage
      * Create the event listener.
      *
      * @return void
-     */
+    */
     public function __construct()
     {
-        //
+        // 
     }
 
     /**
@@ -23,9 +23,9 @@ class LogSentMessage
      *
      * @param  MessageSent  $event
      * @return void
-     */
+    */
     public function handle(MessageSent $event)
-    {
-        //
-    }
+    {   
+       //
+    }    
 }

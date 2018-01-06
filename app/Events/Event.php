@@ -13,6 +13,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 class Event
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $userId;
 
     /**
      * Create a new event instance.

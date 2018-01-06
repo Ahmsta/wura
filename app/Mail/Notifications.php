@@ -2,9 +2,9 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Queue\SerializesModels;
 
 class Notifications extends Mailable //implements ShouldQueue
@@ -15,7 +15,7 @@ class Notifications extends Mailable //implements ShouldQueue
     private $greeting;
     private $drivermsg;
     protected $tag = 'Notifications Email :: '; 
-    const EMAIL_HEADER = 'Notification from WURAfleet';
+    const EMAIL_HEADER = 'WURAfleet Notification ';
 
     /**
      * The number of seconds the job can run before timing out.
@@ -60,7 +60,7 @@ class Notifications extends Mailable //implements ShouldQueue
             $googleplus = env('googleplus_url');
 
             return $this->view('emails.notifications')
-                        ->subject(self::EMAIL_HEADER)
+                        ->subject($title)
                         ->with([
                             'title' => $title,
                             'drivermsg' => $drivermsg,                        

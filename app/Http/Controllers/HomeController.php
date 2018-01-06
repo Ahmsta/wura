@@ -58,7 +58,7 @@ class HomeController extends Controller
                 case 'cards':
                     $recordset = \App\Models\Cards::find($recordid);
                     $recordset->status = $updatefield;
-                    $data = $recordset->save();                        
+                    $data = $recordset->save();           
                     break;
 
                 case 'cardowner':
