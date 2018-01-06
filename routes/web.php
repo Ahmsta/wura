@@ -59,3 +59,5 @@ Route::post('/setstatus', 'HomeController@SetStatus')->name('setstatus');
 Route::post('/walletstore', 'WalletController@store')->name('walletstore');
 
 Route::post('/driverregistration', 'DriversController@store')->name('store');
+
+Route::post('/getMessage', 'NotificationsController@getMessage')->name('getMessage');

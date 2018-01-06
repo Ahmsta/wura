@@ -539,20 +539,33 @@ $(document).ready(function () {
            .end();
     });
 
-    $('#messageview').on('show.bs.modal', function () {
+    $('#messageview').on('show.bs.modal', function (event) {
         // Button that triggered the modal
-        var button = $('.msgbutton')[0];
+        var button = $(event.relatedTarget);
 
-        // Extract title from data-title attributes
-        var m_title = $(button).data('title');
-
-         // Extract message from data-message attributes
-        var m_message = $(button).data('message');
+        // Disable button.
+        $(button).attr("disabled", "disabled");
 
         // Update the modal's content.
         var modal = $(this);
-        modal.find('.modal-title').html(m_title);
-        modal.find('.modal-body').html(m_message);
+
+        settings.data = JSON.stringify(
+            {
+                "id": button.data('id')
+            }
+        );
+        settings.url = window.location.protocol + '//' + window.location.hostname + '/getMessage';
+       
+        $.ajax(settings).done(function (response) {
+            if (response.status.toLowerCase() === 'success') {
+                $('.modal-body').html(response.data);
+                $('.modal-title').html(response.title);
+
+                // Enable button.
+                $('.msgbutton[data-id="' + response.id + '"]').removeAttr("disabled");
+                Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+            }
+        });
     });
 
     // $('.components li, .components i').on('mouseout', function() {

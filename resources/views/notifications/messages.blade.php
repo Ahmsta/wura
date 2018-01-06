@@ -17,7 +17,7 @@
                     <th> Message Type </th>
                     <th> Subject </th>
                     <th> Recipient </th>
-                    <th> Read On </th>
+                    <th> Sent On </th>
                     <th> Action </th>
                 </tr>
             </thead>
@@ -35,8 +35,8 @@
                         <td> {{ $notification->recipient }} </td>
                         <td> {{ Carbon\Carbon::parse($notification->read_at)->toFormattedDateString() }} </td>
                         <td> 
-                            <a href="#" data-toggle="modal" data-target="#messageview" data-message="{{ $notification->data }}" class="btn btn-default msgbutton"
-                                data-title="Viewing Message sent to <br /> {{ $notification->recipient }} on {{ Carbon\Carbon::parse($notification->read_at)->toFormattedDateString() }} " style="color: black;border-color: grey;">
+                            <a href="#" data-toggle="modal" data-target="#messageview" class="btn btn-default msgbutton" data-id="{{ $notification->id }}"
+                                style="color: black;border-color: grey;">
                                 <i class="fa fa-eye" aria-hidden="true"></i> 
                                 View Message 
                             </a>

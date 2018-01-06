@@ -95,7 +95,7 @@ class HomeController extends Controller
             
             if ($data == true) {
                 $user = Auth::user();
-            
+
                 if (isset($recordset['assignedto']) && $recordset->assignedto >= 1) {
                     if (!empty($oldcarduser)) {
                         $recordset = DB::table('drivers')->where('id', $oldcarduser->assignedto)->first();
@@ -126,7 +126,10 @@ class HomeController extends Controller
                     $greeting = $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
                     $drivermsg = "We write to officially notify you that your account has been " . str_replace('eed', 'ed', $recordset->status . 'ed') . ".";
                     $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
+                } else if (strtolower($actonmodule) == 'wallets') {
+                    
                 }
+ 
                 return response()->json([
                     'id' => $recordid,
                     'status' => 'success',
