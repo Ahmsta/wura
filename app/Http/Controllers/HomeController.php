@@ -95,8 +95,8 @@ class HomeController extends Controller
             
             if ($data == true) {
                 $user = Auth::user();
-                if (array_key_exists('assignedto', $recordset) && $recordset->assignedto >= 1) {
-
+            
+                if (isset($recordset['assignedto']) && $recordset->assignedto >= 1) {
                     if (!empty($oldcarduser)) {
                         $recordset = DB::table('drivers')->where('id', $oldcarduser->assignedto)->first();
 
@@ -114,13 +114,11 @@ class HomeController extends Controller
                     }
 
                     // Notify the new holder / user of the card of the status change.
-                    $carduser = Cards::find($recordid);
+                    $carduser = \App\Models\Cards::find($recordid);
                     $recordset = DB::table('drivers')->where('id', $carduser->assignedto)->first();
-
-                    // Notify the former holder / user of the card that access has been revoked.
-                    $title = "Your access to card ". $oldcarduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    $title = "Your access to card ". $carduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
                     $greeting= $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
-                    $drivermsg = "We write to officially notify you that your access to card " . $oldcarduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    $drivermsg = "We write to officially notify you that your access to card " . $carduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
                     $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
                 } else if (strtolower($actonmodule) == 'drivers') {
                     // A driver's status was just modified. Duly notify the Driver.
