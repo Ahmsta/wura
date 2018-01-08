@@ -36,7 +36,7 @@
                             <td>{{ $driver->idnumber }} </td>
                             <td>{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }} </td>
                             <td>{{ $driver->mobilenumber }} </td>
-                            <td>{{ $driver->dateofbirth }} </td>
+                            <td>{{ Carbon\Carbon::parse($driver->dateofbirth)->toFormattedDateString() }} </td>
                             <td>
                                 @switch(strtolower($driver->status))
                                     @case('activate')

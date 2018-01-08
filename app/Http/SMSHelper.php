@@ -2,82 +2,106 @@
 
 namespace App\Http;
 
-use Illuminate\Http\Client;
-use Illuminate\Http\QueryString;
-use Illuminate\Http\Client\Request;
+use Auth;
+use Carbon\Carbon;
+use App\Models\Notifications;
+use Illuminate\Support\Facades\Log;
 
 class SMSHelper
 {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-    */
-    public function __construct() 
-    {
-        $this->middleware('auth');
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+  */
+  public function __construct() 
+  {
+      //$this->middleware('auth');
+  }
+
+  public function GetSessionID() {
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "http://www.smslive247.com/http/index.aspx?cmd=login&owneremail=triflyheaven%40yahoo.com.au&subacct=WURA&subacctpwd=wurafleet1234",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => array(
+        "cache-control: no-cache",
+        "content-type: application/json"
+      ),
+    ));
+    
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    
+    curl_close($curl);
+    
+    if ($err) {
+      return "cURL Error #:" . $err;
+    } else {
+      return $response;
     }
+  }
 
-    public function SendSMS($message) {
-        $sessionID = $this->GetSessionID();
-        $response = $this->SendSMSOut($sendto, $message, $sessionID);
+  public function SendSMS($sendto, $message, $msgType) {
+    $sessionID = $this->GetSessionID();
+    $response = explode(" ", $sessionID);
 
-        // (new Notifications([
-        //     'type' => 'emails',
-        //     'read_at' => Carbon::today(),
-        //     'data' => $message->getBody(),
-        //     'owner_id' => $authid, //Auth::id()?? 0,
-        //     'subject' => $message->getHeaders()->get('Subject')->getFieldBody(),
-        //     'recipient' => !$message->getHeaders()->get('To') ? null : $message->getHeaders()->get('To')->getFieldBody(),
-        // ]))->save();
+    if (strtolower($response[0]) == "ok:") {
+      $SMSresponse = $this->SendSMSOut($sendto, $message, $response[1]);
+    } else {
+      Log::error(json_encode($sessionID));
     }
-
-    private function GetSessionID() {
-        $client = new Client;
-        $request = new Request;
-
-        $request->setRequestUrl('http://www.smslive247.com/http/index.aspx');
-        $request->setRequestMethod('GET');
-        $request->setQuery(new QueryString(array(
-            'subacctpwd' => 'wurafleet1234',
-            'subacct' => 'WURA',
-            'owneremail' => 'triflyheaven@yahoo.com.au',
-            'cmd' => 'login'
-        )));
-
-        $request->setHeaders(array(
-            'content-type' => 'application/json'
-        ));
-
-        $client->enqueue($request)->send();
-        $response = $client->getResponse();
-
-        return $response->getBody();
+    
+    $response = explode(" ", $SMSresponse);
+    if (strtolower($response[0]) == "ok:") {
+      (new Notifications([
+          'type' => 'SMS',
+          'data' => $message,
+          'subject' => $msgType,
+          'recipient' => $sendto,
+          'read_at' => Carbon::today(),
+          'owner_id' => Auth::id()?? 0,
+      ]))->save();        
+    } else {
+      Log::error(json_encode($SMSresponse));
     }
+  }
 
-    private function SendSMSOut($sendto, $message, $sessionid) {
-        $client = new Client;
-        $request = new Request;
+  public function SendSMSOut($sendto, $message, $sessionid) {
 
-        $request->setRequestUrl('http://www.smslive247.com/http/index.aspx');
-        $request->setRequestMethod('POST');
-        $request->setQuery(new QueryString(array(
-            'msgtype' => '0',
-            'sendto' => $sendto,
-            'sender' => 'wurafleet',
-            'message' => $message,
-            'sessionid' => $sessionid,
-            'cmd' => 'sendmsg'
-        )));
+    $curl = curl_init();
 
-        $request->setHeaders(array(
-            'content-type' => 'application/json'
-        ));
-
-        $client->enqueue($request)->send();
-        $response = $client->getResponse();
-
-        return $response->getBody();
-    }
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => "http://www.smslive247.com/http/index.aspx?cmd=sendmsg&sessionid=" . $sessionid . "&message=" . $message . "&sender=wurafleet&sendto=" . $sendto . "&msgtype=0",
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "POST",
+      CURLOPT_HTTPHEADER => array(
+        "Content-Length: 0",
+        "cache-control: no-cache",
+        "content-type: application/json"
+      ),
+    ));
+    
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+    
+    curl_close($curl);
+    
+    if ($err) {
+      return "cURL Error #:" . $err;
+    } else {
+      return $response;
+    }        
+  }
 }

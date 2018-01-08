@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use App\Models\User;
 use App\Models\Drivers;
+use App\Http\SMSHelper;
 use Illuminate\Http\File;
 use Illuminate\Http\Request;
 use App\Mail\Registration\Driver;
@@ -101,7 +102,6 @@ class DriversController extends Controller
                 
         // Use a transaction to save this record sir.
         $result = DB::transaction(function () use ($driver, $request, $password) {
-
             // Save the driver to the DB.
             $driver->save();
 
@@ -119,9 +119,13 @@ class DriversController extends Controller
 
         if (is_null($result)) {
             $user = Auth::user();
+            $sms = new SMSHelper();
             $user->userrole = 'driver';
             $request['password'] = $password;
             Mail::to($request->email)->send(new Driver($user, $request));
+            $sms->SendSMS($request->mobile, 'Hello ' . $request->firstname . '. 
+            Congratulations "Name Of Company" has fully registered you as one of her drivers,
+            You will receive other notifications as we proceed with your next level of registration. WURAfleet Team.', 'Driver Creation');
             return redirect()->action('DriversController@index');
         } 
         else {

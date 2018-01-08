@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Http\SMSHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -44,6 +45,7 @@ class HomeController extends Controller
             $data = 0;
             $recordset = null;
             $oldcarduser = null;
+            $sms = new SMSHelper();
             $recordid = $request->input('id');
             $updatefield = $request->input('request');
             $actonmodule = $request->input('module');
@@ -52,13 +54,13 @@ class HomeController extends Controller
                 case 'drivers':
                     $recordset = \App\Models\Drivers::find($recordid);
                     $recordset->status = $updatefield;
-                    $data = $recordset->save();                        
+                    $data = $recordset->save();
                     break;
 
                 case 'cards':
                     $recordset = \App\Models\Cards::find($recordid);
                     $recordset->status = $updatefield;
-                    $data = $recordset->save();           
+                    $data = $recordset->save();
                     break;
 
                 case 'cardowner':
@@ -102,7 +104,7 @@ class HomeController extends Controller
 
                         // Notify the former holder / user of the card that access has been revoked.
                         $title = "Your access to card " . $oldcarduser->cardnos . " has been deactivated.";
-                        $greeting= $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
+                        $greeting = $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
                         $drivermsg = "We write to officially notify you that your access to card " . $oldcarduser->cardnos . " has been deactivated.";
                         $drivermsg .= '<br /><br />
                             <p style="background-color:#ea3a52; border-top-left-radius:5px; border-bottom-left-radius:5px; border-top-right-radius:5px; border-bottom-right-radius:5px; background-clip: padding-box; font-size:17px; font-family: Helvetica, Arial, sans-serif; text-align:center; color:#ffffff; font-weight: bold; letter-spacing: 1px; padding-left:42px; padding-right:42px;">
@@ -111,8 +113,8 @@ class HomeController extends Controller
                                 </span>
                             </p>';
                         $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
+                        $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. Your access to card [' . $oldcarduser->cardnos . '] has been deactivated on WURAFleet platform. Kindly contact your admin to address this issue if you feel uncomfortable. WURAfleet Team.', 'Card Suspension.');
                     }
-
                     // Notify the new holder / user of the card of the status change.
                     $carduser = \App\Models\Cards::find($recordid);
                     $recordset = DB::table('drivers')->where('id', $carduser->assignedto)->first();
@@ -120,12 +122,32 @@ class HomeController extends Controller
                     $greeting= $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
                     $drivermsg = "We write to officially notify you that your access to card " . $carduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
                     $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
+
+                    switch(strtolower(str_replace('eed', 'ed', $recordset->status . 'ed'))) {
+                        case 'activated':
+                            $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. Congratulations. Your access to card [' . $carduser->cardnos . '] have been activated for you, you now at liberty to drive & refuel at any filling station. WURAfleet Team.', 'Card Activation.');
+                            break;
+
+                        case 'suspended':
+                            $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. Your access to card [' . $carduser->cardnos . '] has been deactivated on WURAFleet platform. Kindly contact your admin to address this issue if you feel uncomfortable. WURAfleet Team.', 'Card Suspension.');
+                            break;
+                    }
                 } else if (strtolower($actonmodule) == 'drivers') {
                     // A driver's status was just modified. Duly notify the Driver.
                     $title = "Your account has been " . str_replace('eed', 'ed', $recordset->status . 'ed');
                     $greeting = $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
                     $drivermsg = "We write to officially notify you that your account has been " . str_replace('eed', 'ed', $recordset->status . 'ed') . ".";
                     $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
+
+                    switch(strtolower(str_replace('eed', 'ed', $recordset->status . 'ed'))) {
+                        case 'activated':
+                            $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. You have been activated by {“Name Of Company”} on WURAFleet platform. In order for you to be fully part of {“Name Of Company”}’s drivers, you are required to download your app from the wurafleet website. User Name: "' . $recordset->email . '", Password: "' . $recordset->email . '". WURAfleet Team.', 'Driver Activation.');
+                            break;
+
+                        case 'suspended':
+                            $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. You have been suspended by {“Name Of Company”} on WURAFleet platform. If you think this is a technical issue, kindly contact your admin to raise this issue. WURAfleet Team.', 'Driver Suspension.');
+                            break;
+                    }
                 } else if (strtolower($actonmodule) == 'wallets') {
                     
                 }
