@@ -16,8 +16,8 @@
         <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+        @yield('styles')
         <link href="{{ mix('css/frontend.css') }}" rel="stylesheet" type="text/css" />
-             
         <style>            
             /* .navbar-default {
                 background-color: transparent;
@@ -205,6 +205,10 @@
                                 <i class="fa fa-comment-o"></i>
                             </a>
 
+                            <a href="{{ route('calendar') }}" class="btn btn-default navbar-btn" title="View all your Calendar Events.">
+                                <i class="fa fa-calendar"></i>
+                            </a>
+                            
                             <a href="{{ route('messages') }}" class="btn btn-default navbar-btn" title="View all messages.">
                                 <i class="fa fa-envelope-o"></i>
                             </a>
@@ -250,6 +254,7 @@
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+        @yield('scripts')
         <script type="text/javascript" src="{{ mix('js/frontend.js') }}"></script>
         
     </body>

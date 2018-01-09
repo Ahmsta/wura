@@ -19,9 +19,12 @@ mix.styles('vendor/twbs/bootstrap/dist/css/bootstrap.min.css', 'public/css/app.c
 mix.copy([
     'vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map',
     'resources/assets/css/toastr.min.css',
+    'resources/assets/css/fullcalendar.min.css',
+    'resources/assets/css/fullcalendar.print.min.css',
     'resources/assets/css/font-awesome.css'], 'public/css/');
 mix.copy('vendor/twbs/bootstrap/dist/fonts', 'public/fonts');
 mix.copy([
+    'resources/assets/js/fullcalendar.min.js',
     'resources/assets/js/toastr.min.js'], 'public/js');
     
 // Utility files

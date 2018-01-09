@@ -45,8 +45,11 @@ Route::get('/walletsummary', 'ReportController@walletsummary')->name('walletsumm
 
 Route::get('/wallet', 'WalletController@index')->name('wallet');
 
-Route::get('/chats', 'NotificationsController@chats')->name('chats');
 Route::get('/messages', 'NotificationsController@messages')->name('messages');
+
+Route::get('/calendar', 'NotificationsController@calendar')->name('calendar');
+
+Route::get('/chats', 'NotificationsController@chats')->name('chats');
 Route::get('/reminders', 'NotificationsController@calendar')->name('reminders');
 
 

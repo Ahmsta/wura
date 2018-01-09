@@ -56,7 +56,6 @@ class NotificationsController extends Controller
     */
     public function calendar()
     {
-        $drivers = User::find(Auth::id());
-        return view('mydrivers', ['drivers' => $drivers->Drivers]);
+        return view('notifications.calendar');
     }
 }
