@@ -254,6 +254,53 @@
         <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
         <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
+        <script>
+            var oTable;
+
+            var settings = {
+                "async": true,
+                "crossDomain": true,
+                "url": '',
+                "method": "POST",
+                "processData": false,
+                "data": ''
+            };
+
+            toastr.options = {
+                "closeButton": true,
+                "debug": false,
+                "newestOnTop": false,
+                "progressBar": true,
+                "positionClass": "toast-top-right",
+                "preventDuplicates": true,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            };
+
+            var wurafleet = {
+                temp: '',
+                auditenddate: '',
+                auditstartdate: '',
+                toastType : {
+                    Info: 'info',
+                    Error: 'error',
+                    Success: 'success',
+                    Warning: 'warning'
+                },
+                toastTitle: 'Wurafleet Notification Service'
+            };
+
+            function Notify(toastType, toastMessage) {
+                toastr[toastType](toastMessage, wurafleet.toastTitle);
+            }
+        </script>
         @yield('scripts')
         <script type="text/javascript" src="{{ mix('js/frontend.js') }}"></script>
         

@@ -21,10 +21,13 @@ mix.copy([
     'resources/assets/css/toastr.min.css',
     'resources/assets/css/fullcalendar.min.css',
     'resources/assets/css/fullcalendar.print.min.css',
+    'resources/assets/css/bootstrap-multiselect.css',
     'resources/assets/css/font-awesome.css'], 'public/css/');
 mix.copy('vendor/twbs/bootstrap/dist/fonts', 'public/fonts');
 mix.copy([
+    'resources/assets/js/mycalendar.js',
     'resources/assets/js/fullcalendar.min.js',
+    'resources/assets/js/bootstrap-multiselect.js',
     'resources/assets/js/toastr.min.js'], 'public/js');
     
 // Utility files
@@ -35,14 +38,12 @@ mix.copyDirectory('resources/assets/img', 'public/images');
  mix.styles([
     'vendor/twbs/bootstrap/dist/css/bootstrap.min.css',
     'resources/assets/css/bootstrap-editable.css',
-    'resources/assets/css/bootstrap-multiselect.css',
     'resources/assets/css/frontend.css'], 'public/css/frontend.css');
 
 mix.js([
    'resources/assets/js/jquery.js',
    'vendor/twbs/bootstrap/dist/js/bootstrap.min.js',
    'resources/assets/js/bootstrap-editable.js',
-   'resources/assets/js/bootstrap-multiselect.js',
    'resources/assets/js/frontend.js'], 'public/js/frontend.js');
 
 // Copy DataTables files needed over to the public folder.
