@@ -45,6 +45,8 @@ Route::get('/walletsummary', 'ReportController@walletsummary')->name('walletsumm
 
 Route::get('/wallet', 'WalletController@index')->name('wallet');
 
+Route::get('/mycalendarevents', 'NotificationsController@mycalendarevents')->name('mycalendarevents');
+
 Route::get('/messages', 'NotificationsController@messages')->name('messages');
 
 Route::get('/calendar', 'NotificationsController@calendar')->name('calendar');
@@ -63,4 +65,11 @@ Route::post('/walletstore', 'WalletController@store')->name('walletstore');
 
 Route::post('/driverregistration', 'DriversController@store')->name('store');
 
+Route::post('/newEvent', 'NotificationsController@newEvent')->name('newEvent');
+
 Route::post('/getMessage', 'NotificationsController@getMessage')->name('getMessage');
+
+
+Route::put('/updateEvent', 'NotificationsController@updateEvent')->name('updateEvent');
+
+Route::delete('/deleteEvent', 'NotificationsController@deleteEvent')->name('deleteEvent');

@@ -129,7 +129,7 @@ class DriversController extends Controller
             return redirect()->action('DriversController@index');
         } 
         else {
-            Log::info($this->tag . json_encode($result));
+            Log::error($this->tag . json_encode($result));
             return redirect()->action('DriversController@create');
         }
     }
