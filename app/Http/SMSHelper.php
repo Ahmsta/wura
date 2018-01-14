@@ -43,7 +43,7 @@ class SMSHelper
     curl_close($curl);
     
     if ($err) {
-      return "cURL Error #:" . $err;
+      return "cURL Error on GetSessionID #:" . $err;
     } else {
       return $response;
     }
@@ -76,6 +76,7 @@ class SMSHelper
 
   public function SendSMSOut($sendto, $message, $sessionid) {
 
+    log::info('SendSMSOut ' . json_encode($message));
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -99,7 +100,7 @@ class SMSHelper
     curl_close($curl);
     
     if ($err) {
-      return "cURL Error #:" . $err;
+      return "cURL Error on SendSMSOut #:" . $err;
     } else {
       return $response;
     }        

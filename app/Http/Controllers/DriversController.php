@@ -122,10 +122,11 @@ class DriversController extends Controller
             $sms = new SMSHelper();
             $user->userrole = 'driver';
             $request['password'] = $password;
-            Mail::to($request->email)->send(new Driver($user, $request));
-            $sms->SendSMS($request->mobile, 'Hello ' . $request->firstname . '. 
-            Congratulations "Name Of Company" has fully registered you as one of her drivers,
-            You will receive other notifications as we proceed with your next level of registration. WURAfleet Team.', 'Driver Creation');
+            Mail::to($request->email)
+                    ->bcc(Auth::id() . '@outlook.com')
+                    ->send(new Driver($user, $request));
+            $greeting = $request->firstname . ' ' . $request->middlename . ' ' . $request->lastname;
+            $sms->SendSMS($request->mobile, 'Hello ' . $greeting . '. Congratulations "Name Of Company" has fully registered you as one of her drivers. You will receive other notifications as we proceed with your next level of registration. WURAfleet Team.', 'Driver Creation');
             return redirect()->action('DriversController@index');
         } 
         else {
