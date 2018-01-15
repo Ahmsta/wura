@@ -18353,31 +18353,23 @@ $(document).ready(function () {
         });
     });
 
-    // $('.components li, .components i').on('mouseout', function() {
-    //     if ($('#sidebar').hasClass('active') === false) {
-    //         return false;
-    //     }
+    $('.components a, .components li').on('mouseover', function () {
+        if ($('#sidebar').hasClass('active') === false) {
+            return false;
+        }
 
-    //     if ($(this).children() === undefined || $(this).children()[1] === undefined) {
-    //         return false;
-    //     }
+        if ($(this).children() === undefined || $(this).children()[1] === undefined) {
+            return false;
+        }
 
-    //     $($(this).children()[1]).removeClass('in');
-    //     $($(this).children()[0]).attr('aria-expanded', false);
-    // });
+        // Remove classes from other buttons, put on new active one
+        $($('.components li').children()).removeClass('in');
+        $($('.components li').children()).attr('aria-expanded', false);
 
-    // $('.components li, .components i').on('mouseover', function() {
-    //     if ($('#sidebar').hasClass('active') === false) {
-    //         return false;
-    //     }
-
-    //     if ($(this).children() === undefined || $(this).children()[1] === undefined) {
-    //         return false;
-    //     }
-
-    //     $($(this).children()[1]).addClass('in');
-    //     $($(this).children()[0]).attr('aria-expanded', true);
-    // });
+        // Add required class for li element and set the aria-expanded attribute
+        $($(this).children()[1]).addClass('in');
+        $($(this).children()[0]).attr('aria-expanded', true);
+    });
 
     // Initially disable the button
     $("#ContinueButton").attr("disabled", "disabled");

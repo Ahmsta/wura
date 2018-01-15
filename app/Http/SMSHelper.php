@@ -75,8 +75,6 @@ class SMSHelper
   }
 
   public function SendSMSOut($sendto, $message, $sessionid) {
-
-    log::info('SendSMSOut ' . json_encode($message));
     $curl = curl_init();
 
     curl_setopt_array($curl, array(

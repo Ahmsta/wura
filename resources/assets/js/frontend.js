@@ -205,280 +205,296 @@ $(document).ready(function () {
         }
     });
     
-    $(window).bind("load resize", function() {
-        topOffset = 50;
-        width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
-        if (width < 768) {
-            $('nav.navbar-collapse').addClass('collapse');
-            topOffset = 100; // 2-row-menu
-        } else {
-            $('nav.navbar-collapse').removeClass('collapse');
-        }
-
-        height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
-        height = height - topOffset;
-        if (height < 1) height = 1;
-        if (height > topOffset) {
-            $("#wrapper").css("min-height", (height) + "px");
-        }
-    });
-
-    $('.clickable').on('click', function() {
-        var ctrlVal = $(this).data('val');
-        var parent = $(this).data('parentctrl');
-
-        $('#' + parent).val(ctrlVal);
-
-        var element = $('.clickable').filter(function() {
-            $(this).removeClass('btn-wura').removeClass('btn-primary').removeClass('btn-danger').removeClass('active');
-        });
-
-        if (ctrlVal === true) {
-            $(this).addClass('btn-primary').addClass('active');
-        } else {
-            $(this).addClass('btn-danger').addClass('active');
-        }
-    });
-
-    $('.callback').on('click', function() {
-        // Disable button.
-        $(this).attr("disabled", "disabled");
-        var _module = $(this).data('module');
-        settings.data = JSON.stringify(
-            {
-                "id": $(this).data('id'),
-                "request": $(this).text(),
-                "module": $(this).data('module')
+    $(window).bind("load resize", 
+        function() {
+            topOffset = 50;
+            width = (this.window.innerWidth > 0) ? this.window.innerWidth : this.screen.width;
+            if (width < 768) {
+                $('nav.navbar-collapse').addClass('collapse');
+                topOffset = 100; // 2-row-menu
+            } else {
+                $('nav.navbar-collapse').removeClass('collapse');
             }
-        );
-        settings.url = window.location.protocol + '//' + window.location.hostname + '/setstatus';
-       
-        $.ajax(settings).done(function (response) {
-            console.log(response);
-            if (response.status.toLowerCase() === 'success') {
 
-                var _display, _cardStatus;
-                switch (response.old_status.toLowerCase()) {
-                    case "activate":
-                        _display = "Suspend";
-                        _cardStatus = "Activated";
-                        break;
-                    case "suspend":
-                        _display = "Activate";
-                        _cardStatus = "Suspended";
-                        break;
-                    case "cancel":
-                        _display = "Activate";
-                        _cardStatus = "Cancelled";
-                        break;
-                    case 'processing request':
-                        _display = "Cancel";
-                        _cardStatus = "Processing Request";
-                        break;
-                }
-
-                // Set the Button text.
-                $('.callback[data-id="' + response.id + '"]').text(_display);              
-                if ($('.callback[data-status="' + response.id + '"]').length > 0) {
-                    $('.callback[data-status="' + response.id + '"]').html(_cardStatus);
-                }
-
-                // Enable button.
-                $('.callback[data-id="' + response.id + '"]').removeAttr("disabled");
-                Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+            height = ((this.window.innerHeight > 0) ? this.window.innerHeight : this.screen.height) - 1;
+            height = height - topOffset;
+            if (height < 1) height = 1;
+            if (height > topOffset) {
+                $("#wrapper").css("min-height", (height) + "px");
             }
-        });
-    });
+        }
+    );
 
-    $('#LogSearch').on('click', function() {
-        // Disable button.
-        $(this).attr("disabled", "disabled");
+    $('.clickable').on('click', 
+        function() {
+            var ctrlVal = $(this).data('val');
+            var parent = $(this).data('parentctrl');
+
+            $('#' + parent).val(ctrlVal);
+
+            var element = $('.clickable').filter(function() {
+                $(this).removeClass('btn-wura').removeClass('btn-primary').removeClass('btn-danger').removeClass('active');
+            });
+
+            if (ctrlVal === true) {
+                $(this).addClass('btn-primary').addClass('active');
+            } else {
+                $(this).addClass('btn-danger').addClass('active');
+            }
+        }
+    );
+
+    $('.callback').on('click', 
+        function() {
+            // Disable button.
+            $(this).attr("disabled", "disabled");
+            var _module = $(this).data('module');
+            settings.data = JSON.stringify(
+                {
+                    "id": $(this).data('id'),
+                    "request": $(this).text(),
+                    "module": $(this).data('module')
+                }
+            );
+            settings.url = window.location.protocol + '//' + window.location.hostname + '/setstatus';
         
-        // get all option element values
-        var _selectedValues = $('#auditsources option:selected').map(
-            function(a, item){
-                return item.value;
-            }
-        ).get();
+            $.ajax(settings).done(function (response) {
+                console.log(response);
+                if (response.status.toLowerCase() === 'success') {
 
-        // Perform a quick validation at the client side.
-        if (_selectedValues.length === 0) {
-            Notify(wurafleet.toastType.Info, "You are yet to select a valid audit Source.");
-            return false;
+                    var _display, _cardStatus;
+                    switch (response.old_status.toLowerCase()) {
+                        case "activate":
+                            _display = "Suspend";
+                            _cardStatus = "Activated";
+                            break;
+                        case "suspend":
+                            _display = "Activate";
+                            _cardStatus = "Suspended";
+                            break;
+                        case "cancel":
+                            _display = "Activate";
+                            _cardStatus = "Cancelled";
+                            break;
+                        case 'processing request':
+                            _display = "Cancel";
+                            _cardStatus = "Processing Request";
+                            break;
+                    }
+
+                    // Set the Button text.
+                    $('.callback[data-id="' + response.id + '"]').text(_display);              
+                    if ($('.callback[data-status="' + response.id + '"]').length > 0) {
+                        $('.callback[data-status="' + response.id + '"]').html(_cardStatus);
+                    }
+
+                    // Enable button.
+                    $('.callback[data-id="' + response.id + '"]').removeAttr("disabled");
+                    Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+                }
+            });
         }
+    );
 
-        if (wurafleet.auditstartdate === "") {
-            Notify(wurafleet.toastType.Info, "You are yet to select a valid Audit Start Date.");
-            return false;
-        }
+    $('#LogSearch').on('click', 
+        function() {
+            // Disable button.
+            $(this).attr("disabled", "disabled");
+            
+            // get all option element values
+            var _selectedValues = $('#auditsources option:selected').map(
+                function(a, item){
+                    return item.value;
+                }
+            ).get();
 
-        if (wurafleet.auditenddate === "") {
-            Notify(wurafleet.toastType.Info, "You are yet to select a valid Audit End Date.");
-            return false;
-        }
-
-        // Validation passed. Kindly post to the server.
-        settings.data = JSON.stringify(
-            {
-                "audit_enddate": wurafleet.auditenddate,
-                "audit_source": _selectedValues.join(","),
-                "audit_startdate": wurafleet.auditstartdate
+            // Perform a quick validation at the client side.
+            if (_selectedValues.length === 0) {
+                Notify(wurafleet.toastType.Info, "You are yet to select a valid audit Source.");
+                return false;
             }
-        );
-        settings.url = window.location.protocol + '//' + window.location.hostname + '/getlogs';
-       
-        $.ajax(settings).done(function (response) {
-            if (response.status.toLowerCase() === 'success') {
-                // Clear the contents of the timelineheader and timelinepanel.
-                $('#timelinepanel').empty();
-                $('#timelineheader').empty();
-                
-                $.each(response.data, function(TabText, JsonObject) {
-                    $('#timelineheader').append('<li role="presentation"><a href="#' + TabText + '" aria-controls="' + TabText + '" role="tab" data-toggle="tab">' + TabText + '</a></li>');
-                    $('#timelinepanel').append('<div role="tabpanel" class="tab-pane active" id="' + TabText + '">' + PopulatePanel(TabText, JsonObject) + '</div>');
-                });
 
-                $('#timelineheader').removeAttr("style");
-                $('#timelineheader a:first').tab('show')
-
-                // Enable button.
-                $('#LogSearch').removeAttr("disabled");
-                Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+            if (wurafleet.auditstartdate === "") {
+                Notify(wurafleet.toastType.Info, "You are yet to select a valid Audit Start Date.");
+                return false;
             }
-        });
-    });
+
+            if (wurafleet.auditenddate === "") {
+                Notify(wurafleet.toastType.Info, "You are yet to select a valid Audit End Date.");
+                return false;
+            }
+
+            // Validation passed. Kindly post to the server.
+            settings.data = JSON.stringify(
+                {
+                    "audit_enddate": wurafleet.auditenddate,
+                    "audit_source": _selectedValues.join(","),
+                    "audit_startdate": wurafleet.auditstartdate
+                }
+            );
+            settings.url = window.location.protocol + '//' + window.location.hostname + '/getlogs';
+        
+            $.ajax(settings).done(function (response) {
+                if (response.status.toLowerCase() === 'success') {
+                    // Clear the contents of the timelineheader and timelinepanel.
+                    $('#timelinepanel').empty();
+                    $('#timelineheader').empty();
+                    
+                    $.each(response.data, function(TabText, JsonObject) {
+                        $('#timelineheader').append('<li role="presentation"><a href="#' + TabText + '" aria-controls="' + TabText + '" role="tab" data-toggle="tab">' + TabText + '</a></li>');
+                        $('#timelinepanel').append('<div role="tabpanel" class="tab-pane active" id="' + TabText + '">' + PopulatePanel(TabText, JsonObject) + '</div>');
+                    });
+
+                    $('#timelineheader').removeAttr("style");
+                    $('#timelineheader a:first').tab('show')
+
+                    // Enable button.
+                    $('#LogSearch').removeAttr("disabled");
+                    Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+                }
+            });
+        }
+    );
  
-    $('#butDriver').on('click', function() {
-        if ($('#passpic').get(0).files.length === 0) {
-            Notify(wurafleet.toastType.Error, "No Passport Picture Selected.");
-            return false;
+    $('#butDriver').on('click', 
+        function() {
+            if ($('#passpic').get(0).files.length === 0) {
+                Notify(wurafleet.toastType.Error, "No Passport Picture Selected.");
+                return false;
+            }
+
+            if ($('#StaffID').get(0).files.length === 0) {
+                Notify(wurafleet.toastType.Error, "No valid means of Identification provided.");
+                return false;
+            }
+
+            $('#' + $(this).data('parentform')).validate();
         }
+    );
 
-        if ($('#StaffID').get(0).files.length === 0) {
-            Notify(wurafleet.toastType.Error, "No valid means of Identification provided.");
-            return false;
+    $('.submitForm').on('click', 
+        function() {
+            var errorList = '<ol>';
+            var parentForm = $('#' + $(this).data('parentform'))[0];
+
+            if ($('#walletname').val() === "") {
+                errorList += '<li>Please enter a valid Wallet Name.</li>';
+            }
+
+            if ($('#oncard').val() === "null" || $('#oncard').val() === null) {
+                errorList += '<li>Kindly setup a new Card.</li>';
+            }
+
+            if ($('#amount').val() === "") {
+                errorList += '<li>Please enter a Valid Amount.</li>';
+            }
+
+            if ($('#status').val() === "") {
+                errorList += '<li>Please indicate if you will like to activate the wallet or not.</li>';
+            }
+            errorList += '</ol>';
+
+            if (errorList !== "<ol></ol>") {
+                Notify(wurafleet.toastType.Error, '<strong>' + errorList + '<li>Kindly fix the errors and try creating the wallet again.</li></strong>');
+                e.preventDefault();
+                return false;
+            }
+            else {
+                $(parentForm).submit();
+            }
         }
+    );
 
-        $('#' + $(this).data('parentform')).validate();
-    });
-
-    $('.submitForm').on('click', function() {
-        var errorList = '<ol>';
-        var parentForm = $('#' + $(this).data('parentform'))[0];
-
-        if ($('#walletname').val() === "") {
-            errorList += '<li>Please enter a valid Wallet Name.</li>';
+    $('input[type=file]').change(
+        function() {
+            readURL(this);
         }
-
-        if ($('#oncard').val() === "null" || $('#oncard').val() === null) {
-            errorList += '<li>Kindly setup a new Card.</li>';
-        }
-
-        if ($('#amount').val() === "") {
-            errorList += '<li>Please enter a Valid Amount.</li>';
-        }
-
-        if ($('#status').val() === "") {
-            errorList += '<li>Please indicate if you will like to activate the wallet or not.</li>';
-        }
-        errorList += '</ol>';
-
-        if (errorList !== "<ol></ol>") {
-            Notify(wurafleet.toastType.Error, '<strong>' + errorList + '<li>Kindly fix the errors and try creating the wallet again.</li></strong>');
-            e.preventDefault();
-            return false;
-        }
-        else {
-            $(parentForm).submit();
-        }
-    });
-
-    $('input[type=file]').change(function() {
-        readURL(this);
-    });
+    );
     
-    $('#sidebarCollapse').on('click', function () {
-        $('#sidebar').toggleClass('active');
-    });
+    $('#sidebarCollapse').on('click', 
+        function () {
+            $('#sidebar').toggleClass('active');
+        }
+    );
 
-    $(".modal").on('hidden.bs.modal', function () {
-        var modal = $(this);
+    $(".modal").on('hidden.bs.modal', 
+        function () {
+            var modal = $(this);
+            
+            // Clear all inputs of their values
+            $(this)
+            .find("input,textarea,hidden")
+            .val('')
+            .end()
+            .find("input[type=checkbox], input[type=radio]")
+            .prop("checked", "")
+            .end();
+        }
+    );
+
+    $('#messageview').on('show.bs.modal', 
+        function (event) {
+            // Button that triggered the modal
+            var button = $(event.relatedTarget);
+
+            // Disable button.
+            $(button).attr("disabled", "disabled");
+
+            // Update the modal's content.
+            var modal = $(this);
+
+            settings.data = JSON.stringify(
+                {
+                    "id": button.data('id')
+                }
+            );
+            settings.url = window.location.protocol + '//' + window.location.hostname + '/getMessage';
         
-        // Clear all inputs of their values
-        $(this)
-        .find("input,textarea,hidden")
-           .val('')
-           .end()
-        .find("input[type=checkbox], input[type=radio]")
-           .prop("checked", "")
-           .end();
-    });
+            $.ajax(settings).done(function (response) {
+                if (response.status.toLowerCase() === 'success') {
+                    $('.modal-body').html(response.data);
+                    $('.modal-title').html(response.title);
 
-    $('#messageview').on('show.bs.modal', function (event) {
-        // Button that triggered the modal
-        var button = $(event.relatedTarget);
+                    // Enable button.
+                    $('.msgbutton[data-id="' + response.id + '"]').removeAttr("disabled");
+                    Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+                }
+            });
+        }
+    );
 
-        // Disable button.
-        $(button).attr("disabled", "disabled");
-
-        // Update the modal's content.
-        var modal = $(this);
-
-        settings.data = JSON.stringify(
-            {
-                "id": button.data('id')
+    $('.components a, .components li').on('mouseover', 
+        function() {
+            if ($('#sidebar').hasClass('active') === false) {
+                return false;
             }
-        );
-        settings.url = window.location.protocol + '//' + window.location.hostname + '/getMessage';
-       
-        $.ajax(settings).done(function (response) {
-            if (response.status.toLowerCase() === 'success') {
-                $('.modal-body').html(response.data);
-                $('.modal-title').html(response.title);
 
-                // Enable button.
-                $('.msgbutton[data-id="' + response.id + '"]').removeAttr("disabled");
-                Notify(wurafleet.toastType.Success, 'Request has been processed successfully!');                
+            if ($(this).children() === undefined || $(this).children()[1] === undefined) {
+                return false;
             }
-        });
-    });
 
-    // $('.components li, .components i').on('mouseout', function() {
-    //     if ($('#sidebar').hasClass('active') === false) {
-    //         return false;
-    //     }
-        
-    //     if ($(this).children() === undefined || $(this).children()[1] === undefined) {
-    //         return false;
-    //     }
-        
-    //     $($(this).children()[1]).removeClass('in');
-    //     $($(this).children()[0]).attr('aria-expanded', false);
-    // });
+            // Remove classes from other buttons, put on new active one
+            $($('.components li').children()).removeClass('in');
+            $($('.components li').children()).attr('aria-expanded', false);
 
-    // $('.components li, .components i').on('mouseover', function() {
-    //     if ($('#sidebar').hasClass('active') === false) {
-    //         return false;
-    //     }
-
-    //     if ($(this).children() === undefined || $(this).children()[1] === undefined) {
-    //         return false;
-    //     }
-
-    //     $($(this).children()[1]).addClass('in');
-    //     $($(this).children()[0]).attr('aria-expanded', true);
-    // });
+            // Add required class for li element and set the aria-expanded attribute
+            $($(this).children()[1]).addClass('in');
+            $($(this).children()[0]).attr('aria-expanded', true);
+        }
+    );
 
     // Initially disable the button
     $("#ContinueButton").attr("disabled", "disabled");
  
     // Map the function below to the scroll event of our Terms DIV
-    $("#Terms").scroll(function() {
+    $("#Terms").scroll(
+        function() {
          if ($("#Terms").AtEnd()) {
               // Enable the button once we reach the end of the DIV
               $("#ContinueButton").removeAttr("disabled");
          }
-    });
+        }
+    );
 });
 
 $.fn.AtEnd = function() {

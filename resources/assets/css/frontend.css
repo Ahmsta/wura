@@ -164,7 +164,7 @@ i, span {
     display: none;
 }
 
-#sidebar.active a[aria-expanded="true"]::before, #sidebar.active a[aria-expanded="false"]::before {
+#sidebar.active a[aria-expanded="true"]::before {
     top: auto;
     right: 20%;
     content: '\e258';
@@ -172,6 +172,10 @@ i, span {
     -ms-transform: translateX(50%);
     -webkit-transform: translateX(50%);
     font-family: 'Glyphicons Halflings';
+}
+
+#sidebar.active a[aria-expanded="false"]::before {
+    content: '';
 }
 
 #sidebar > li:hover > ul {
