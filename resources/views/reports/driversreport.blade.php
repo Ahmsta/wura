@@ -2,9 +2,7 @@
 @section('page_heading', "Driver's Report")
 
 @section('content')
-
     <div class="row" style="margin-top:20px;">
-
         @foreach ($drivers as $driver)
             <?php
                 $imgPath = \Illuminate\Support\Facades\Storage::url($driver->passportpath);
@@ -44,6 +42,5 @@
                 </div>
             </div>
         @endforeach
-
     </div>
 @endsection

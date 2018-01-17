@@ -132,14 +132,14 @@ class HomeController extends Controller
                     // Notify the new holder / user of the card of the status change.
                     $carduser = \App\Models\Cards::find($recordid);
                     $recordset = DB::table('drivers')->where('id', $carduser->assignedto)->first();
-                    $title = "Your access to card ". $carduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    $title = "Your access to card ". $carduser->cardnos . ' has been ' . str_replace( 'dd', 'd', str_replace('e', 'ed', $recordset->status)) . ".";
                     $greeting= $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
-                    $drivermsg = "We write to officially notify you that your access to card " . $carduser->cardnos . ' has been ' . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    $drivermsg = "We write to officially notify you that your access to card " . $carduser->cardnos . ' has been ' . str_replace( 'dd', 'd', str_replace('e', 'ed', $recordset->status)) . ".";
                     $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
 
-                    switch(strtolower(str_replace('eed', 'ed', $recordset->status . 'ed'))) {
+                    switch(strtolower(str_replace( 'dd', 'd', str_replace('e', 'ed', $recordset->status)) . ".")) {
                         case 'activated':
-                            $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. Congratulations. Your access to card [' . $carduser->cardnos . '] have been activated for you, you now at liberty to drive & refuel at any filling station. WURAfleet Team.', 'Card Activation.');
+                            $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. Congratulations. Your access to card [' . $carduser->cardnos . '] have been activated for you, you are now at liberty to drive & refuel at any filling station. WURAfleet Team.', 'Card Activation.');
                             break;
 
                         case 'suspended':
@@ -148,12 +148,12 @@ class HomeController extends Controller
                     }
                 } else if (strtolower($actonmodule) == 'drivers') {
                     // A driver's status was just modified. Duly notify the Driver.
-                    $title = "Your account has been " . str_replace('eed', 'ed', $recordset->status . 'ed');
+                    $title = "Your account has been " . str_replace( 'dd', 'd', str_replace('e', 'ed', $recordset->status)) . ".";
                     $greeting = $recordset->firstname . ' ' . $recordset->middlename . ' ' . $recordset->lastname;
-                    $drivermsg = "We write to officially notify you that your account has been " . str_replace('eed', 'ed', $recordset->status . 'ed') . ".";
+                    $drivermsg = "We write to officially notify you that your account has been " . str_replace( 'dd', 'd', str_replace('e', 'ed', $recordset->status)) . "." . ".";
                     $this->dispatch(new \App\Jobs\SendEmails($recordset->email, array('Action' => 'Notifications', 'Title' => $title, 'Message' => $drivermsg, 'Greeting' => $greeting)));
 
-                    switch(strtolower(str_replace('eed', 'ed', $recordset->status . 'ed'))) {
+                    switch(strtolower(str_replace( 'dd', 'd', str_replace('e', 'ed', $recordset->status)) . ".")) {
                         case 'activated':
                             $sms->SendSMS($recordset->mobilenumber, 'Hello ' . $greeting . '. You have been activated by {“Name Of Company”} on WURAFleet platform. In order for you to be fully part of {“Name Of Company”}’s drivers, you are required to download your app from the wurafleet website. User Name: "' . $recordset->email . '", Password: "' . $recordset->email . '". WURAfleet Team.', 'Driver Activation.');
                             break;

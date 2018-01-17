@@ -4,6 +4,7 @@
 @section('content')
 
     <?php
+        $textcolor = "black"; 
         $imgPath = \Illuminate\Support\Facades\Storage::url($driver->passportpath);
     ?>
 
@@ -62,10 +63,25 @@
                                             <i class="fa fa-credit-card" aria-hidden="true"></i>
                                         </div>
                                         <div class="sl-right">
-                                            <div>
-                                                <a href="#" class="link">{{ $card->cardnos }}</a> 
-                                                <p class="m-t-10" style="text-align:left;">
-                                                    Status: {{ str_replace('eed', 'ed', $card->status . 'ed') . "." }}
+                                            <div style="text-align:left;">
+                                                <a href="#" class="link">{{ $card->cardnos }}</a>
+                                                <br /><br />
+                                                <p class="m-t-10">
+                                                    @switch(strtolower($card->status))
+                                                        @case('processing request')
+                                                            <?php $textcolor = "black" ?>
+                                                            @break
+
+                                                        @case('activate')
+                                                            <?php $textcolor = "blue" ?>
+                                                            @break
+
+                                                        @default
+                                                            <?php $textcolor = "red" ?>
+                                                        @endswitch
+                                                    <strong style="color:{{$textcolor}}">
+                                                        Status: {{ str_replace( 'dd', 'd', str_replace('e', 'ed', $card->status)) . "." }}
+                                                    </strong>
                                                     <br />
 
                                                     <span class="sl-date">

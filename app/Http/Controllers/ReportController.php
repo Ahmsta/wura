@@ -55,7 +55,16 @@ class ReportController extends Controller
     */
     public function cards()
     {
-        return view('reports.cardsreport');
+        $recordset = \App\Models\Cards::whereNull('deleted_at')
+                                        ->where("holder", Auth::id())
+                                        ->where('status', 'Activate')
+                                        ->orWhere(function($query)
+                                            {
+                                                $query->where('status', 'Inactive');
+                                            })
+                                        ->orderBy('status', 'asc')
+                                        ->get();
+        return view('reports.cardsreport', ['cards' => $recordset]);
     }
 
     /**
@@ -65,7 +74,16 @@ class ReportController extends Controller
     */
     public function expired()
     {
-        return view('reports.expiredreport');
+        $recordset = \App\Models\Cards::where("holder", Auth::id())
+                                        ->where('status', 'Expired')
+                                        ->whereNull('deleted_at')
+                                        ->orWhere(function($query)
+                                            {
+                                                $query->whereNotNull('deleted_at');
+                                            })
+                                        ->orderBy('status', 'asc')
+                                        ->get();
+        return view('reports.expiredreport', ['cards' => $recordset]);
     }
 
     /**
@@ -75,7 +93,16 @@ class ReportController extends Controller
     */
     public function info()
     {
-        return view('reports.cardsinfo');
+        $recordset = \App\Models\Cards::where("holder", Auth::id())
+                                        ->where('status', 'Processing Request')
+                                        ->whereNull('deleted_at')
+                                        ->orWhere(function($query)
+                                            {
+                                                $query->where('status', 'Disputed');
+                                            })
+                                        ->orderBy('status', 'asc')
+                                        ->get();
+        return view('reports.cardsinfo', ['cards' => $recordset]);
     }
 
     /**
@@ -87,5 +114,18 @@ class ReportController extends Controller
     {
         return view('reports.walletsummary');
     }
-    // driverdetails, carddetails
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function transactions(Request $request)
+    {
+        $recordid = $request->input('cardid');
+
+        return view('reports.transactions');
+    }
+
+    // 
 }
