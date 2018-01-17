@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Drivers;
 use App\Http\SMSHelper;
@@ -115,6 +116,17 @@ class DriversController extends Controller
                     'userrole' => 'driver',
                 ]
             );
+
+            // Create a calendar event for the driver based on their birthday
+            $calendarEntry = new \App\Models\Calendars();
+            $calendarEntry->url = '';
+            $calendarEntry->allDay = false;
+            $calendarEntry->owner = Auth::id();
+            $calendarEntry->classname = 'bg-primary';
+            $calendarEntry->start = $driver->dateofbirth;
+            $calendarEntry->end = Carbon::createFromFormat('Y-m-d', $driver->dateofbirth)->addYears(100);;
+            $calendarEntry->title = $driver->firstname . " " . $driver->firstname . " " . $driver->firstname . "'s Birthday";
+            $calendarEntry->save();
         }, 3);
 
         if (is_null($result)) {
