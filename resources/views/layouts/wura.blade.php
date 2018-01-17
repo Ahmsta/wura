@@ -129,6 +129,12 @@
 
                 <ul class="list-unstyled components">
                     <li>
+                        <a href="{{ route('home') }}">
+                            <i class="fa fa-tachometer fa-fw" aria-hidden="true"></i>
+                            <span> Dashboard </span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="#driverSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i class="fa fa-car fa-fw" aria-hidden="true"></i>
                             <span>Register Drivers</span>
