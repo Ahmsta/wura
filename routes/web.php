@@ -43,6 +43,8 @@ Route::get('/expiredreport', 'ReportController@expired')->name('expiredreport');
 
 Route::get('/walletsummary', 'ReportController@walletsummary')->name('walletsummary');
 
+Route::get('/driverdetails', 'ReportController@driverdetails')->name('driverdetails');
+
 Route::get('/wallet', 'WalletController@index')->name('wallet');
 
 Route::get('/mycalendarevents', 'NotificationsController@mycalendarevents')->name('mycalendarevents');

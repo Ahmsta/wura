@@ -899,11 +899,11 @@ i, span {
     margin-right: 10px;
 }
 
-a[data-toggle="collapse"] {
+#sidebar a[data-toggle="collapse"] {
     position: relative;
 }
 
-a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
+#sidebar a[aria-expanded="false"]::before, #sidebar a[aria-expanded="true"]::before {
     content: '\e259';
     display: block;
     position: absolute;
@@ -912,7 +912,7 @@ a[aria-expanded="false"]::before, a[aria-expanded="true"]::before {
     font-size: 0.6em;
 }
 
-a[aria-expanded="true"]::before {
+#sidebar a[aria-expanded="true"]::before {
     content: '\e260';
 }
 
@@ -1076,4 +1076,119 @@ input[type=file] {
       -webkit-transform: scale(2.5);
               transform: scale(2.5);
     }
+}
+
+.card-no-border .card {
+    border: 0px;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+.card-block {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.text-center {
+    text-align: center!important;
+}
+
+.align-self-center {
+    -webkit-align-self: center!important;
+    -ms-flex-item-align: center!important;
+    -ms-grid-row-align: center!important;
+    align-self: center!important;
+}
+
+.card-title {
+    margin-bottom: .75rem;
+}
+
+.social-profile {
+    text-align: center;
+    background: rgba(7,10,43,0.8);
+}
+
+.d-flex {
+    display: -webkit-box!important;
+    display: -webkit-flex!important;
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+
+.card-img-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1.25rem;
+}
+
+.card-inverse {
+    color: rgba(255,255,255,.65);
+}
+
+.profile-tab li a.nav-link, .customtab li a.nav-link {
+    border: 0px;
+    padding: 15px 20px;
+    color: #54667a;
+}
+
+.nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-right-radius: .25rem;
+    border-top-left-radius: .25rem;
+}
+
+.nav-link {
+    display: block;
+    padding: .5em 1em;
+}
+
+.card-block {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem;
+}
+
+.profiletimeline {
+    position: relative;
+    margin-left: 70px;
+    margin-right: 10px;
+}
+
+.profiletimeline .sl-item {
+    margin-top: 8px;
+    margin-bottom: 30px;
+}
+
+.profiletimeline .sl-left {
+    float: left;
+    margin-left: -60px;
+    z-index: 1;
+    margin-right: 15px;
 }

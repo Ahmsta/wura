@@ -35,8 +35,22 @@ class HomeController extends Controller
             ->where('valid_until', '<', Carbon::now())
             ->update(['status' => 'Expired']);
 
-        $dashboardinfo = DB::select('SELECT * from "dashboard_info"(' . Auth::id() . ')');
-        return view('home', ['dashboardinfo' => $dashboardinfo[0]]);
+        $allUsersCount = DB::select('SELECT public."dashboard_info"(' . Auth::id() . ')');
+        $allUsersCount = explode(",", trim($allUsersCount[0]->dashboard_info, '()'));
+
+        $dashboardinfo = array(
+            "expiredcards" => $allUsersCount[4],
+            "deletedcards" => $allUsersCount[5],
+            "activecards" => $allUsersCount[2],
+            "inactivedcards" => $allUsersCount[3],
+            "activedrivers" => $allUsersCount[0],
+            "inactivedrivers" => $allUsersCount[1],
+            "pendingcardrequest" => $allUsersCount[6],
+            "disputedcards" => $allUsersCount[7],
+            "activewallets" => $allUsersCount[8],
+            "inactivewallets" => $allUsersCount[9]
+        );
+        return view('home', ['dashboardinfo' => (object) $dashboardinfo]);
     }
 
     public function setstatus(Request $request) {

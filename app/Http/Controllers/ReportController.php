@@ -33,9 +33,21 @@ class ReportController extends Controller
     */
     public function drivers()
     {
-        return view('reports.driversreport');
+        $recordset = \App\Models\Drivers::where("belongsTo", Auth::id())
+                                        ->whereNull('deleted_at')
+                                        ->get();
+        return view('reports.driversreport', ['drivers' => $recordset]);
     }
 
+    public function driverdetails(Request $request)
+    {
+        $recordid = $request->input('id');
+        $recordset = \App\Models\Drivers::find($recordid);
+
+        $cards = \App\Models\Cards::where("assignedto", $recordid)->get();
+        return view('reports.driverdetails', ['driver' => $recordset, 'cards' => $cards]);
+    }
+    
     /**
      * Show the form for creating a new resource.
      *
@@ -66,5 +78,14 @@ class ReportController extends Controller
         return view('reports.cardsinfo');
     }
 
-    // walletsummary, 
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function walletsummary()
+    {
+        return view('reports.walletsummary');
+    }
+    // driverdetails, carddetails
 }

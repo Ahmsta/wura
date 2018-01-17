@@ -17940,7 +17940,7 @@ $(document).ready(function () {
     function SetActive() {
         var url = window.location;
         var element = $('nav li a').filter(function () {
-            return this.href == url || url.href.indexOf(this.href) == 0;
+            return this.href == url; // || url.href.indexOf(this.href) == 0;
         });
 
         element.addClass('linkactive').parent().parent().addClass('in').parent();
@@ -18177,7 +18177,6 @@ $(document).ready(function () {
         settings.url = window.location.protocol + '//' + window.location.hostname + '/setstatus';
 
         $.ajax(settings).done(function (response) {
-            console.log(response);
             if (response.status.toLowerCase() === 'success') {
 
                 var _display, _cardStatus;
