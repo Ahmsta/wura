@@ -124,7 +124,7 @@ class DriversController extends Controller
             $calendarEntry->owner = Auth::id();
             $calendarEntry->classname = 'bg-primary';
             $calendarEntry->start = $driver->dateofbirth;
-            $calendarEntry->end = Carbon::createFromFormat('Y-m-d', $driver->dateofbirth)->addYears(100);;
+            $calendarEntry->end = Carbon::createFromFormat('Y-m-d', $driver->dateofbirth)->addYears(100);
             $calendarEntry->title = $driver->firstname . " " . $driver->firstname . " " . $driver->firstname . "'s Birthday";
             $calendarEntry->save();
         }, 3);

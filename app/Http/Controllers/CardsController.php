@@ -73,8 +73,8 @@ class CardsController extends Controller
 
         $card->assignedto = 0;
         $card->holder = Auth::id();
-        $card->valid_until = Carbon::today();
         $card->status = 'Processing Request';
+        $card->valid_until = Carbon::today()->addMonths(2);
         $card->cardnos = 'CARD-' . Auth::id() . Carbon::now();
   
         // Save the new card request to the DB.

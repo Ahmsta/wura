@@ -136,13 +136,18 @@
                     </li>
                     <li>
                         <a href="#driverSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="fa fa-car fa-fw" aria-hidden="true"></i>
-                            <span>Register Drivers</span>
+                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <span>Driver Management</span>
                         </a>
                         <ul class="collapse list-unstyled" id="driverSubmenu">
                             <li>
                                 <a href="{{ route('drivers') }}">
                                     Add Driver
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <span>Driver Location</span>
                                 </a>
                             </li>
                             <li>
@@ -153,11 +158,28 @@
                         </ul>
                     </li>
                     <li>
-                        <a href="#">
-                            <i class="fa fa-map-pin fa-fw" aria-hidden="true"></i>
-                            <span>Driver Location</span>
+                        <a href="#fleetSubmenu" data-toggle="collapse" aria-expanded="false">
+                            <i class="fa fa-car fa-fw" aria-hidden="true"></i>
+                            <span>Fleet Management</span>
                         </a>
-                    </li>
+                        <ul class="collapse list-unstyled" id="fleetSubmenu">
+                            <li>
+                                <a href="{{ route('drivers') }}">
+                                    Register Vehicle
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    ???
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('mydrivers') }}">
+                                    Moderate Vehicle
+                                </a>
+                            </li>
+                        </ul>
+                    </li>                    
                     <li>
                         <a href="#cardSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i class="fa fa-qrcode fa-fw" aria-hidden="true"></i>
