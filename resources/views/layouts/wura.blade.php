@@ -164,7 +164,7 @@
                         </a>
                         <ul class="collapse list-unstyled" id="fleetSubmenu">
                             <li>
-                                <a href="{{ route('drivers') }}">
+                                <a href="{{ route('registerform') }}">
                                     Register Vehicle
                                 </a>
                             </li>

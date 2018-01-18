@@ -35,6 +35,8 @@ Route::get('/mydrivers', 'DriversController@index')->name('mydrivers');
 
 Route::get('/cardsinfo', 'ReportController@info')->name('cardsinfo');
 
+Route::get('/registerform', 'VehicleController@registerform')->name('registerform');
+
 Route::get('/cardsreport', 'ReportController@cards')->name('cardsreport');
 
 Route::get('/driversreport', 'ReportController@drivers')->name('driversreport');
@@ -46,7 +48,6 @@ Route::get('/transactions', 'ReportController@transactions')->name('transactions
 Route::get('/walletsummary', 'ReportController@walletsummary')->name('walletsummary');
 
 Route::get('/driverdetails', 'ReportController@driverdetails')->name('driverdetails');
-
 
 Route::get('/wallet', 'WalletController@index')->name('wallet');
 
@@ -73,6 +74,8 @@ Route::post('/driverregistration', 'DriversController@store')->name('store');
 Route::post('/newEvent', 'NotificationsController@newEvent')->name('newEvent');
 
 Route::post('/getMessage', 'NotificationsController@getMessage')->name('getMessage');
+
+Route::get('/registervehicle', 'VehicleController@registervehicle')->name('registervehicle');
 
 
 Route::put('/updateEvent', 'NotificationsController@updateEvent')->name('updateEvent');

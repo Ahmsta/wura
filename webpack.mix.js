@@ -17,16 +17,18 @@ mix.js('vendor/twbs/bootstrap/dist/js/bootstrap.min.js', 'public/js/app.js');
 
 mix.styles('vendor/twbs/bootstrap/dist/css/bootstrap.min.css', 'public/css/app.css');
 mix.copy([
-    'vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map',
     'resources/assets/css/toastr.min.css',
     'resources/assets/css/fullcalendar.min.css',
-    'resources/assets/css/fullcalendar.print.min.css',
+    'resources/assets/css/float-label-control.css',
     'resources/assets/css/bootstrap-multiselect.css',
+    'resources/assets/css/fullcalendar.print.min.css',
+    'vendor/twbs/bootstrap/dist/css/bootstrap.min.css.map',
     'resources/assets/css/font-awesome.css'], 'public/css/');
 mix.copy('vendor/twbs/bootstrap/dist/fonts', 'public/fonts');
 mix.copy([
     'resources/assets/js/mycalendar.js',
     'resources/assets/js/fullcalendar.min.js',
+    'resources/assets/js/float-label-control.js',
     'resources/assets/js/bootstrap-multiselect.js',
     'resources/assets/js/toastr.min.js'], 'public/js');
     
