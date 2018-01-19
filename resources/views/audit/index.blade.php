@@ -2,6 +2,7 @@
 @section('page_heading','Audit Log')
 
 @section('styles')
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
     <link href="{{ asset('css/bootstrap-multiselect.css') }}" rel="stylesheet" type="text/css" />
     <style>
         /* -------------------------------- Main Components [Horizontal Timeline] -------------------------------- */
@@ -611,6 +612,8 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
     <script type="text/javascript" src="{{ asset('js/bootstrap-multiselect.js') }}"></script>
 
 <script>

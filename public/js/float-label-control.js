@@ -35,10 +35,7 @@
           }
 
           var placeholderText =
-            $field.attr("placeholder") &&
-            $field.attr("placeholder") != $label.text()
-              ? $field.attr("placeholder")
-              : $label.text();
+            $field.attr("placeholder") && $field.attr("placeholder") != $label.text() ? $field.attr("placeholder") : $label.text();
 
           $label.data("placeholder-text", placeholderText);
           $label.data("original-text", $label.text());

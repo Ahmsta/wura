@@ -43,6 +43,7 @@
 @endsection
 
 @section('scripts')
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/fullcalendar.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/mycalendar.js') }}"></script>
 @stop

@@ -15,7 +15,6 @@
         <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
-        <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
         @yield('styles')
         <link href="{{ mix('css/frontend.css') }}" rel="stylesheet" type="text/css" />
         <style>            
@@ -170,7 +169,7 @@
                             </li>
                             <li>
                                 <a href="#">
-                                    ???
+                                    Vehicle info/Diagnosis
                                 </a>
                             </li>
                             <li>
@@ -279,8 +278,6 @@
         <script type="text/javascript" src="{{ asset('js/toastr.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('js/dataTables.bootstrap4.min.js') }}"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-        <script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.js"></script>
         <script>
             var oTable;
