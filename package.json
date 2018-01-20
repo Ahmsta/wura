@@ -19,6 +19,5 @@
     },
     "dependencies": {
         "jquery": "^3.2.1"
-    },
-    "post-install-cmd": [ "ln -sr storage/app/public public/storage" ]
+    }
 }
