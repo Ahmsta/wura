@@ -207,6 +207,8 @@ class HomeController extends Controller
         if ($request->isMethod('post')) {
             $searchText = $request->searchText;
             $filters = $request->input('filter.*');
+
+            // select * from search_columns('Adegbenga', '{drivers, users}')
             return view('search');
             //return view('vehicle.index', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
         }

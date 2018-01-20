@@ -61,8 +61,8 @@ class DriversController extends Controller
     */
     public function store(Request $request)
     {
-        $data['userrole'] = 'driver';
-        $data['belongsTo'] = Auth::id();
+        $request['userrole'] = 'driver';
+        $request['belongsTo'] = Auth::id();
         
         // Validate the request...
         $validator = Validator::make($request->all(), AuthValidation::registerDriver());
