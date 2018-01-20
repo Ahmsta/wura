@@ -202,4 +202,11 @@ class HomeController extends Controller
         $freecards = DB::select('SELECT * from "get_freecards"(' . Auth::id() . ')');
         return response()->json($freecards);
     }
+
+    public function search(Request $request) {
+        if ($request->isMethod('post')) {
+            $searchText = $request->searchText;
+            $filters = $request->input('filter.*');
+        }
+    }
 }

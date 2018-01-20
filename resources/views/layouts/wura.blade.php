@@ -69,7 +69,6 @@
     <body>
 
         <div class="wrapper">
-
             <nav id="sidebar" class="in">
                 <div class="sidebar-header text-center">
                     <a class="navbar-brand" href="{{ url('/home') }}">
@@ -244,6 +243,10 @@
                             <a href="{{ route('auditlog') }}" class="btn btn-default navbar-btn" title="Audit Log / Historicals.">
                                 <i class="fa fa-history"></i>
                             </a>
+
+                            <button class="btn btn-default navbar-btn" title="Search." data-toggle="modal" data-target="#searchModal">
+                                <i class="glyphicon glyphicon-search"></i>
+                            </button>
                         </div>
 
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -268,9 +271,81 @@
 
                 <div class="text-center">
                     <h1 class="standout" id="pgheader" name="pgheader">@yield('page_heading')</h1>
-                                        
                     @yield('content')
-                
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                        <h4 class="modal-title" id="myModalLabel"> Enter Search Criteria. </h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="searchForm" name="searchForm" method="POST" action="{{ route('search') }}">
+                            {{ csrf_field() }}
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+
+                                    <label style="color:black; text-align:left; float:left;">Filter by</label>
+                                    <br /><br />
+
+                                    <div class="row" style="margin-bottom:15px;" title="Filter by">
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="1" /> Calendars
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="2" /> Cards
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="3" /> Drivers
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom:15px;" title="Filter by">
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="4" /> Notications
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="5" /> Transactions
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="6" /> Users
+                                        </div>
+                                    </div>
+
+                                    <div class="row" style="margin-bottom:15px;" title="Filter by">
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="7" /> Vehicles
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="8" /> Wallets
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" checked="checked" value="0" /> All Objects
+                                        </div>
+                                    </div>
+                    
+                                    <div class="row" style="margin-top:20px;">
+                                        <div class="col-md-12" title="Search For">
+                                            <label for="car_type" style="color:black; text-align:left; float:left;">Search For</label>
+                                            <br /><br />
+                                            <input class="form-control required" id="searchText" name="searchText" type="text" />
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="searchButton" name="searchButton">
+                            <i class="fa fa-save fa-5w">&nbsp;&nbsp;</i>
+                            Search.
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

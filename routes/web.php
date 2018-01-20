@@ -69,6 +69,8 @@ Route::post('/cards', 'CardsController@newrequest')->name('cards');
 
 Route::post('/getlogs', 'AuditController@getlogs')->name('getlogs');
 
+Route::post('/search', 'HomeController@search')->name('search');
+
 Route::post('/setstatus', 'HomeController@SetStatus')->name('setstatus');
 
 Route::post('/walletstore', 'WalletController@store')->name('walletstore');

@@ -497,6 +497,31 @@ $(document).ready(function () {
         }
     );
 
+    $('.filter').on('click',
+        function() {
+            var checked = $(this).prop('checked');
+            if (this.value == 0 && checked == true) {
+                $('.filter').each(function() { 
+                    this.checked = !checked; 
+                });
+                this.checked = checked;
+            } else {
+                //$('input:checkbox[value="0"]').prop('checked', false);
+            }
+        }
+    );
+
+    $('#searchButton').on('click', 
+        function() {
+            var form = $("#searchForm");
+            form.validate();
+
+            if (form.valid()) {
+                $(form).submit();
+            }
+        }
+    );
+
     // Initially disable the button
     $("#ContinueButton").attr("disabled", "disabled");
  
