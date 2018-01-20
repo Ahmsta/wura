@@ -41,6 +41,24 @@ class AuthValidation
     }
 
     /**
+     * Validation for Registering a new vehicle on the platform.
+     * @return mixed
+    */
+    public static function registervehicle()
+    {
+        return [
+            'car_year' => 'required|string|max:255',
+            'car_type' => 'required|string|max:255',
+            'owner_name' => 'required|string|max:255',
+            'car_model' => 'required|string|max:255',
+            'car_model_trim' => 'required|string|max:255',
+            'car_model_color' => 'required|string|max:255',
+            'purchase_date' => 'required|date',
+            'license_plate_number' => 'required|string|max:30',
+        ];
+    }
+
+    /**
      * Validation for login
      * @return mixed
      */

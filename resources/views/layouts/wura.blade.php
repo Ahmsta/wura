@@ -11,7 +11,7 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <link href="{{ asset('css/font-awesome.css') }}" rel="stylesheet" type="text/css" />
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
@@ -135,7 +135,7 @@
                     </li>
                     <li>
                         <a href="#driverSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                            <i class="fa fa-id-badge" aria-hidden="true"></i>
                             <span>Driver Management</span>
                         </a>
                         <ul class="collapse list-unstyled" id="driverSubmenu">
@@ -163,20 +163,21 @@
                         </a>
                         <ul class="collapse list-unstyled" id="fleetSubmenu">
                             <li>
+                                <a href="{{ route('vehicles') }}">
+                                    Vehicle's List
+                                </a>
+                            </li>
+                            <li>
                                 <a href="{{ route('registerform') }}">
                                     Register Vehicle
                                 </a>
                             </li>
+
                             <li>
                                 <a href="#">
                                     Vehicle info/Diagnosis
                                 </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('mydrivers') }}">
-                                    Moderate Vehicle
-                                </a>
-                            </li>
+                            </li>                            
                         </ul>
                     </li>                    
                     <li>

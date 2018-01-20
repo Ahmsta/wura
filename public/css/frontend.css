@@ -682,6 +682,31 @@ a.editable-click.editable-disabled:hover {
     border-right: 5px solid #1e0015; 
 }
 
+.datepicker th.datepicker-switch {
+    width: 145px;
+    color: black;
+}
+
+.error {
+    color: red;
+    float: right;
+}
+
+/* 
+.prev {
+    content: '\e258';
+    font-family: 'Glyphicons Halflings';
+} 
+
+.next {
+    content: '»';
+    color: black;
+} */
+
+.today {
+    color: black;
+}
+
 .btn-wura, .modal-header {
     color: white;
     text-align: center;

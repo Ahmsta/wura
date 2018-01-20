@@ -7,7 +7,7 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
-                            <i class="fa fa-car fa-5x" aria-hidden="true"></i>
+                            <i class="fa fa-id-badge fa-5x" aria-hidden="true"></i>
                         </div>
                         <div class="col-xs-9 text-right">
                             <div class="huge">{{ $dashboardinfo->activedrivers }}</div>

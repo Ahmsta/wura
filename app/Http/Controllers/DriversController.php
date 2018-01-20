@@ -40,7 +40,7 @@ class DriversController extends Controller
     public function index()
     {
         $drivers = User::find(Auth::id());
-        return view('mydrivers', ['drivers' => $drivers->Drivers]);
+        return view('drivers.mydrivers', ['drivers' => $drivers->Drivers]);
     }
 
     /**
@@ -50,26 +50,7 @@ class DriversController extends Controller
     */
     public function create()
     {
-        return view('driver')->with('defaultImg', Storage::url('upload.png'));
-    }
-
-    /**
-     * Get a validator for an incoming driver registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        $data['userrole'] = 'driver';
-        $data['belongsTo'] = Auth::id();
-        $validator = Validator::make($data, AuthValidation::registerDriver());
-        if ($validator->fails())
-        {
-            $failedRules = $validator->failed();
-            Log::info($this->tag . json_encode($failedRules));   
-        }
-        return $validator;
+        return view('drivers.driver')->with('defaultImg', Storage::url('upload.png'));
     }
 
     /**
@@ -80,9 +61,18 @@ class DriversController extends Controller
     */
     public function store(Request $request)
     {
+        $data['userrole'] = 'driver';
+        $data['belongsTo'] = Auth::id();
+        
         // Validate the request...
-        $this->validator($request->all())->validate();
+        $validator = Validator::make($request->all(), AuthValidation::registerDriver());
 
+        if ($validator->fails())
+        {
+            Log::info($this->tag . json_encode($validator->failed()));
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        
         $driver = new Drivers();
 
         $password = bin2hex(openssl_random_pseudo_bytes(4));

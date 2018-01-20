@@ -46,7 +46,7 @@ class CardsController extends Controller
                 $card['Fullname'] = $carduser->cardUser[0]['firstname'] . ' ' . $carduser->cardUser[0]['middlename'] . ' ' . $carduser->cardUser[0]['lastname'];
             }
         }
-        return view('mycards', ['cards' => $cards->Cards]);
+        return view('cards.mycards', ['cards' => $cards->Cards]);
     }
 
     /**
@@ -56,7 +56,7 @@ class CardsController extends Controller
     */
     public function create()
     {
-        return view('newcard');
+        return view('cards.newcard');
     }
 
     /**

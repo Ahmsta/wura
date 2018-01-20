@@ -18106,7 +18106,7 @@ $(document).ready(function () {
         }
     });
 
-    var editable = $('.cardnumber').editable({
+    var editable1 = $('.cardnumber').editable({
         'mode': 'inline',
         showbuttons: true,
         emptytext: "No Card has been registered",
@@ -18146,6 +18146,19 @@ $(document).ready(function () {
         if (height > topOffset) {
             $("#wrapper").css("min-height", height + "px");
         }
+    });
+
+    $(".datepicker").datepicker({
+        format: "yyyy-mm-dd",
+        weekStart: 0,
+        todayBtn: "linked",
+        calendarWeeks: true,
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('.datepicker').on("keypress", function () {
+        return false;
     });
 
     $('.clickable').on('click', function () {

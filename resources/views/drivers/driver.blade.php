@@ -40,7 +40,7 @@
                                     <div class="col-md-12 form-group{{ $errors->has('firstname') ? ' has-error' : '' }} float-label-control" title="First Name">
                                         <label for="">First Name</label>
                                         @if ($errors->has('firstname'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('firstname') }}</strong>
                                             </span>
                                         @endif
@@ -51,7 +51,7 @@
                                     <div class="col-md-12 float-label-control form-group{{ $errors->has('middlename') ? ' has-error' : '' }}" title="Middle Name">
                                         <label for="">Middle Name</label>
                                         @if ($errors->has('middlename'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('middlename') }}</strong>
                                             </span>
                                         @endif
@@ -62,7 +62,7 @@
                                     <div class="col-md-12 float-label-control form-group{{ $errors->has('lastname') ? ' has-error' : '' }}" title="Last Name">
                                         <label for="">Last Name</label>
                                         @if ($errors->has('lastname'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('lastname') }}</strong>
                                             </span>
                                         @endif
@@ -91,7 +91,7 @@
                                     <div class="col-md-12 float-label-control form-group{{ $errors->has('idnumber') ? ' has-error' : '' }}" title="Staff ID Number">
                                         <label for="">Staff ID Number</label>
                                         @if ($errors->has('idnumber'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('idnumber') }}</strong>
                                             </span>
                                         @endif
@@ -102,7 +102,7 @@
                                     <div class="col-md-12 float-label-control form-group{{ $errors->has('mobile') ? ' has-error' : '' }}" title="Mobile Number">
                                         <label for="">Mobile Number</label>
                                         @if ($errors->has('mobile'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('mobile') }}</strong>
                                             </span>
                                         @endif
@@ -113,7 +113,7 @@
                                     <div class="col-md-12 float-label-control form-group{{ $errors->has('dateofbirth') ? ' has-error' : '' }}" title="Date Of Birth">
                                         <label for="">Date Of Birth</label>
                                         @if ($errors->has('dateofbirth'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('dateofbirth') }}</strong>
                                             </span>
                                         @endif
@@ -124,7 +124,7 @@
                                     <div class="col-md-12 float-label-control form-group{{ $errors->has('email') ? ' has-error' : '' }}" title="Email Address">
                                         <label for="">Email Address</label>
                                         @if ($errors->has('email'))
-                                            <span class="help-block text-danger">
+                                            <span class="help-block text-danger pull-right">
                                                 <strong>{{ $errors->first('email') }}</strong>
                                             </span>
                                         @endif

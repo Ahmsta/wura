@@ -35,6 +35,10 @@ Route::get('/mydrivers', 'DriversController@index')->name('mydrivers');
 
 Route::get('/cardsinfo', 'ReportController@info')->name('cardsinfo');
 
+Route::get('/getInfo/{id}', 'VehicleController@getInfo')->name('getInfo');
+
+Route::get('/vehicles', 'VehicleController@index')->name('vehicles');
+
 Route::get('/registerform', 'VehicleController@registerform')->name('registerform');
 
 Route::get('/cardsreport', 'ReportController@cards')->name('cardsreport');
@@ -75,9 +79,13 @@ Route::post('/newEvent', 'NotificationsController@newEvent')->name('newEvent');
 
 Route::post('/getMessage', 'NotificationsController@getMessage')->name('getMessage');
 
-Route::get('/registervehicle', 'VehicleController@registervehicle')->name('registervehicle');
+Route::post('/registervehicle', 'VehicleController@registervehicle')->name('registervehicle');
 
 
 Route::put('/updateEvent', 'NotificationsController@updateEvent')->name('updateEvent');
+
+Route::put('/updatevehicle', 'VehicleController@updatevehicle')->name('updatevehicle');
+
+
 
 Route::delete('/deleteEvent', 'NotificationsController@deleteEvent')->name('deleteEvent');
