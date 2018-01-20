@@ -55,8 +55,11 @@
                     <h4 class="modal-title" id="myModalLabel"> Modify Car Details. </h4>
                 </div>
                 <div class="modal-body">
-                    <form class="form-horizontal" id="vehicleform" name="vehicleform" method="POST" action="{{ route('updatevehicle') }}" enctype="multipart/form-data" >
+                    <form class="form-horizontal" id="vehicleform" name="vehicleform" method="POST" action="{{ route('updatevehicle') }}" enctype="multipart/form-data">
                         {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="PUT" />
+                        <input type="hidden" name="id" id="id" value="" />
+
                         <div class="panel panel-default">
                             <div class="panel-body">
                                 <input type="hidden" id="vehicle_info" name="vehicle_info" value="" />

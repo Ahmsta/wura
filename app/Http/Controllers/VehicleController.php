@@ -71,7 +71,7 @@ class VehicleController extends Controller
      * @return \Illuminate\Http\Response
     */
     public function registervehicle(Request $request)
-    { 
+    {
         if ($request->isMethod('post')) 
         {
             // Validate the request...
@@ -128,8 +128,8 @@ class VehicleController extends Controller
     }
 
     public function updatevehicle(Request $request) {
-        if ($request->isMethod('put')) {
-            
+        if ($request->isMethod('put')) 
+        {
             // Validate the request...
             $validator = Validator::make($request->all(), AuthValidation::registervehicle());
 
@@ -145,29 +145,29 @@ class VehicleController extends Controller
             $left_view = '/upload_image.png';
             if ($request->hasFile('left_view')) {
                 $left_view = Storage::putFile('public/cars', $request->file('left_view'));
+                $vehicle->left_view = $left_view;
             }
 
             $rear_view = '/upload_image.png';
             if ($request->hasFile('rear_view')) {
                 $rear_view = Storage::putFile('public/cars', $request->file('rear_view'));
+                $vehicle->rear_view = $rear_view;
             }
 
             $right_view = '/upload_image.png';
             if ($request->hasFile('right_view')) {
                 $right_view = Storage::putFile('public/cars', $request->file('right_view'));
+                $vehicle->right_view = $right_view;
             }
 
             $frontal_view = '/upload_image.png';
             if ($request->hasFile('front_view_image')) {
                 $frontal_view = Storage::putFile('public/cars', $request->file('front_view_image'));
+                $vehicle->frontal_view = $frontal_view;
             }
             
             $vehicle->assigned_to = 0;
             $vehicle->owner = Auth::id();
-            $vehicle->left_view = $left_view;
-            $vehicle->rear_view = $rear_view;
-            $vehicle->right_view = $right_view;
-            $vehicle->frontal_view = $frontal_view;
             $vehicle->year = $request->car_year;
             $vehicle->make = $request->car_type;
             $vehicle->model = $request->car_model;

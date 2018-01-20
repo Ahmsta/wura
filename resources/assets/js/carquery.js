@@ -2770,8 +2770,12 @@ $(document).ready(function () {
                 Notify(wurafleet.toastType.Info, "No Rear View Image uploaded.");
             }
 
-            $('#vehicleform').validate();
-            // window.location.reload(true);
+            var form = $("#vehicleform");
+            form.validate();
+
+            if (form.valid()) {
+                $(form).submit();
+            }
         }
     );
 
@@ -2781,11 +2785,9 @@ $(document).ready(function () {
             $.getJSON(window.location.protocol + '//' + window.location.hostname + '/getInfo/' + recordId, {id:recordId}, 
                 function(data) {
                     if (data.status.toLowerCase() === 'success') {
+                        $('#id').val(data.vehicleInfo.id);
                         $('select#car_year').val(data.vehicleInfo.year); //.trigger('change');
-                        $("select#car_type").val(data.vehicleInfo.make); //.trigger('change');
-                        $("select#car_model").val(data.vehicleInfo.model);
                         $('#owner_name').val(data.vehicleInfo.owner_name);
-                        $("select#car_model_trim").val(data.vehicleInfo.trim);
                         $("select#car_model_color").val(data.vehicleInfo.color);
                         $('#purchase_date').val(data.vehicleInfo.purchase_date);
                         $('#license_plate_number').val(data.vehicleInfo.license_plate_number);
@@ -2793,6 +2795,10 @@ $(document).ready(function () {
                         $("#rear_view_preview").attr("src", data.vehicleInfo.rear_view.replace('public', '/storage'));
                         $("#right_view_preview").attr("src", data.vehicleInfo.right_view.replace('public', '/storage'));
                         $("#front_view_preview").attr("src", data.vehicleInfo.frontal_view.replace('public', '/storage'));
+                        $("select#car_type").html("<option value='" + data.vehicleInfo.make + "'>" + data.vehicleInfo.make + "</option>"); //.trigger('change');
+                        $("select#car_model").html("<option value='" + data.vehicleInfo.model + "'>" + data.vehicleInfo.model + "</option>");//
+                        $("select#car_model_trim").html("<option value='" + data.vehicleInfo.trim + "'>" + data.vehicleInfo.trim.split(':')[1] + "</option>");//
+
                         $('#carEditModal').modal('show');
                     }
                 }
