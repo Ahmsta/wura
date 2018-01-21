@@ -18434,16 +18434,6 @@ $(document).ready(function () {
     });
 
     $('#updateDriver').on('click', function () {
-        // if ($('#ImgPreview').get(0).files.length === 0) {
-        //     Notify(wurafleet.toastType.Error, "No Passport Picture Selected.");
-        //     return false;
-        // }
-
-        // if ($('#IDPreview').get(0).files.length === 0) {
-        //     Notify(wurafleet.toastType.Error, "No valid means of Identification provided.");
-        //     return false;
-        // }
-
         var form = $("#driverform");
         form.validate();
 

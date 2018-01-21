@@ -22,7 +22,8 @@ class DashboardInfoFunction extends Migration
                 activecards bigint, inactivedcards bigint,
                 activedrivers bigint, inactivedrivers bigint,
                 pendingcardrequest bigint, disputedcards bigint,
-                activewallets bigint, inactivewallets bigint
+                activewallets bigint, inactivewallets bigint,
+                registeredvehicles bigint
             ) 
             AS $$
             BEGIN
@@ -40,7 +41,8 @@ class DashboardInfoFunction extends Migration
             (select count(*) from cards where holder = userid and status = 'Processing Request') pendingcardrequest,
             (select count(*) from cards where holder = userid and status = 'Disputed') disputedcards,
             (select count(*) from wallets where \"belongsTo\" = userid and status = true) activewallets,
-            (select count(*) from wallets where \"belongsTo\" = userid and status = false) inactivewallets
+            (select count(*) from wallets where \"belongsTo\" = userid and status = false) inactivewallets,
+            (select count(*) from vehicles where owner = userid) registeredvehicles
             
             from drivers where \"belongsTo\" = userid and status = 'Activate';
             
@@ -65,7 +67,7 @@ class DashboardInfoFunction extends Migration
             
             LANGUAGE 'plpgsql';
 
-            -- DROP FUNCTION search_columns(text, name[], name[]);
+            DROP FUNCTION search_columns(text, name[], name[]);
 
             CREATE OR REPLACE FUNCTION search_columns(
                 IN needle text,

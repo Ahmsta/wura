@@ -110,6 +110,17 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
+    public function vehicleinfo($id)
+    {
+        $recordset = \App\Models\Vehicles::where("id", $id)->get();
+        return view('reports.vehicleinfo', ['vehicle' => $recordset]);
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
     public function walletsummary()
     {
         return view('reports.walletsummary');

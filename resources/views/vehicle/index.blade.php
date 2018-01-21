@@ -35,10 +35,14 @@
                             <td>{{ Carbon\Carbon::parse($vehicle->purchase_date)->toFormattedDateString() }}</td>
                             <td nowrap>{{ $vehicle->year . ' ' . $vehicle->make }}</td>
                             <td>{{ $vehicle->model . ' [' . $trim_details . ']' }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary recordEdit" data-id="{{ $vehicle->id }}"> 
+                            <td nowrap>
+                                <button type="button" class="btn btn-primary recordEdit" data-id="{{ $vehicle->id }}" title="Edit Vehicle Details.">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit    
                                 </button>
+
+                                <a href="vehicleinfo/{{ $vehicle->id }}" class="btn btn-primary" title="View Details"> 
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </a>
                             </td>
                         </tr>
                     @endforeach

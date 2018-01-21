@@ -2598,7 +2598,6 @@ $(document).ready(function () {
         carDataHTML: 
             function(data)
             {
-                // <div id="modelData" name="modelData"></div>
                 var sold_in_us = "No";
                 if (data.model_sold_in_us == "1") {
                     sold_in_us = "Yes";
@@ -2805,4 +2804,98 @@ $(document).ready(function () {
             );
         }
     );
+
 });
+
+function carDataHTML()
+{
+    var sold_in_us = "No";
+    data = JSON.parse(data);
+    if (data.model_sold_in_us == "1") {
+        sold_in_us = "Yes";
+    }
+
+    $('#pgheader')
+        .css('text-decoration', 'underline')
+        .html(data.model_year + ' ' + data.make_display + ' ' + data.model_name + ' ' + data.model_trim);
+
+    var out = '<table class="model-data">';
+        
+    out += '<tr><th colspan="2">'+data.model_year+' '+data.make_display+' '+data.model_name+' '+data.model_trim+'</th></tr>';
+        
+    out += '<tr><td colspan="2"><hr/></td></tr>';	
+    out += '<tr><td>Country of Origin:</td><td>'+data.make_country+'</td></tr>';
+    out += '<tr><td>Sold in US:</td><td>'+sold_in_us+'</td></tr>';
+    out += '<tr><td>Body Style:</td><td>'+data.model_body+'</td></tr>';
+    
+    // Output Color Data
+    out += '<tr><td colspan="2"><hr/></td></tr>';
+    out += '<tr><td valign="top">Exterior Colors:</td><td>';
+    //out += this.carColorHTML(data.ExtColors) + '</td></tr>';
+    out += JSON.stringify(data.ExtColors) + '</td></tr>';
+    out += '<tr><td valign="top">Interior Colors:</td><td>';
+    //out += this.carColorHTML(data.IntColors) + '</td></tr>';
+    out += JSON.stringify(data.IntColors) + '</td></tr>';
+        
+    out += '<tr><td colspan="2"><hr/></td></tr>';
+    out += '<tr><td>Engine Location:</td><td>'+data.model_engine_position+'</td></tr>';
+    out += '<tr><td>Engine Type:</td><td>'+data.model_engine_type+'</td></tr>';
+    out += '<tr><td>Engine Cylinders:</td><td>'+data.model_engine_cyl+'</td></tr>';
+    out += '<tr><td>Engine Displacement (cc):</td><td>'+data.model_engine_cc+'</td></tr>';
+    out += '<tr><td>Engine Displacement (l):</td><td>'+data.model_engine_l+'</td></tr>';
+    out += '<tr><td>Engine Displacement (cubic inches):</td><td>'+data.model_engine_ci+'</td></tr>';
+    out += '<tr><td>Engine Bore (mm):</td><td>'+data.model_engine_bore_mm+'</td></tr>';
+    out += '<tr><td>Engine Bore (in):</td><td>'+data.model_engine_bore_in+'</td></tr>';
+    out += '<tr><td>Engine Stroke (mm):</td><td>'+data.model_engine_stroke_mm+'</td></tr>';
+    out += '<tr><td>Engine Stroke (in):</td><td>'+data.model_engine_stroke_in+'</td></tr>';
+    out += '<tr><td>Engine Valves Per Cylinder:</td><td>'+data.model_engine_valves_per_cyl+'</td></tr>';
+    out += '<tr><td>Engine Valves:</td><td>'+data.model_engine_valves+'</td></tr>';
+    out += '<tr><td>Engine Max Power (HP):</td><td>'+data.model_engine_power_hp+'</td></tr>';
+    out += '<tr><td>Engine Max Power (PS):</td><td>'+data.model_engine_power_ps+'</td></tr>';
+    out += '<tr><td>Engine Max Power (kW):</td><td>'+data.model_engine_power_kw+'</td></tr>';
+    out += '<tr><td>Engine Max Power RPM:</td><td>'+data.model_engine_power_rpm+'</td></tr>';
+    out += '<tr><td>Engine Max Torque (Nm):</td><td>'+data.model_engine_torque_nm+'</td></tr>';
+    out += '<tr><td>Engine Max Torque (Lb-Ft):</td><td>'+data.model_engine_torque_lbft+'</td></tr>';
+    out += '<tr><td>Engine Max Torque (kgf-m):</td><td>'+data.model_engine_torque_kgm+'</td></tr>';
+    out += '<tr><td>Engine Max Torque RPM:</td><td>'+data.model_engine_torque_rpm+'</td></tr>';
+    out += '<tr><td>Engine Compression Ratio:</td><td>'+data.model_engine_compression+'</td></tr>';
+    out += '<tr><td>Engine Fuel Type:</td><td>'+data.model_engine_fuel+'</td></tr>';
+    out += '</table>';
+    out = out.replace(/>null</g, ">Not Available<");
+    $("#modelData").html(out);
+
+    out = '<table class="model-data">';
+    out += '<tr><td colspan="2"><hr/></td></tr>';
+    out += '<tr><td>Drive:</td><td>'+data.model_drive+'</td></tr>';
+    out += '<tr><td>Transmission Type:</td><td>'+data.model_transmission_type+'</td></tr>';
+    out += '<tr><td>Top Speed (KPH):</td><td>'+data.model_top_speed_kph+'</td></tr>';
+    out += '<tr><td>Top Speed (MPH):</td><td>'+data.model_top_speed_mph+'</td></tr>';
+    out += '<tr><td>0-100 kph (0-62mph):</td><td>'+data.model_0_to_100_kph+'</td></tr>';
+        
+    out += '<tr><td colspan="2"><hr/></td></tr>';
+    out += '<tr><td>Doors:</td><td>'+data.model_doors+'</td></tr>';
+    out += '<tr><td>Seats:</td><td>'+data.model_seats+'</td></tr>';
+    out += '<tr><td>Weight (kg):</td><td>'+data.model_weight_kg+'</td></tr>';
+    out += '<tr><td>Weight (lbs):</td><td>'+data.model_weight_lbs+'</td></tr>';
+    out += '<tr><td>Length (mm):</td><td>'+data.model_length_mm+'</td></tr>';
+    out += '<tr><td>Length (in):</td><td>'+data.model_length_in+'</td></tr>';
+    out += '<tr><td>Width (mm):</td><td>'+data.model_width_mm+'</td></tr>';
+    out += '<tr><td>Width (in):</td><td>'+data.model_width_in+'</td></tr>';
+    out += '<tr><td>Height (mm):</td><td>'+data.model_height_mm+'</td></tr>';
+    out += '<tr><td>Height (in):</td><td>'+data.model_height_in+'</td></tr>';
+    out += '<tr><td>Wheelbase (mm):</td><td>'+data.model_wheelbase_mm+'</td></tr>';
+    out += '<tr><td>Wheelbase (in):</td><td>'+data.model_wheelbase_in+'</td></tr>';
+    out += '<tr><td>Fuel Economy City(l/100km):</td><td>'+data.model_lkm_city+'</td></tr>';
+    out += '<tr><td>Fuel Economy City(mpg):</td><td>'+data.model_mpg_city+'</td></tr>';
+    out += '<tr><td>Fuel Economy HWY(l/100km):</td><td>'+data.model_lkm_hwy+'</td></tr>';
+    out += '<tr><td>Fuel Economy HWY(mpg):</td><td>'+data.model_mpg_hwy+'</td></tr>';
+    out += '<tr><td>Fuel Economy Mixed(l/100km):</td><td>'+data.model_lkm_mixed+'</td></tr>';
+    out += '<tr><td>Fuel Economy Mixed(mpg):</td><td>'+data.model_mpg_mixed+'</td></tr>';
+    out += '<tr><td>Fuel Capacity(l):</td><td>'+data.model_fuel_cap_l+'</td></tr>';
+    out += '<tr><td>Fuel Capacity(g):</td><td>'+data.model_fuel_cap_g+'</td></tr>';
+        
+    out += '</table>';
+        
+    out = out.replace(/>null</g, ">Not Available<");
+    $('#modelInfo').html(out);
+}

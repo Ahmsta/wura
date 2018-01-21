@@ -7,6 +7,34 @@
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-3">
+                            <i class="fa fa-car fa-5x" aria-hidden="true"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ $dashboardinfo->registeredvehicles }}</div>
+                            <div>Valid Vehicle(s)</div>
+                        </div>
+                        <br />
+                        <div class="col-xs-9 text-right text-danger">
+                            <div class="huge">{{ $dashboardinfo->expireddocuments }}</div>
+                            <div>Expired Documents</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="{{ route('vehicles') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
                             <i class="fa fa-id-badge fa-5x" aria-hidden="true"></i>
                         </div>
                         <div class="col-xs-9 text-right">
@@ -70,41 +98,13 @@
                             <div>Card(s) Request</div>
                         </div>
                         <br />
-                        <div class="col-xs-9 text-right">
+                        <div class="col-xs-9 text-right text-danger">
                             <div class="huge">{{ $dashboardinfo->disputedcards }}</div>
                             <div>Disputed Card(s)</div>
                         </div>
                     </div>
                 </div>
                 <a href="{{ route('cardsinfo') }}">
-                    <div class="panel-footer">
-                        <span class="pull-left">View Details</span>
-                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-
-                        <div class="clearfix"></div>
-                    </div>
-                </a>
-            </div>
-        </div>
-        <div class="col-lg-3 col-md-6">
-            <div class="panel panel-danger">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-3">
-                            <i class="fa fa-info-circle fa-5x"></i>
-                        </div>
-                        <div class="col-xs-9 text-right">
-                            <div class="huge">{{ $dashboardinfo->expiredcards }}</div>
-                            <div>Expired Cards(s)</div>
-                        </div>
-                        <br />
-                        <div class="col-xs-9 text-right text-danger">
-                            <div class="huge">{{ $dashboardinfo->deletedcards }}</div>
-                            <div>Deleted Card(s)</div>
-                        </div>
-                        </div>
-                </div>
-                <a href="{{ route('expiredreport') }}">
                     <div class="panel-footer">
                         <span class="pull-left">View Details</span>
                         <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -147,19 +147,32 @@
                 </a>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="hero-widget well well-sm">
-                <div class="icon">
-                    <h5> Last 10 failed transactions </h5>
-                    <i class="glyphicon glyphicon-star"></i>
+        <div class="col-lg-3 col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-xs-3">
+                            <i class="fa fa-info-circle fa-5x"></i>
+                        </div>
+                        <div class="col-xs-9 text-right">
+                            <div class="huge">{{ $dashboardinfo->expiredcards }}</div>
+                            <div>Expired Cards(s)</div>
+                        </div>
+                        <br />
+                        <div class="col-xs-9 text-right text-danger">
+                            <div class="huge">{{ $dashboardinfo->deletedcards }}</div>
+                            <div>Deleted Card(s)</div>
+                        </div>
+                        </div>
                 </div>
-                <div class="text">
-                    <span class="value">614</span>
-                    <label class="text-muted">Hero Widget</label>
-                </div>
-                <div class="options">
-                    <a href="javascript:;" class="btn btn-primary btn-lg"><i class="glyphicon glyphicon-search"></i> Secondary Action</a>
-                </div>
+                <a href="{{ route('expiredreport') }}">
+                    <div class="panel-footer">
+                        <span class="pull-left">View Details</span>
+                        <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+
+                        <div class="clearfix"></div>
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-sm-3">

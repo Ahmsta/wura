@@ -48,7 +48,9 @@ class HomeController extends Controller
             "pendingcardrequest" => $allUsersCount[6],
             "disputedcards" => $allUsersCount[7],
             "activewallets" => $allUsersCount[8],
-            "inactivewallets" => $allUsersCount[9]
+            "inactivewallets" => $allUsersCount[9],
+            "registeredvehicles" => $allUsersCount[10],
+            "expireddocuments" => 0
         );
         return view('home', ['dashboardinfo' => (object) $dashboardinfo]);
     }
