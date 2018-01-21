@@ -61,7 +61,7 @@ class DashboardInfoFunction extends Migration
             
             LANGUAGE 'plpgsql';
 
-            -- DROP FUNCTION search_columns(text, name[], name[]);
+            DROP FUNCTION search_columns(text, name[], name[]);
 
             CREATE OR REPLACE FUNCTION search_columns(
                 IN needle text,
