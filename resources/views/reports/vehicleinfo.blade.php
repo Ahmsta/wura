@@ -29,7 +29,15 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin-bottom: 5px;">
+                <div class="row move" style="margin-bottom: 5px;">
+                    <div class="col-md-12 col-lg-12">
+                        <label class="control-label" style="color:white;"> Rear View </label>
+                        <br />
+                        <img style="height: 100px;" src="{{ $rear_view }}" alt="Rear view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
+                    </div>
+                </div>
+                
+                <div class="row move" style="margin-bottom: 5px;">
                     <div class="col-md-12 col-lg-12">
                         <label class="control-label" style="color:white;"> Left Hand Side <br />View </label>
                         <br />
@@ -37,17 +45,10 @@
                     </div>
                 </div>
 
-                <div class="row" style="margin-bottom: 5px;">
-                    <div class="col-md-12 col-lg-12">
-                        <label class="control-label" style="color:white;"> Rear View </label>
-                        <br />
-                        <img style="height: 100px;" src="{{ $rear_view }}" alt="Rear view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
-                    </div>
-                </div>
             </div>
 
-            <div class="col-md-5 col-lg-5" style="">
-                <div id="modelData" name="modelData"></div>
+            <div class="col-md-5 col-lg-5" id="modelData" name="modelData">
+            
             </div>
 
             <div class="col-md-5 col-lg-5">
