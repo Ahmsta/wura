@@ -15,6 +15,8 @@ class DashboardInfoFunction extends Migration
     public function up()
     {
         DB::unprepared("
+            DROP FUNCTION dashboard_info;
+
             CREATE OR REPLACE FUNCTION dashboard_info (userid INT) RETURNS TABLE (
                 expiredcards bigint, deletedcards bigint,
                 activecards bigint, inactivedcards bigint,
@@ -46,6 +48,8 @@ class DashboardInfoFunction extends Migration
             
             LANGUAGE 'plpgsql';
 
+            DROP FUNCTION get_freecards;
+
             CREATE OR REPLACE FUNCTION get_freecards (userid INT) RETURNS TABLE (
                 value integer, text character varying(255)
             ) 
@@ -61,7 +65,7 @@ class DashboardInfoFunction extends Migration
             
             LANGUAGE 'plpgsql';
 
-            DROP FUNCTION search_columns(text, name[], name[]);
+            -- DROP FUNCTION search_columns(text, name[], name[]);
 
             CREATE OR REPLACE FUNCTION search_columns(
                 IN needle text,
