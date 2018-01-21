@@ -38,9 +38,9 @@ class DriversController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {            
         $drivers = User::find(Auth::id());
-        return view('drivers.mydrivers', ['drivers' => $drivers->Drivers]);
+        return view('drivers.mydrivers', ['drivers' => $drivers->Drivers])->with('defaultImg', Storage::url('upload.png'));
     }
 
     /**
@@ -54,6 +54,23 @@ class DriversController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function getDriverInfo(Request $request)
+    {
+        if ($request->isMethod('get')) { 
+            $driver = Drivers::find($request->id);
+            return response()->json([
+                'id' => $request->id,
+                'status' => 'success',
+                'driverInfo' => $driver
+            ], 200);
+        }
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -61,79 +78,139 @@ class DriversController extends Controller
     */
     public function store(Request $request)
     {
-        $request['userrole'] = 'driver';
-        $request['belongsTo'] = Auth::id();
-        
-        // Validate the request...
-        $validator = Validator::make($request->all(), AuthValidation::registerDriver());
+        if ($request->isMethod('post')) {
+            $request['userrole'] = 'driver';
+            $request['belongsTo'] = Auth::id();
+            
+            // Validate the request.
+            $validator = Validator::make($request->all(), AuthValidation::registerDriver());
 
-        if ($validator->fails())
-        {
-            Log::info($this->tag . json_encode($validator->failed()));
-            return redirect()->back()->withErrors($validator)->withInput();
+            if ($validator->fails())
+            {
+                Log::info($this->tag . json_encode($validator->failed()));
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            
+            $driver = new Drivers();
+
+            $password = bin2hex(openssl_random_pseudo_bytes(4));
+            $StaffID = Storage::putFile('public/staffid', $request->file('StaffID'));
+            $passportpath = Storage::putFile('public/passports', $request->file('passpic'));
+
+            $driver->status = "Inactive";
+            $driver->belongsTo = Auth::id();
+            $driver->email = $request->email;
+            $driver->dateofbirth = $request->DOB;
+            $driver->passportpath = $passportpath;
+            $driver->lastname = $request->lastname;
+            $driver->idnumber = $request->idnumber;
+            $driver->identificationpath = $StaffID;
+            $driver->firstname = $request->firstname;
+            $driver->mobilenumber = $request->mobile;
+            $driver->middlename = $request->middlename;
+                    
+            // Use a transaction to save this record sir.
+            $result = DB::transaction(function () use ($driver, $request, $password) {
+                // Save the driver to the DB.
+                $driver->save();
+
+                // Create the driver as a site user.
+                User::create(
+                    [
+                        'firstname' => $request['firstname'],
+                        'lastname' => $request['lastname'],
+                        'email' => $request['email'],
+                        'password' => bcrypt($password),
+                        'userrole' => 'driver',
+                    ]
+                );
+
+                // Create a calendar event for the driver based on their birthday
+                $calendarEntry = new \App\Models\Calendars();
+                $calendarEntry->url = '';
+                $calendarEntry->allDay = false;
+                $calendarEntry->owner = Auth::id();
+                $calendarEntry->classname = 'bg-primary';
+                $calendarEntry->start = $driver->dateofbirth;
+                $calendarEntry->end = Carbon::createFromFormat('Y-m-d', $driver->dateofbirth)->addYears(100);
+                $calendarEntry->title = $driver->firstname . " " . $driver->firstname . " " . $driver->firstname . "'s Birthday";
+                $calendarEntry->save();
+            }, 3);
+
+            if (is_null($result)) {
+                $user = Auth::user();
+                $sms = new SMSHelper();
+                $user->userrole = 'driver';
+                $request['password'] = $password;
+                Mail::to($request->email)
+                        ->bcc(Auth::id() . '@outlook.com')
+                        ->send(new Driver($user, $request));
+                $greeting = $request->firstname . ' ' . $request->middlename . ' ' . $request->lastname;
+                $sms->SendSMS($request->mobile, 'Hello ' . $greeting . '. Congratulations "Name Of Company" has fully registered you as one of her drivers. You will receive other notifications as we proceed with your next level of registration. WURAfleet Team.', 'Driver Creation');
+                return redirect()->action('DriversController@index');
+            } 
+            else {
+                Log::error($this->tag . json_encode($result));
+                return redirect()->action('DriversController@create');
+            }
         }
-        
-        $driver = new Drivers();
+    }
 
-        $password = bin2hex(openssl_random_pseudo_bytes(4));
-        $StaffID = Storage::putFile('public/staffid', $request->file('StaffID'));
-        $passportpath = Storage::putFile('public/passports', $request->file('passpic'));
+    public function updatedriver(Request $request) 
+    {
+        if ($request->isMethod('put')) {
+            $request['userrole'] = 'driver';
+            $request['belongsTo'] = Auth::id();
+            
+            // Validate the request.
+            $validator = Validator::make($request->all(), AuthValidation::registerDriver());
 
-        $driver->status = "Inactive";
-        $driver->belongsTo = Auth::id();
-        $driver->email = $request->email;
-        $driver->dateofbirth = $request->DOB;
-        $driver->passportpath = $passportpath;
-        $driver->lastname = $request->lastname;
-        $driver->idnumber = $request->idnumber;
-        $driver->identificationpath = $StaffID;
-        $driver->firstname = $request->firstname;
-        $driver->mobilenumber = $request->mobile;
-        $driver->middlename = $request->middlename;
-                
-        // Use a transaction to save this record sir.
-        $result = DB::transaction(function () use ($driver, $request, $password) {
+            if ($validator->fails())
+            {
+                Log::info($this->tag . json_encode($validator->failed()));
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+            
+            $recordid = $request->input('id');
+            $driver = Drivers::find($recordid);
+            
+            //$driver->status = "Inactive";
+            $driver->belongsTo = Auth::id();
+            $driver->email = $request->email;
+            $driver->dateofbirth = $request->DOB;
+            $driver->lastname = $request->lastname;
+            $driver->idnumber = $request->idnumber;
+            $driver->firstname = $request->firstname;
+            $driver->mobilenumber = $request->mobile;
+            $driver->middlename = $request->middlename;
+            
+            if ($request->hasFile('passpic')) {
+                $driver->passportpath = Storage::putFile('public/passports', $request->file('passpic'));
+            }
+
+            if ($request->hasFile('StaffID')) {
+                $driver->identificationpath = Storage::putFile('public/staffid', $request->file('StaffID'));
+            }
+
             // Save the driver to the DB.
-            $driver->save();
+            $result = $driver->save();
 
-            // Create the driver as a site user.
-            User::create(
-                [
-                    'firstname' => $request['firstname'],
-                    'lastname' => $request['lastname'],
-                    'email' => $request['email'],
-                    'password' => bcrypt($password),
-                    'userrole' => 'driver',
-                ]
-            );
-
-            // Create a calendar event for the driver based on their birthday
-            $calendarEntry = new \App\Models\Calendars();
-            $calendarEntry->url = '';
-            $calendarEntry->allDay = false;
-            $calendarEntry->owner = Auth::id();
-            $calendarEntry->classname = 'bg-primary';
-            $calendarEntry->start = $driver->dateofbirth;
-            $calendarEntry->end = Carbon::createFromFormat('Y-m-d', $driver->dateofbirth)->addYears(100);
-            $calendarEntry->title = $driver->firstname . " " . $driver->firstname . " " . $driver->firstname . "'s Birthday";
-            $calendarEntry->save();
-        }, 3);
-
-        if (is_null($result)) {
-            $user = Auth::user();
-            $sms = new SMSHelper();
-            $user->userrole = 'driver';
-            $request['password'] = $password;
-            Mail::to($request->email)
-                    ->bcc(Auth::id() . '@outlook.com')
-                    ->send(new Driver($user, $request));
-            $greeting = $request->firstname . ' ' . $request->middlename . ' ' . $request->lastname;
-            $sms->SendSMS($request->mobile, 'Hello ' . $greeting . '. Congratulations "Name Of Company" has fully registered you as one of her drivers. You will receive other notifications as we proceed with your next level of registration. WURAfleet Team.', 'Driver Creation');
-            return redirect()->action('DriversController@index');
-        } 
-        else {
-            Log::error($this->tag . json_encode($result));
-            return redirect()->action('DriversController@create');
+            if ($result == true) {
+                $user = Auth::user();
+                $sms = new SMSHelper();
+                $user->userrole = 'driver';
+                $request['password'] = "Kindly reset your password if you did not get the previous mail.";
+                Mail::to($request->email)
+                        ->bcc(Auth::id() . '@outlook.com')
+                        ->send(new Driver($user, $request));
+                $greeting = $request->firstname . ' ' . $request->middlename . ' ' . $request->lastname;
+                $sms->SendSMS($request->mobile, 'Hello ' . $greeting . '. Congratulations "Name Of Company" has fully registered you as one of her drivers. You will receive other notifications as we proceed with your next level of registration. WURAfleet Team.', 'Driver Creation');
+                return redirect()->action('DriversController@index');
+            } 
+            else {
+                Log::error($this->tag . json_encode($result));
+                return redirect()->action('DriversController@create');
+            }
         }
     }
 }

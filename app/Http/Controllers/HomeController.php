@@ -205,12 +205,49 @@ class HomeController extends Controller
 
     public function search(Request $request) {
         if ($request->isMethod('post')) {
+            $filter = ""; $searchResult;
             $searchText = $request->searchText;
             $filters = $request->input('filter.*');
 
-            // select * from search_columns('Adegbenga', '{drivers, users}')
-            return view('search');
-            //return view('vehicle.index', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
+            foreach ($filters as &$value) {
+                switch ($value) {
+                    case "0":
+                        $filter = "";
+                        break;
+                    case "1":
+                        $filter .= "Calendars, ";
+                        break;
+                    case "2":
+                        $filter .= "Cards, ";
+                        break;
+                    case "3":
+                        $filter .= "Drivers, ";
+                        break;
+                    case "4":
+                        $filter .= "Notications, ";
+                        break;
+                    case "5":
+                        $filter .= "Transactions, ";
+                        break;
+                    case "6":
+                        $filter .= "Users, ";
+                        break;
+                    case "7":
+                        $filter .= "Vehicles, ";
+                        break;
+                    case "8":
+                        $filter .= "Wallets, ";
+                        break;
+                }
+            }
+
+            if ($filter == "") {
+                $searchResult = DB::select("select * from search_columns('" . $searchText . "', '{}')");
+            } else {
+                $searchResult = DB::select("select * from search_columns('%" . $searchText . "%', '{" . substr($filter, 0, -2) . "}')");
+            }
+            // select * from search_columns('%Adegbenga%', '{}')
+            return view('search', ['searchResults' => $searchResult]);
         }
     }
 }

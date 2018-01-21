@@ -61,35 +61,38 @@ class DashboardInfoFunction extends Migration
             
             LANGUAGE 'plpgsql';
 
+            DROP FUNCTION search_columns(text, name[], name[]);
+
             CREATE OR REPLACE FUNCTION search_columns(
-                needle text,
-                haystack_tables name[] default '{}',
-                haystack_schema name[] default '{public}'
-            )
-            RETURNS table(schemaname text, tablename text, columnname text, rowctid text)
-            AS $$
+                IN needle text,
+                IN haystack_tables name[] DEFAULT '{}'::name[],
+                IN haystack_schema name[] DEFAULT '{public}'::name[])
+
+            RETURNS TABLE(schemaname text, tablename text, columnname text, rowctid text) AS
+            \$BODY\$
             begin
-              FOR schemaname,tablename,columnname IN
-                  SELECT c.table_schema,c.table_name,c.column_name
-                  FROM information_schema.columns c
-                  JOIN information_schema.tables t ON
+                FOR schemaname,tablename,columnname IN
+                    SELECT c.table_schema,c.table_name,c.column_name
+                    FROM information_schema.columns c
+                    JOIN information_schema.tables t ON
                     (t.table_name=c.table_name AND t.table_schema=c.table_schema)
-                  WHERE (c.table_name=ANY(haystack_tables) OR haystack_tables='{}')
-                    AND (c.table_schema=ANY(haystack_schema) OR haystack_schema='{}')
+                    WHERE (c.table_name=ANY(haystack_tables) OR haystack_tables='{}')
+                    AND c.table_schema=ANY(haystack_schema)
                     AND t.table_type='BASE TABLE'
-              LOOP
-                EXECUTE format('SELECT ctid FROM %I.%I WHERE cast(%I as text)=%L',
-                   schemaname,
-                   tablename,
-                   columnname,
-                   needle
-                ) INTO rowctid;
-                IF rowctid is not null THEN
-                  RETURN NEXT;
-                END IF;
-             END LOOP;
+                LOOP
+            /* EXECUTE format('SELECT ctid FROM %I.%I WHERE cast(%I as text)=%L', */
+            EXECUTE format('SELECT ctid FROM %I.%I WHERE cast(%I as text) LIKE %L',
+                schemaname, tablename, columnname, needle
+            ) INTO rowctid;
+            IF rowctid is not null THEN
+                RETURN NEXT;
+            END IF;
+            END LOOP;
             END;
-            $$ language plpgsql;
+            \$BODY\$
+            LANGUAGE plpgsql VOLATILE
+            COST 100
+            ROWS 1000;
         ");
     }
 

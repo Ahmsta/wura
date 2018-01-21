@@ -360,7 +360,7 @@ $(document).ready(function () {
                     });
 
                     $('#timelineheader').removeAttr("style");
-                    $('#timelineheader a:first').tab('show')
+                    $('#timelineheader a:first').tab('show');
 
                     // Enable button.
                     $('#LogSearch').removeAttr("disabled");
@@ -506,7 +506,7 @@ $(document).ready(function () {
                 });
                 this.checked = checked;
             } else {
-                //$('input:checkbox[value="0"]').prop('checked', false);
+                $('input:checkbox[value="0"]').prop('checked', false);
             }
         }
     );
@@ -522,6 +522,59 @@ $(document).ready(function () {
         }
     );
 
+    $('.driverEdit').on('click', 
+        function() {
+            var recordId = $(this).data('id');
+            $.getJSON(window.location.protocol + '//' + window.location.hostname + '/getDriverInfo/' + recordId, {id:recordId}, 
+                function(data) {
+                    if (data.status.toLowerCase() === 'success') {
+                        $('#id').val(data.driverInfo.id);
+                        $("#email").val(data.driverInfo.email);
+                        $('#idnumber').val(data.driverInfo.idnumber);
+                        $("#lastname").val(data.driverInfo.lastname);
+                        $('#mobile').val(data.driverInfo.mobilenumber);
+                        $('#firstname').val(data.driverInfo.firstname);
+                        switch(data.driverInfo.status.toLowerCase()) {
+                            case 'activate':
+                                //$('#statusButton').html('Suspend');
+                                $('#driverStatus').html('Current Status: Activated');
+                            break;
+
+                            default:
+                                //$('#statusButton').html('Activate');
+                                $('#driverStatus').html('Current Status: Suspended');
+                        }
+                        $('#middlename').val(data.driverInfo.middlename);
+                        $("#dateofbirth").val(moment(data.driverInfo.dateofbirth).format('D-MM-YYYY'));
+                        $("#ImgPreview").attr("src", data.driverInfo.passportpath.replace('public', '/storage'));
+                        $("#IDPreview").attr("src", data.driverInfo.identificationpath.replace('public', '/storage'));
+                        $('#driverEditModal').modal('show');
+                    }
+                }
+            );
+        }
+    );
+
+    $('#updateDriver').on('click', 
+        function() {
+            // if ($('#ImgPreview').get(0).files.length === 0) {
+            //     Notify(wurafleet.toastType.Error, "No Passport Picture Selected.");
+            //     return false;
+            // }
+
+            // if ($('#IDPreview').get(0).files.length === 0) {
+            //     Notify(wurafleet.toastType.Error, "No valid means of Identification provided.");
+            //     return false;
+            // }
+
+            var form = $("#driverform");
+            form.validate();
+
+            if (form.valid()) {
+                $(form).submit();
+            }
+        }
+    );
     // Initially disable the button
     $("#ContinueButton").attr("disabled", "disabled");
  

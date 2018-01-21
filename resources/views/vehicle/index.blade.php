@@ -37,7 +37,7 @@
                             <td>{{ $vehicle->model . ' [' . $trim_details . ']' }}</td>
                             <td>
                                 <button type="button" class="btn btn-primary recordEdit" data-id="{{ $vehicle->id }}"> 
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"> Edit </i>    
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit    
                                 </button>
                             </td>
                         </tr>

@@ -142,28 +142,20 @@ class VehicleController extends Controller
             $recordid = $request->input('id');
             $vehicle = Vehicles::find($recordid);
             
-            $left_view = '/upload_image.png';
             if ($request->hasFile('left_view')) {
-                $left_view = Storage::putFile('public/cars', $request->file('left_view'));
-                $vehicle->left_view = $left_view;
+                $vehicle->left_view = Storage::putFile('public/cars', $request->file('left_view'));
             }
 
-            $rear_view = '/upload_image.png';
             if ($request->hasFile('rear_view')) {
-                $rear_view = Storage::putFile('public/cars', $request->file('rear_view'));
-                $vehicle->rear_view = $rear_view;
+                $vehicle->rear_view = Storage::putFile('public/cars', $request->file('rear_view'));
             }
 
-            $right_view = '/upload_image.png';
             if ($request->hasFile('right_view')) {
-                $right_view = Storage::putFile('public/cars', $request->file('right_view'));
-                $vehicle->right_view = $right_view;
+                $vehicle->right_view = Storage::putFile('public/cars', $request->file('right_view'));
             }
 
-            $frontal_view = '/upload_image.png';
             if ($request->hasFile('front_view_image')) {
-                $frontal_view = Storage::putFile('public/cars', $request->file('front_view_image'));
-                $vehicle->frontal_view = $frontal_view;
+                $vehicle->frontal_view = Storage::putFile('public/cars', $request->file('front_view_image'));
             }
             
             $vehicle->assigned_to = 0;
