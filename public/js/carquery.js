@@ -2446,13 +2446,13 @@ $(document).ready(function () {
                 if(!this.responseError(data))
                 {
                     var options = '<option value="">Please choose a make</option>';
+                    options += '<option value="-1"> Register Car Make </option>';
                     var makes = data.Makes;
                     for (var key in makes)
                     {
                         options += '<option value="' + makes[key].make_id + '">' + makes[key].make_display + '</option>';
                     }
                 
-                    options += '<option value="-1"> Register Car Make </option>';
                     $("select#" + this.make_select_id).html(options);
                 }
             },
