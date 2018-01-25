@@ -188,7 +188,7 @@ class VehicleController extends Controller
         //     'status' => 'success',
         //     'vehicleInfo' => $vehicles
         // ], 200);
-        $vehicles = Vehicles::where('owner', Auth::id())->get();
+        $vehicles = Vehicles::find($id);
         return view('vehicle.documents', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
     }
 }

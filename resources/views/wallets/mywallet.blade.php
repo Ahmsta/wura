@@ -6,12 +6,6 @@
     $cnt = 0;
 ?>
 
-    <div class="row" style="margin-bottom:20px;">
-        <div class="col-md-12">
-            <a href="#" data-toggle="modal" data-target="#newwallet" class="btn btn-wura pull-right" style="margin-top: -45px; margin-right:20px;">Register new Wallet</a>
-        </div>
-    </div>
-
     <div class="row">
         <div class="col-md-12">
 
@@ -142,3 +136,15 @@
     </div>
 
 @endsection
+
+
+@section('scripts')
+    <script>
+        $(document).ready(function () {
+            
+            $('#pgheader')
+                .css('text-decoration', 'underline')
+                .html('My Wallets <a href="#" data-toggle="modal" data-target="#newwallet" class="btn btn-wura pull-right" style="margin-right:20px;">Register new Wallet</a>');
+        });
+    </script>
+@stop

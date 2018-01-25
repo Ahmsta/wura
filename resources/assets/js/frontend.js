@@ -121,7 +121,6 @@ $(document).ready(function () {
     }
 
     function Convert2DataTable() {
-
         var tables = $.fn.dataTable.fnTables(true);         
         
         $(tables).each(function () {
@@ -234,7 +233,7 @@ $(document).ready(function () {
         todayHighlight: true
     });
 
-    $('.datepicker').on("keypress", 
+    $('input[type=date], .datepicker').on("keypress", 
         function () {
             return false;
         }
