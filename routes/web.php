@@ -43,6 +43,8 @@ Route::get('/getInfo/{id}', 'VehicleController@getInfo')->name('getInfo');
 
 Route::get('/vehicles', 'VehicleController@index')->name('vehicles');
 
+Route::get('/documents/{id}', 'VehicleController@documents')->name('documents');
+
 Route::get('/registerform', 'VehicleController@registerform')->name('registerform');
 
 Route::get('/cardsreport', 'ReportController@cards')->name('cardsreport');

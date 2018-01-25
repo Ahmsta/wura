@@ -36,12 +36,16 @@
                             <td nowrap>{{ $vehicle->year . ' ' . $vehicle->make }}</td>
                             <td>{{ $vehicle->model . ' [' . $trim_details . ']' }}</td>
                             <td nowrap>
+                                <a href="vehicleinfo/{{ $vehicle->id }}" class="btn btn-primary" title="View Document Details"> 
+                                    <i class="fa fa-eye" aria-hidden="true"></i>
+                                </a>
+                                
                                 <button type="button" class="btn btn-primary recordEdit" data-id="{{ $vehicle->id }}" title="Edit Vehicle Details.">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit    
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>    
                                 </button>
 
-                                <a href="vehicleinfo/{{ $vehicle->id }}" class="btn btn-primary" title="View Details"> 
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                <a href="documents/{{ $vehicle->id }}" class="btn btn-primary" title="Modify Vehicle Documents"> 
+                                    <i class="fa fa-file" aria-hidden="true"></i>
                                 </a>
                             </td>
                         </tr>

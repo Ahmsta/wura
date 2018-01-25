@@ -179,4 +179,16 @@ class VehicleController extends Controller
             }
         }
     }
+
+    public function documents($id) {
+        // log::info($this->tag . $id);
+        // $vehicles = Vehicles::find($request->id);
+        // return response()->json([
+        //     'id' => $request->id,
+        //     'status' => 'success',
+        //     'vehicleInfo' => $vehicles
+        // ], 200);
+        $vehicles = Vehicles::where('owner', Auth::id())->get();
+        return view('vehicle.documents', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
+    }
 }

@@ -17,7 +17,7 @@
         <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         @yield('styles')
         <link href="{{ mix('css/frontend.css') }}" rel="stylesheet" type="text/css" />
-        <style>            
+        <style>
             /* .navbar-default {
                 background-color: transparent;
                 border-color: transparent;
