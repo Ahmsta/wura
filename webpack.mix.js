@@ -28,6 +28,7 @@ mix.copy('vendor/twbs/bootstrap/dist/fonts', 'public/fonts');
 mix.copy([
     'resources/assets/js/carquery.js',
     'resources/assets/js/mycalendar.js',
+    'resources/assets/js/vehicledocument.js',
     'resources/assets/js/fullcalendar.min.js',
     'resources/assets/js/float-label-control.js',
     'resources/assets/js/bootstrap-multiselect.js',

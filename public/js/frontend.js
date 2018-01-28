@@ -18156,6 +18156,12 @@ $(document).ready(function () {
         todayHighlight: true
     });
 
+    $('input[type=number]').on("keypress", function (evt) {
+        if (evt.which < 48 || evt.which > 57) {
+            evt.preventDefault();
+        }
+    });
+
     $('input[type=date], .datepicker').on("keypress", function () {
         return false;
     });

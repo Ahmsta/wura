@@ -39,6 +39,8 @@ Route::get('/vehicleinfo/{id}', 'ReportController@vehicleinfo')->name('vehiclein
 
 Route::get('/getDriverInfo/{id}', 'DriversController@getDriverInfo')->name('getDriverInfo');
 
+Route::get('/getDocuments/{id}', 'VehicleController@getDocuments')->name('getDocuments');
+
 Route::get('/getInfo/{id}', 'VehicleController@getInfo')->name('getInfo');
 
 Route::get('/vehicles', 'VehicleController@index')->name('vehicles');
@@ -89,6 +91,8 @@ Route::post('/getMessage', 'NotificationsController@getMessage')->name('getMessa
 
 Route::post('/registervehicle', 'VehicleController@registervehicle')->name('registervehicle');
 
+Route::post('/documentsupload', 'VehicleController@documentsupload')->name('documentsupload');
+
 
 Route::put('/updatedriver', 'DriversController@updatedriver')->name('updatedriver');
 
@@ -98,3 +102,5 @@ Route::put('/updatevehicle', 'VehicleController@updatevehicle')->name('updateveh
 
 
 Route::delete('/deleteEvent', 'NotificationsController@deleteEvent')->name('deleteEvent');
+
+Route::get('/deleteDocument/{id}', 'VehicleController@deleteDocument')->name('deleteDocument');

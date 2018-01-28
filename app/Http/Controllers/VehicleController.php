@@ -6,6 +6,7 @@ use Auth;
 use Carbon\Carbon;
 use App\Models\Vehicles;
 use Illuminate\Http\File;
+use App\Models\VehicleDocs;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
@@ -174,21 +175,113 @@ class VehicleController extends Controller
             if ($data == true) {
                 return redirect()->action('VehicleController@index');
             } else {
-                return redirect()->back()->withErrors($validator)->withInput();
                 log::error($this->tag . json_encode($request->all()));
+                return redirect()->back()->withErrors($validator)->withInput();
             }
         }
     }
 
     public function documents($id) {
-        // log::info($this->tag . $id);
-        // $vehicles = Vehicles::find($request->id);
-        // return response()->json([
-        //     'id' => $request->id,
-        //     'status' => 'success',
-        //     'vehicleInfo' => $vehicles
-        // ], 200);
         $vehicles = Vehicles::find($id);
         return view('vehicle.documents', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
+    }
+
+    /**
+     * Display a listing of the documents uploaded.
+     *
+     * @return \Illuminate\Http\Response
+    */
+    public function getDocuments($id)
+    {
+        $VehicleDocs = VehicleDocs::where('ownerid', Auth::id()) 
+                                ->where('vehicleid', $id)
+                                ->orderBy('id', 'asc')
+                                ->orderBy('status', 'asc')
+                                ->get();
+        return response()->json([
+            'status' => 'success',
+            'vehicledocs' => $VehicleDocs
+        ], 200);
+    }
+
+    public function documentsupload(Request $request)
+    {
+        if ($request->isMethod('post')) {
+            // Validate the request...
+            $validator = Validator::make($request->all(), AuthValidation::vehicleDocuments());
+
+            if ($validator->fails())
+            {
+                log::info($this->tag . json_encode($validator->failed()));
+                return response()->json([
+                    'status' => 'error',
+                    'error' => [
+                        'exception' => json_encode($validator->failed()),
+                        'message' => 'An error occurred while trying to upload the document.'
+                    ]
+                ], 500);
+                // return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            // Find or create a new object based on the primary key.
+            $vehicledoc = VehicleDocs::findOrNew($request->id);
+            if ($request->hasFile('file')) {
+                // $document = '/upload_image.png';
+                $vehicledoc->docpath = Storage::putFile('public/documents', $request->file('file'));
+            }
+
+            $vehicledoc->status = 'active';
+            $vehicledoc->ownerid = Auth::id();
+            $vehicledoc->counter = $request->counter;
+            $vehicledoc->doctypes = $request->doctypes;
+            $vehicledoc->frequency = $request->frequency;
+            $vehicledoc->vehicleid = $request->vehicleid;
+            $vehicledoc->expirydate = $request->expirydate;
+            $vehicledoc->notifytype = $request->notifytype;
+            if (Carbon::now()->gt(Carbon::parse($request->expirydate))) {
+                $vehicledoc->status = 'expired';
+            }
+
+            // Save the Record to the database.
+            $data = $vehicledoc->save();
+
+            // register in calendar alongside the reminder day
+            if ($data == true) {
+                return response()->json([
+                    'status' => 'success',
+                    'vehicledoc' => $vehicledoc
+                ], 200);
+            } else {
+                log::error($this->tag . json_encode($request->all()));
+                return response()->json([
+                    'status' => 'error',
+                    'error' => [
+                        'data' => json_encode($vehicledoc),
+                        'message' => 'An error occurred while trying to upload the document. Please try again later.'
+                    ]
+                ], 500);
+            }
+        }
+    }
+
+    public function deleteDocument($id) {
+        // Find document based on the primary key passed in.
+        $vehicledoc = VehicleDocs::find($id);
+        $data = $vehicledoc->delete();
+
+        if ($data == true) {
+            return response()->json([
+                'status' => 'success'
+            ], 200);
+        } else {
+            log::error($this->tag . json_encode($id));
+            return response()->json([
+                'status' => 'error',
+                'error' => [
+                    'data' => json_encode($id),
+                    'message' => 'An error occurred while trying to upload the document. Please try again later.'
+                ]
+            ], 500);
+        }
     }
 }

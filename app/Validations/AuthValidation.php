@@ -59,6 +59,22 @@ class AuthValidation
     }
 
     /**
+     * Validation for Registering vehicle documents on the platform.
+     * @return mixed
+    */
+    public static function vehicleDocuments()
+    {
+        return [
+            'expirydate' => 'required|date',
+            'counter' => 'required|numeric',
+            'vehicleid' => 'required|numeric',
+            'doctypes' => 'required|string|max:255',
+            'frequency' => 'required|string|max:255',
+            'notifytype' => 'required|string|max:255',
+        ];
+    }
+
+    /**
      * Validation for login
      * @return mixed
      */
