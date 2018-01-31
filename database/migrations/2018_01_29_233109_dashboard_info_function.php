@@ -23,7 +23,7 @@ class DashboardInfoFunction extends Migration
                 activedrivers bigint, inactivedrivers bigint,
                 pendingcardrequest bigint, disputedcards bigint,
                 activewallets bigint, inactivewallets bigint,
-                registeredvehicles bigint
+                registeredvehicles bigint, expireddocuments bigint
             ) 
             AS $$
             BEGIN
@@ -42,6 +42,7 @@ class DashboardInfoFunction extends Migration
             (select count(*) from cards where holder = userid and status = 'Disputed') disputedcards,
             (select count(*) from wallets where \"belongsTo\" = userid and status = true) activewallets,
             (select count(*) from wallets where \"belongsTo\" = userid and status = false) inactivewallets,
+            (select  count(*) from vehicle_docs where status = 'Expired' and ownerid = userid) expireddocuments,
             (select count(*) from vehicles where owner = userid) registeredvehicles
             
             from drivers where \"belongsTo\" = userid and status = 'Activate';

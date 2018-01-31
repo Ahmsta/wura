@@ -230,7 +230,7 @@ class VehicleController extends Controller
                 $vehicledoc->docpath = Storage::putFile('public/documents', $request->file('file'));
             }
 
-            $vehicledoc->status = 'active';
+            $vehicledoc->status = 'Active';
             $vehicledoc->ownerid = Auth::id();
             $vehicledoc->counter = $request->counter;
             $vehicledoc->doctypes = $request->doctypes;
@@ -239,13 +239,16 @@ class VehicleController extends Controller
             $vehicledoc->expirydate = $request->expirydate;
             $vehicledoc->notifytype = $request->notifytype;
             if (Carbon::now()->gt(Carbon::parse($request->expirydate))) {
-                $vehicledoc->status = 'expired';
+                $vehicledoc->status = 'Expired';
             }
 
             // Save the Record to the database.
             $data = $vehicledoc->save();
 
-            // register in calendar alongside the reminder day
+            // register in calendar alongside the reminder day.
+            // Also handle notifications
+            // Reject duplicate uploads
+
             if ($data == true) {
                 return response()->json([
                     'status' => 'success',

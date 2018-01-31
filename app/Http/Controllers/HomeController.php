@@ -31,10 +31,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Update all expired cards and set status to expired.
         DB::table('cards')
             ->where('valid_until', '<', Carbon::now())
             ->update(['status' => 'Expired']);
 
+        // Update all expired vehicle documents and set status to expired.
+        DB::table('vehicle_docs')
+            ->where('expirydate', '<', Carbon::now())
+            ->update(['status' => 'Expired']);
+        
         $allUsersCount = DB::select('SELECT public."dashboard_info"(' . Auth::id() . ')');
         $allUsersCount = explode(",", trim($allUsersCount[0]->dashboard_info, '()'));
 
@@ -49,8 +55,8 @@ class HomeController extends Controller
             "disputedcards" => $allUsersCount[7],
             "activewallets" => $allUsersCount[8],
             "inactivewallets" => $allUsersCount[9],
-            "registeredvehicles" => $allUsersCount[10],
-            "expireddocuments" => 0
+            "registeredvehicles" => $allUsersCount[11],
+            "expireddocuments" => $allUsersCount[10]
         );
         return view('home', ['dashboardinfo' => (object) $dashboardinfo]);
     }

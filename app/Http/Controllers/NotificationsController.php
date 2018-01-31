@@ -66,6 +66,26 @@ class NotificationsController extends Controller
             ->where('start', '>=', $request->input('start'))
             ->where('end', '<=', $request->input('end'))
             ->get();
+
+        $vehicleDocs = new \App\Models\VehicleDocs();
+        $VehicleDocs = $vehicleDocs
+            ->select('vehicleid') 
+            ->distinct()
+            ->where('status', 'Expired')
+            ->where('expirydate', Carbon::today())
+            ->get();
+
+
+            // ->where('ownerid', Auth::id()) 
+            // ->where('status', 'Expired')
+            // ->orderBy('id', 'asc')
+            // ->orderBy('status', 'asc')
+            // ->get();
+
+            // select distinct vehicleid from vehicle_docs where status = 'Expired' and expirydate = current_date
+
+        //log::info(json_encode($calendarEntry));            
+        //log::info(json_encode($calendarEntry));
         return response()->json($calendarEntry);
     }
 

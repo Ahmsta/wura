@@ -12,6 +12,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.1.0/font-awesome-animation.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
@@ -225,7 +226,7 @@
                             </button>
 
                             <a href="{{ route('reminders') }}" class="btn btn-default navbar-btn" title="View all reminders.">
-                                <i class="fa fa-bell-o"></i>
+                                <i class="{{ $hasNotification }}" style="color:{{ $setColor }};"></i>
                             </a>
 
                             <a href="{{ route('chats') }}" class="btn btn-default navbar-btn" title="View all chats.">
@@ -233,7 +234,7 @@
                             </a>
 
                             <a href="{{ route('calendar') }}" class="btn btn-default navbar-btn" title="View all your Calendar Events.">
-                                <i class="fa fa-calendar"></i>
+                                <i class="{{ $hasevent }}" style="color:{{ $eventColor }};"></i>
                             </a>
                             
                             <a href="{{ route('messages') }}" class="btn btn-default navbar-btn" title="View all messages.">
