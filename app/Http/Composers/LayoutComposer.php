@@ -34,17 +34,17 @@ class LayoutComposer {
             ->distinct('title') 
             ->where('owner', Auth::id())
             ->where('start',  Carbon::today()->format('Y-m-d'))
-            ->orWhere('end', '>=', Carbon::today()->format('Y-m-d'))
+            ->orWhere('end', Carbon::today()->format('Y-m-d'))
             ->whereNull('deleted_at')
             ->count('title');
 
         if ($eventscount >= 1) {
             // Return Ringer to show there is a notification 
-            $view->with('eventColor', 'aqua');
+            $view->with('setColor', 'aqua');
             $view->with('hasevent', 'fa fa-calendar faa-pulse animated');
         } else {
             // Return normal bell. There is currently no notification for the user.
-            $view->with('eventColor', 'white');
+            $view->with('setColor', 'white');
             $view->with('hasevent', 'fa fa-calendar');
         }
     }

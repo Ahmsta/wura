@@ -212,8 +212,10 @@ class HomeController extends Controller
     }
 
     public function search(Request $request) {
+        // Time we got the request and started processing.
+        $time_start = microtime(true);
         if ($request->isMethod('post')) {
-            $filter = ""; $searchResult;
+            $filter = ""; $searchResult = "";
             $searchText = $request->searchText;
             $filters = $request->input('filter.*');
 
@@ -244,18 +246,26 @@ class HomeController extends Controller
                         $filter .= "Vehicles, ";
                         break;
                     case "8":
+                        $filter .= "vehicle_docs, ";
+                        break;
+                    case "9":
                         $filter .= "Wallets, ";
                         break;
                 }
             }
 
             if ($filter == "") {
-                $searchResult = DB::select("select * from search_columns('" . $searchText . "', '{}')");
+                $searchResult = DB::select("select * from search_columns('%" . $searchText . "%', '{}') order by 2;");
             } else {
-                $searchResult = DB::select("select * from search_columns('%" . $searchText . "%', '{" . substr($filter, 0, -2) . "}')");
+                $searchResult = DB::select("select * from search_columns('%" . $searchText . "%', '{" . substr($filter, 0, -2) . "}') order by 2;");
             }
-            // select * from search_columns('%Adegbenga%', '{}')
-            return view('search', ['searchResults' => $searchResult]);
+
+            // Display Script End time
+            $time_end = microtime(true);
+
+            // Dividing with 60 will give the execution time in minutes other wise seconds
+            $execution_time = ($time_end - $time_start) / 60;
+            return view('search')->with(['searchResults' => $searchResult, 'executionTime' => $execution_time, 'searchText' => $searchText]);
         }
     }
 }

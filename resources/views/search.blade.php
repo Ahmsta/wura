@@ -3,93 +3,189 @@
 
 @section('styles')
     <style>
-        .mb20 { margin-bottom: 20px; } 
+		*, *:before, *:after {
+			-webkit-box-sizing: border-box; 
+			-moz-box-sizing: border-box; 
+			box-sizing: border-box;
+		}
 
-        hgroup { padding-left: 15px; border-bottom: 1px solid #ccc; }
-        hgroup h1 { font: 500 normal 1.625em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin-top: 0; line-height: 1.15; }
-        hgroup h2.lead { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; color: #2a3644; margin: 0; padding-bottom: 10px; }
+		#integration-list {
+			width: 80%;
+			margin: 0 auto;
+			display: table;
+		}
 
-        .search-result .thumbnail { border-radius: 0 !important; }
-        .search-result:first-child { margin-top: 0 !important; }
-        .search-result { margin-top: 20px; }
-        .search-result .col-md-2 { border-right: 1px dotted #ccc; min-height: 140px; }
-        .search-result ul { padding-left: 0 !important; list-style: none;  }
-        .search-result ul li { font: 400 normal .85em "Roboto",Arial,Verdana,sans-serif;  line-height: 30px; }
-        .search-result ul li i { padding-right: 5px; }
-        .search-result .col-md-7 { position: relative; }
-        .search-result h3 { font: 500 normal 1.375em "Roboto",Arial,Verdana,sans-serif; margin-top: 0 !important; margin-bottom: 10px !important; }
-        .search-result h3 > a, .search-result i { color: #248dc1 !important; }
-        .search-result p { font: normal normal 1.125em "Roboto",Arial,Verdana,sans-serif; } 
-        .search-result span.plus { position: absolute; right: 0; top: 126px; }
-        .search-result span.plus a { background-color: #248dc1; padding: 5px 5px 3px 5px; }
-        .search-result span.plus a:hover { background-color: #414141; }
-        .search-result span.plus a i { color: #fff !important; }
-        .search-result span.border { display: block; width: 97%; margin: 0 15px; border-bottom: 1px dotted #ccc; }
+		#integration-list ul {
+			color: #fff;
+			padding: 0;
+			margin: 20px 0;
+		}
+
+		#integration-list ul > li {
+			padding: 15px;
+			display: block;
+			overflow: hidden;
+			list-style: none;
+			border-top: 1px solid #ddd;
+		}
+
+		#integration-list ul:last-child {
+			border-bottom: 1px solid #ddd;
+		}
+
+		.expand {
+			display: block;
+			text-decoration: none;
+			color: #555;
+			cursor: pointer;
+		}
+
+		h2 {
+			padding: 0;
+			margin: 0;
+			font-size: 17px;
+			font-weight: 400;
+		}
+
+		span {
+			text-align: left;
+			font-size: 12.5px;
+		}
+
+		#sup {
+			display: table-cell;
+			vertical-align: middle;
+			width: 80%;
+		}
+
+		.detail a {
+			float: left;
+			text-decoration: none;
+			color: #C0392B;
+			border: 1px solid #C0392B;
+			padding: 6px 10px 5px;
+			font-size: 14px;
+		}
+
+		.detail {
+			margin: 10px 0 10px 0px;
+			display: none;
+			line-height: 22px;
+			height: 150px;
+		}
+
+		.detail span{
+			margin: 0;
+		}
+
+		.right-arrow {
+			margin-top: 12px;
+			margin-left: 20px;
+			width: 10px;
+			height: 100%;
+			float: right;
+			font-weight: bold;
+			font-size: 20px;
+		}
     </style>
 @stop
 
 @section('content')
+About 299,000 results (0.67 seconds) 
+
     <hgroup class="mb20">
-		<h2 class="lead"><strong class="text-danger">3</strong> results were found for the search for <strong class="text-danger">Lorem</strong></h2>								
+		<h2 class="lead">
+			<strong class="standout">{{ sizeof($searchResults) }}</strong> 
+			results were found for 
+			<strong class="standout">
+				{{ $searchText }}
+			</strong>
+			under {{ round($executionTime, 3) }} seconds
+		</h2>								
 	</hgroup>
 
-    <section class="col-xs-12 col-sm-6 col-md-12">
-		<article class="search-result row">
-			<div class="col-xs-12 col-sm-12 col-md-3">
-				<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/people" alt="Lorem ipsum" /></a>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-2">
-				<ul class="meta-search">
-					<li><i class="glyphicon glyphicon-calendar"></i> <span>02/15/2014</span></li>
-					<li><i class="glyphicon glyphicon-time"></i> <span>4:28 pm</span></li>
-					<li><i class="glyphicon glyphicon-tags"></i> <span>People</span></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-7 excerpet">
-				<h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						
-                <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-			</div>
-			<span class="clearfix borda"></span>
-		</article>
+	<div id="integration-list">
+		<ul>
+			@foreach ($searchResults as $searchresult)
+				<?php
+					$classname = ''; $url = '';
+					switch (strtolower($searchresult->tablename)) {
+						case 'audits':
+							$classname = 'fa fa-history fa-fw';
+							break;
 
-        <article class="search-result row">
-			<div class="col-xs-12 col-sm-12 col-md-3">
-				<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/food" alt="Lorem ipsum" /></a>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-2">
-				<ul class="meta-search">
-					<li><i class="glyphicon glyphicon-calendar"></i> <span>02/13/2014</span></li>
-					<li><i class="glyphicon glyphicon-time"></i> <span>8:32 pm</span></li>
-					<li><i class="glyphicon glyphicon-tags"></i> <span>Food</span></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-7">
-				<h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						
-                <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-			</div>
-			<span class="clearfix borda"></span>
-		</article>
+						case 'calendars':
+							$classname = 'fa fa-calendar fa-fw';
+							break;
+							
+						case 'cards':
+							$classname = 'fa fa-credit-card fa-fw';
+							break;
+				
+						case 'notifications':
+							$classname = 'fa fa-bell-o fa-fw';
+							break;
+			
+						case 'transactions':
+							$classname = 'fa fa-exchange-alt fa-fw';
+							break;
+		
+						case 'users':
+							$classname = 'fa fa-users fa-fw';
+							break;
+	
+						case 'vehicle_docs':
+							$classname = 'fa fa-file-alt fa-fw';
+							break;
 
-		<article class="search-result row">
-			<div class="col-xs-12 col-sm-12 col-md-3">
-				<a href="#" title="Lorem ipsum" class="thumbnail"><img src="http://lorempixel.com/250/140/sports" alt="Lorem ipsum" /></a>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-2">
-				<ul class="meta-search">
-					<li><i class="glyphicon glyphicon-calendar"></i> <span>01/11/2014</span></li>
-					<li><i class="glyphicon glyphicon-time"></i> <span>10:13 am</span></li>
-					<li><i class="glyphicon glyphicon-tags"></i> <span>Sport</span></li>
-				</ul>
-			</div>
-			<div class="col-xs-12 col-sm-12 col-md-7">
-				<h3><a href="#" title="">Voluptatem, exercitationem, suscipit, distinctio</a></h3>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatem, exercitationem, suscipit, distinctio, qui sapiente aspernatur molestiae non corporis magni sit sequi iusto debitis delectus doloremque.</p>						
-                <span class="plus"><a href="#" title="Lorem ipsum"><i class="glyphicon glyphicon-plus"></i></a></span>
-			</div>
-			<span class="clearfix border"></span>
-		</article>			
+						case 'vehicles':
+							$classname = 'fa fa-car fa-fw';
+							break;
+	
+						case 'wallets':
+							$classname = 'fa fa-google-wallet fa-fw';
+							break;
+							
+						case 'drivers':
+							$classname = 'fa fa-id-badge fa-fw';
+							break;
+					}
+				?>
+				<li>
+					<a class="expand">
+						<div class="right-arrow">+</div>
+						<div>
+							<h2 class="pull-left">
+								<i class="{{ $classname }}"></i>
+								{{ ucwords($searchresult->tablename) }}
+							</h2>
+							<span>Meets SPCC Regulation 40CFR112, Oil spill solutions, Oil Solidifier - just pick it up and send it to a land fill, Spill kits, Sub-station containment</span>
+						</div>
+					</a>
 
-	</section>
+					<div class="detail">
+						<div class="table-responsive">
+							<table class="table dtable table-hover table-condensed table-bordered">
+							<thead>
+								<tr>
+									<th> S / N </th>
+									<th> Passport </th>
+									<th> Staff ID </th>
+									<th> Full Name </th>
+									<th> Mobile Number </th>
+									<th> Date of Birth </th>
+									<th> Action </th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+							</table>
+						</div>
+					</div>
+
+					<br />
+					<br />
+				</li>
+			@endforeach
+		</ul>
+	</div>
 @endsection

@@ -39,6 +39,19 @@ $(document).ready(function () {
         }
     }
     
+    $(".expand").on( "click", 
+        function() {
+            $(this).next().slideToggle(200);
+            $expand = $(this).find(">:first-child");
+            
+            if($expand.text() == "+") {
+            $expand.text("-");
+            } else {
+            $expand.text("+");
+            }
+        }
+    );
+
     function PopulatePanel(TabText, JsonObject) {
         if (!$.isEmptyObject(JsonObject)) {
             $.each(JsonObject, function(parentIndex, parentElement) {

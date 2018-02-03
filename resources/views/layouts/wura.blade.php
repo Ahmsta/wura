@@ -19,11 +19,6 @@
         @yield('styles')
         <link href="{{ mix('css/frontend.css') }}" rel="stylesheet" type="text/css" />
         <style>
-            /* .navbar-default {
-                background-color: transparent;
-                border-color: transparent;
-            } */
-
             .navbar {
                 padding: 0px;
                 background: transparent;
@@ -63,6 +58,15 @@
                 border-color: transparent;
                 border-image: initial;
                 border-radius: 0px;
+            }
+
+            table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
+                cursor: pointer;
+                position: initial;
+            }
+
+            table.dataTable thead .sorting {
+                background-image: url(../images/sort_both.png);
             }
         </style>
     </head>
@@ -234,7 +238,7 @@
                             </a>
 
                             <a href="{{ route('calendar') }}" class="btn btn-default navbar-btn" title="View all your Calendar Events.">
-                                <i class="{{ $hasevent }}" style="color:{{ $eventColor }};"></i>
+                                <i class="{{ $hasevent }}" style="color:{{ $setColor }};"></i>
                             </a>
                             
                             <a href="{{ route('messages') }}" class="btn btn-default navbar-btn" title="View all messages.">
@@ -321,14 +325,24 @@
                                         <div class="col-md-4">
                                             <input type="checkbox" id="filter" name="filter[]" class="filter" value="7" /> Vehicles
                                         </div>
+
                                         <div class="col-md-4">
-                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="8" /> Wallets
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="8" /> Vehicle Documents
+                                        </div>
+                                        <div class="col-md-4">
+                                            <input type="checkbox" id="filter" name="filter[]" class="filter" value="9" /> Wallets
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom:15px;" title="Filter by">
+                                        <div class="col-md-4">
+                                        </div>
+                                        <div class="col-md-4">
                                         </div>
                                         <div class="col-md-4">
                                             <input type="checkbox" id="filter" name="filter[]" class="filter" checked="checked" value="0" /> All Objects
                                         </div>
                                     </div>
-                    
+
                                     <div class="row" style="margin-top:20px;">
                                         <div class="col-md-12" title="Search For">
                                             <label for="car_type" style="color:black; text-align:left; float:left;">Search For</label>

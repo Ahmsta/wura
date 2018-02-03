@@ -61,7 +61,6 @@ $(document).ready(function () {
                             });
 
                             if (value.status.toLowerCase() === 'expired') {
-                                console.log($(mockFile.previewElement).find('div#Div'));
                                 $(mockFile.previewElement).find('div#Div').css('background-color', 'red');
                             }
 
