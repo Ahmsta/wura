@@ -21,9 +21,9 @@ class RenameColumns extends Migration
             $table->renameColumn('holder', 'ownerid');
         });
 
-        Schema::table('drivers', function (Blueprint $table) {
-            $table->renameColumn('belongsTo', 'ownerid');
-        });
+        // Schema::table('drivers', function (Blueprint $table) {
+        //     $table->renameColumn('belongsTo', 'ownerid');
+        // });
 
         Schema::table('notifications', function (Blueprint $table) {
             $table->renameColumn('owner_id', 'ownerid');
