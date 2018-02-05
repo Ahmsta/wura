@@ -33,9 +33,9 @@ class RenameColumns extends Migration
             $table->renameColumn('owner', 'ownerid');
         });
 
-        Schema::table('wallets', function (Blueprint $table) {
-            $table->renameColumn('belongsTo', 'ownerid');
-        });
+        // Schema::table('wallets', function (Blueprint $table) {
+        //     $table->renameColumn('belongsTo', 'ownerid');
+        // });
 
         Schema::create('transactions', function (Blueprint $table) {
             $table->integer('ownerid');
