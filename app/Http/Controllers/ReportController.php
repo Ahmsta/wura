@@ -121,6 +121,48 @@ class ReportController extends Controller
      *
      * @return \Illuminate\Http\Response
     */
+    public function preview($module, $id)
+    {
+        //Log::info($id);
+        //Log::info($module);
+
+        switch (strtolower($module)) {
+            case 'calendars':
+                break;
+                
+            case 'cards':
+                break;
+    
+            case 'notifications':
+                break;
+
+            case 'transactions':
+                break;
+
+            case 'users':
+                break;
+
+            case 'vehicle_docs':
+                break;
+
+            case 'vehicles':
+                break;
+
+            case 'wallets':
+                break;
+                
+            case 'drivers':
+                break;
+        }
+        //$recordset = \App\Models\Vehicles::where("id", $id)->get();
+        return view('reports.preview');
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+    */
     public function walletsummary()
     {
         return view('reports.walletsummary');

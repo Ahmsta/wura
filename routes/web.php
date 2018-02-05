@@ -33,6 +33,8 @@ Route::get('/drivers', 'DriversController@create')->name('drivers');
 
 Route::get('/mydrivers', 'DriversController@index')->name('mydrivers');
 
+Route::get('/preview/{module}/{id}', 'ReportController@preview')->name('preview');
+
 Route::get('/cardsinfo', 'ReportController@info')->name('cardsinfo');
 
 Route::get('/vehicleinfo/{id}', 'ReportController@vehicleinfo')->name('vehicleinfo');

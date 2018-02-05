@@ -70,7 +70,7 @@ class DashboardInfoFunction extends Migration
 
             -- FUNCTION: public.search_columns(text, name[], name[])
 
-            DROP FUNCTION public.search_columns(text, name[], name[]);
+            DROP FUNCTION public.search_columns(text, integer, name[], name[]);
 
             CREATE OR REPLACE FUNCTION public.search_columns(
                 needle text,
@@ -97,19 +97,19 @@ class DashboardInfoFunction extends Migration
                         AND t.table_name NOT IN ('audits', 'failed_jobs', 'jobs', 'migrations', 'password_resets', 'users')
                     LOOP
 
-                        EXECUTE format('SELECT ctid FROM %I.%I WHERE lower(cast(%I as text)) LIKE lower(%L)',
+                        EXECUTE format('SELECT ctid FROM %I.%I WHERE lower(cast(%I as text)) LIKE lower(cast(%L as text)) ',
                             schemaname, tablename, columnname, needle
                         ) INTO rowctid;
                         
                         IF rowctid is not null THEN
                             execute format('SELECT json_agg(result) FROM (
-                                        SELECT * FROM %I.%I WHERE lower(%I) LIKE $1 AND ownerid = $2) 
+                                        SELECT * FROM %I.%I WHERE lower(cast(%I as text)) LIKE cast($1 as text) AND ownerid = $2) 
                                         as result', schemaname, tablename, columnname) INTO results USING lower(needle), userid;
                             RETURN NEXT;
                         END IF;
                     END LOOP;
                 END;
-
+                
             \$BODY\$;
 
         ");
