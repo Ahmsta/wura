@@ -14,7 +14,6 @@
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.1.0/font-awesome-animation.min.css" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/toastr.min.css') }}" rel="stylesheet" type="text/css" />
-        <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/dataTables.bootstrap4.min.css') }}" rel="stylesheet" type="text/css" />
         @yield('styles')
         <link href="{{ mix('css/frontend.css') }}" rel="stylesheet" type="text/css" />
@@ -60,13 +59,23 @@
                 border-radius: 0px;
             }
 
-            table.dataTable thead .sorting, table.dataTable thead .sorting_asc, table.dataTable thead .sorting_desc, table.dataTable thead .sorting_asc_disabled, table.dataTable thead .sorting_desc_disabled {
-                cursor: pointer;
-                position: initial;
+            .dataTables_wrapper .dataTables_length {
+                float: left;
+            }
+            
+            div.dataTables_wrapper div.dataTables_info {
+                color: white;
+                padding-top: 0.85em;
+                white-space: nowrap;
+                text-align: left;
             }
 
-            table.dataTable thead .sorting {
-                background-image: url(../images/sort_both.png);
+            tbody {
+                background-color: #fff;
+                /* display: table-row-group; */
+                vertical-align: middle;
+                border-color: inherit;
+                color: #337ab7;
             }
         </style>
     </head>

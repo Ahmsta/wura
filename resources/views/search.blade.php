@@ -10,9 +10,9 @@
 		}
 
 		#integration-list {
-			width: 80%;
+			width: 100%;
 			margin: 0 auto;
-			display: table;
+			/* display: table; */
 		}
 
 		#integration-list ul {
@@ -21,10 +21,15 @@
 			margin: 20px 0;
 		}
 
-		#integration-list ul > li {
-			padding: 15px;
+		#integration-list ul > li:hover {
+			color: white;
+			background-color: #000;
+		}
+
+		.listStyle {
+			padding: 0px;
 			display: block;
-			overflow: hidden;
+			overflow: scroll;
 			list-style: none;
 			border-top: 1px solid #ddd;
 		}
@@ -40,42 +45,12 @@
 			cursor: pointer;
 		}
 
-		h2 {
-			padding: 0;
-			margin: 0;
-			font-size: 17px;
-			font-weight: 400;
-		}
-
-		span {
-			text-align: left;
-			font-size: 12.5px;
-		}
-
-		#sup {
-			display: table-cell;
-			vertical-align: middle;
-			width: 80%;
-		}
-
-		.detail a {
-			float: left;
-			text-decoration: none;
-			color: #C0392B;
-			border: 1px solid #C0392B;
-			padding: 6px 10px 5px;
-			font-size: 14px;
-		}
-
 		.detail {
 			margin: 10px 0 10px 0px;
 			display: none;
 			line-height: 22px;
 			height: 150px;
-		}
-
-		.detail span{
-			margin: 0;
+			overflow: scroll;
 		}
 
 		.right-arrow {
@@ -87,12 +62,18 @@
 			font-weight: bold;
 			font-size: 20px;
 		}
+
+		span {
+			font-size: 12.5px;
+		}
+
+		.detail span{
+			margin: 0;
+		}
     </style>
 @stop
 
 @section('content')
-About 299,000 results (0.67 seconds) 
-
     <hgroup class="mb20">
 		<h2 class="lead">
 			<strong class="standout">{{ sizeof($searchResults) }}</strong> 
@@ -108,58 +89,76 @@ About 299,000 results (0.67 seconds)
 		<ul>
 			@foreach ($searchResults as $searchresult)
 				<?php
-					$classname = ''; $url = '';
-					switch (strtolower($searchresult->tablename)) {
-						case 'audits':
-							$classname = 'fa fa-history fa-fw';
-							break;
+					$classname = ''; $url = ''; $fields = array(); $userKey = ''; $cnt = 0; $url = '#';
+					$result = json_decode($searchresult->results, true);
+					$length = count($result);
 
+					switch (strtolower($searchresult->tablename)) {
 						case 'calendars':
+							$userKey = 'owner';
 							$classname = 'fa fa-calendar fa-fw';
+							$fields = array("title", "start", "end");
 							break;
 							
 						case 'cards':
+							$userKey = 'holder';
 							$classname = 'fa fa-credit-card fa-fw';
+							$fields = array("cardnos", "valid_until", "status");
 							break;
 				
 						case 'notifications':
+							$userKey = 'owner_id';
 							$classname = 'fa fa-bell-o fa-fw';
+							$fields = array("type", "recipient", "subject");
 							break;
 			
 						case 'transactions':
 							$classname = 'fa fa-exchange-alt fa-fw';
+							$fields = array("cardnos", "amount", "merchant");
 							break;
 		
 						case 'users':
+							$userKey = 'id';
 							$classname = 'fa fa-users fa-fw';
+							$fields = array("firstname", "lastname", "email");
 							break;
 	
 						case 'vehicle_docs':
+							$userKey = 'ownerid';
 							$classname = 'fa fa-file-alt fa-fw';
+							$fields = array("doctypes", "expirydate", "status");
 							break;
 
 						case 'vehicles':
+							$userKey = 'owner';
 							$classname = 'fa fa-car fa-fw';
+							$fields = array("owner_name", "license_plate_number", "make", 'model', 'year', 'trim', 'purchase_date');
 							break;
 	
 						case 'wallets':
+							$userKey = 'belongsTo';
 							$classname = 'fa fa-google-wallet fa-fw';
+							$fields = array("walletname", "amount", 'status');
 							break;
 							
 						case 'drivers':
+							$userKey = 'belongsTo';
 							$classname = 'fa fa-id-badge fa-fw';
+							$fields = array("firstname", "middlename", 'lastname', 'mobilenumber', 'email', 'status');
 							break;
 					}
 				?>
-				<li>
+				<li class="listStyle">
 					<a class="expand">
 						<div class="right-arrow">+</div>
-						<div>
-							<h2 class="pull-left">
+						<div style="text-align: left; padding-left:20px;">
+							<h2 style="color: #01c0c8;">
 								<i class="{{ $classname }}"></i>
 								{{ ucwords($searchresult->tablename) }}
 							</h2>
-							<span>Meets SPCC Regulation 40CFR112, Oil spill solutions, Oil Solidifier - just pick it up and send it to a land fill, Spill kits, Sub-station containment</span>
+							<span> 
+								{{ $length }} {{ ($length > 1 ? 'records' : 'record') }} found for {{ $searchText }} under {{ ucwords(str_replace('_', ' ', $searchresult->columnname)) }}
+							</span>
 						</div>
 					</a>
 
@@ -168,22 +167,36 @@ About 299,000 results (0.67 seconds)
 							<table class="table dtable table-hover table-condensed table-bordered">
 							<thead>
 								<tr>
-									<th> S / N </th>
-									<th> Passport </th>
-									<th> Staff ID </th>
-									<th> Full Name </th>
-									<th> Mobile Number </th>
-									<th> Date of Birth </th>
+									<th> # </th>
+									<?php
+										foreach ($fields as &$field) {
+											echo '<th> ' . ucwords(str_replace('_', ' ', $field)) . ' </th>';
+										}
+									?>
 									<th> Action </th>
 								</tr>
 							</thead>
-							<tbody></tbody>
+							<tbody>
+								<?php
+									$id = Auth::id();
+									//$key = array_search($userKey, $result);
+									//echo ($key);
+
+									for ($i = 0; $i < $length; $i++) {
+										$cnt++;
+										echo '<tr>';
+										echo '<td>' . $cnt . '</td>';
+										foreach ($fields as &$field) {
+											echo '<td>' . $result[$i][$field] . '</td>';
+										}
+										echo '<td><a href="' . $url . '" class="btn btn-primary">More Details...</a></td>';
+										echo '</tr>';
+									}
+								?>
+							</tbody>
 							</table>
 						</div>
 					</div>
-
-					<br />
-					<br />
 				</li>
 			@endforeach
 		</ul>

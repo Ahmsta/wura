@@ -9,44 +9,44 @@
 <div class="row">
 
     <div class="col-md-12">
-
-        <table id='TblRecords' class='table dtable table-condensed table-striped table-bordered table-hover table-bordered'>
-            <thead>
-                <tr>
-                    <th> S / N </th>
-                    <th> Message Type </th>
-                    <th> Subject </th>
-                    <th> Recipient </th>
-                    <th> Sent On </th>
-                    <th> Action </th>
-                </tr>
-            </thead>
-
-            <tbody>
-                
-                @foreach ($notifications as $notification)
-                    <?php
-                        $cnt++;
-                    ?>
-                    <tr data-href="{{ $notification->id }}">
-                        <td> {{ $cnt }} </td>
-                        <td> {{ ucwords($notification->type) }} </td>
-                        <td> {{ $notification->subject }} </td>
-                        <td> {{ $notification->recipient }} </td>
-                        <td> {{ Carbon\Carbon::parse($notification->read_at)->toFormattedDateString() }} </td>
-                        <td> 
-                            <a href="#" data-toggle="modal" data-target="#messageview" class="btn btn-default msgbutton" data-id="{{ $notification->id }}"
-                                style="color: black;border-color: grey;">
-                                <i class="fa fa-eye" aria-hidden="true"></i> 
-                                View Message 
-                            </a>
-                        </td>
+        <div class="table-responsive">
+            <table id='TblRecords' class='table dtable table-hover table-condensed table-bordered'>
+                <thead>
+                    <tr>
+                        <th> S / N </th>
+                        <th> Message Type </th>
+                        <th> Subject </th>
+                        <th> Recipient </th>
+                        <th> Sent On </th>
+                        <th> Action </th>
                     </tr>
-                @endforeach
-                
-            </tbody>
-        </table>
+                </thead>
 
+                <tbody>
+                    
+                    @foreach ($notifications as $notification)
+                        <?php
+                            $cnt++;
+                        ?>
+                        <tr data-href="{{ $notification->id }}">
+                            <td> {{ $cnt }} </td>
+                            <td> {{ ucwords($notification->type) }} </td>
+                            <td> {{ $notification->subject }} </td>
+                            <td> {{ $notification->recipient }} </td>
+                            <td> {{ Carbon\Carbon::parse($notification->read_at)->toFormattedDateString() }} </td>
+                            <td> 
+                                <a href="#" data-toggle="modal" data-target="#messageview" class="btn btn-default msgbutton" data-id="{{ $notification->id }}"
+                                    style="color: black;border-color: grey;">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> 
+                                    View Message 
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <div class="modal fade" id="messageview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

@@ -93,6 +93,7 @@ class DashboardInfoFunction extends Migration
                         WHERE (c.table_name=ANY(haystack_tables) OR haystack_tables='{}')
                         AND c.table_schema=ANY(haystack_schema)
                         AND t.table_type='BASE TABLE'
+                        AND t.table_name NOT IN ('audits', 'failed_jobs', 'jobs', 'migrations', 'password_resets')
                     LOOP
 
                         EXECUTE format('SELECT ctid FROM %I.%I WHERE lower(cast(%I as text)) LIKE lower(%L)',

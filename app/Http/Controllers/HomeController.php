@@ -255,9 +255,9 @@ class HomeController extends Controller
             }
 
             if ($filter == "") {
-                $searchResult = DB::select("select * from search_columns('%" . $searchText . "%', '{}') order by 2;");
+                $searchResult = DB::select("select * from search_columns('%" . strtolower($searchText) . "%', '{}') order by 2;");
             } else {
-                $searchResult = DB::select("select * from search_columns('%" . $searchText . "%', '{" . substr($filter, 0, -2) . "}') order by 2;");
+                $searchResult = DB::select("select * from search_columns('%" . strtolower($searchText) . "%', '{" . substr($filter, 0, -2) . "}') order by 2;");
             }
 
             // Display Script End time

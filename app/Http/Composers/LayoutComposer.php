@@ -42,6 +42,7 @@ class LayoutComposer {
             // Return Ringer to show there is a notification 
             $view->with('setColor', 'aqua');
             $view->with('hasevent', 'fa fa-calendar faa-pulse animated');
+            $view->with('hasNotification', 'fa fa-bell faa-ring animated');
         } else {
             // Return normal bell. There is currently no notification for the user.
             $view->with('setColor', 'white');
