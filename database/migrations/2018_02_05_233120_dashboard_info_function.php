@@ -70,7 +70,7 @@ class DashboardInfoFunction extends Migration
 
             -- FUNCTION: public.search_columns(text, name[], name[])
 
-            DROP FUNCTION public.search_columns(text, integer, name[], name[]);
+            DROP FUNCTION public.search_columns(text, name[], name[]);
 
             CREATE OR REPLACE FUNCTION public.search_columns(
                 needle text,
