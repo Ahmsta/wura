@@ -89,25 +89,25 @@
 		<ul>
 			@foreach ($searchResults as $searchresult)
 				<?php
-					$classname = ''; $url = ''; $fields = array(); $userKey = ''; $cnt = 0; $url = '#';
+					$classname = ''; $url = ''; $fields = array(); $cnt = 0; $url = '#';
 					$result = json_decode($searchresult->results, true);
 					$length = count($result);
 
 					switch (strtolower($searchresult->tablename)) {
 						case 'calendars':
-							$userKey = 'owner';
+							$url = '#';
 							$classname = 'fa fa-calendar fa-fw';
 							$fields = array("title", "start", "end");
 							break;
 							
 						case 'cards':
-							$userKey = 'holder';
+							$url = '#';
 							$classname = 'fa fa-credit-card fa-fw';
 							$fields = array("cardnos", "valid_until", "status");
 							break;
 				
 						case 'notifications':
-							$userKey = 'owner_id';
+							$url = '#';
 							$classname = 'fa fa-bell-o fa-fw';
 							$fields = array("type", "recipient", "subject");
 							break;
@@ -118,31 +118,31 @@
 							break;
 		
 						case 'users':
-							$userKey = 'id';
+							$url = '#';
 							$classname = 'fa fa-users fa-fw';
 							$fields = array("firstname", "lastname", "email");
 							break;
 	
 						case 'vehicle_docs':
-							$userKey = 'ownerid';
+							$url = '#';
 							$classname = 'fa fa-file-alt fa-fw';
 							$fields = array("doctypes", "expirydate", "status");
 							break;
 
 						case 'vehicles':
-							$userKey = 'owner';
+							$url = '#';
 							$classname = 'fa fa-car fa-fw';
 							$fields = array("owner_name", "license_plate_number", "make", 'model', 'year', 'trim', 'purchase_date');
 							break;
 	
 						case 'wallets':
-							$userKey = 'belongsTo';
+							$url = '#';
 							$classname = 'fa fa-google-wallet fa-fw';
 							$fields = array("walletname", "amount", 'status');
 							break;
 							
 						case 'drivers':
-							$userKey = 'belongsTo';
+							$url = '#';
 							$classname = 'fa fa-id-badge fa-fw';
 							$fields = array("firstname", "middlename", 'lastname', 'mobilenumber', 'email', 'status');
 							break;
@@ -178,9 +178,7 @@
 							</thead>
 							<tbody>
 								<?php
-									$id = Auth::id();
-									//$key = array_search($userKey, $result);
-									//echo ($key);
+									// 1. Link the More details button to the report module controller
 
 									for ($i = 0; $i < $length; $i++) {
 										$cnt++;

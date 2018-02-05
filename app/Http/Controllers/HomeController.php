@@ -194,7 +194,7 @@ class HomeController extends Controller
         $users = DB::table('drivers')
                     ->selectRaw('id as value, firstname || \' \' || middlename || \' \' || lastname as text')
                     ->where([
-                        ['belongsTo', '=', Auth::id()],
+                        ['ownerid', '=', Auth::id()],
                         ['status', '=', 'Activate']
                     ])
                     ->orderBy('text')
@@ -255,9 +255,9 @@ class HomeController extends Controller
             }
 
             if ($filter == "") {
-                $searchResult = DB::select("select * from search_columns('%" . strtolower($searchText) . "%', '{}') order by 2;");
+                $searchResult = DB::select("select * from search_columns('%" . strtolower($searchText) . "%', " . Auth::id() . ", '{}') order by 2;");
             } else {
-                $searchResult = DB::select("select * from search_columns('%" . strtolower($searchText) . "%', '{" . substr($filter, 0, -2) . "}') order by 2;");
+                $searchResult = DB::select("select * from search_columns('%" . strtolower($searchText) . "%', " . Auth::id() . ", '{" . substr($filter, 0, -2) . "}') order by 2;");
             }
 
             // Display Script End time

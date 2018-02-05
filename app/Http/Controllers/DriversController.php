@@ -80,7 +80,7 @@ class DriversController extends Controller
     {
         if ($request->isMethod('post')) {
             $request['userrole'] = 'driver';
-            $request['belongsTo'] = Auth::id();
+            $request['ownerid'] = Auth::id();
             
             // Validate the request.
             $validator = Validator::make($request->all(), AuthValidation::registerDriver());
@@ -98,7 +98,7 @@ class DriversController extends Controller
             $passportpath = Storage::putFile('public/passports', $request->file('passpic'));
 
             $driver->status = "Inactive";
-            $driver->belongsTo = Auth::id();
+            $driver->ownerid = Auth::id();
             $driver->email = $request->email;
             $driver->dateofbirth = $request->DOB;
             $driver->passportpath = $passportpath;
@@ -129,7 +129,7 @@ class DriversController extends Controller
                 $calendarEntry = new \App\Models\Calendars();
                 $calendarEntry->url = '';
                 $calendarEntry->allDay = false;
-                $calendarEntry->owner = Auth::id();
+                $calendarEntry->ownerid = Auth::id();
                 $calendarEntry->classname = 'bg-primary';
                 $calendarEntry->start = $driver->dateofbirth;
                 $calendarEntry->end = Carbon::createFromFormat('Y-m-d', $driver->dateofbirth)->addYears(100);
@@ -160,7 +160,7 @@ class DriversController extends Controller
     {
         if ($request->isMethod('put')) {
             $request['userrole'] = 'driver';
-            $request['belongsTo'] = Auth::id();
+            $request['ownerid'] = Auth::id();
             
             // Validate the request.
             $validator = Validator::make($request->all(), AuthValidation::registerDriver());
@@ -175,7 +175,7 @@ class DriversController extends Controller
             $driver = Drivers::find($recordid);
             
             //$driver->status = "Inactive";
-            $driver->belongsTo = Auth::id();
+            $driver->ownerid = Auth::id();
             $driver->email = $request->email;
             $driver->dateofbirth = $request->DOB;
             $driver->lastname = $request->lastname;

@@ -20,14 +20,14 @@ class Drivers extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['firstname', 'middlename', 'lastname', 'idnumber', 'mobilenumber', 'dateofbirth', 'passportpath', 'identificationpath', 'belongsTo', 'status', 'email'];
+    protected $fillable = ['firstname', 'middlename', 'lastname', 'idnumber', 'mobilenumber', 'dateofbirth', 'passportpath', 'identificationpath', 'ownerid', 'status', 'email'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude = ['firstname', 'middlename', 'lastname', 'idnumber', 'mobilenumber', 'dateofbirth', 'passportpath', 'identificationpath', 'belongsTo', 'status', 'email'];
+    protected $auditInclude = ['firstname', 'middlename', 'lastname', 'idnumber', 'mobilenumber', 'dateofbirth', 'passportpath', 'identificationpath', 'ownerid', 'status', 'email'];
 
     /**
      * {@inheritdoc}

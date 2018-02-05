@@ -20,14 +20,14 @@ class Notifications extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['type', 'recipient', 'data', 'read_at', 'owner_id', 'subject'];
+    protected $fillable = ['type', 'recipient', 'data', 'read_at', 'ownerid', 'subject'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude = ['type', 'recipient', 'data', 'read_at', 'owner_id', 'subject'];
+    protected $auditInclude = ['type', 'recipient', 'data', 'read_at', 'ownerid', 'subject'];
   
     /**
      * {@inheritdoc}

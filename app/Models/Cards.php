@@ -20,14 +20,14 @@ class Cards extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['cardnos', 'holder', 'status', 'valid_until', 'assignedto'];
+    protected $fillable = ['cardnos', 'ownerid', 'status', 'valid_until', 'assignedto'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude = ['cardnos', 'holder', 'status', 'valid_until', 'assignedto'];
+    protected $auditInclude = ['cardnos', 'ownerid', 'status', 'valid_until', 'assignedto'];
 
     /**
      * Get all transactions owned by this card.
@@ -50,7 +50,7 @@ class Cards extends Model implements AuditableContract
     */
     public function cardOwner()
     {
-        return $this->hasMany('App\Models\User', 'id', 'holder');
+        return $this->hasMany('App\Models\User', 'id', 'ownerid');
     }
 
     /**

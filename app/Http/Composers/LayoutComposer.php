@@ -32,7 +32,7 @@ class LayoutComposer {
         $eventscount =  new \App\Models\Calendars();
         $eventscount = $eventscount
             ->distinct('title') 
-            ->where('owner', Auth::id())
+            ->where('ownerid', Auth::id())
             ->where('start',  Carbon::today()->format('Y-m-d'))
             ->orWhere('end', Carbon::today()->format('Y-m-d'))
             ->whereNull('deleted_at')

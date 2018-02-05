@@ -83,7 +83,7 @@ class WalletController extends Controller
             $this->validator($request->all())->validate();
 
             $wallet = new Wallets();
-            $wallet->belongsTo = Auth::id();
+            $wallet->ownerid = Auth::id();
             $wallet->oncard = $request->oncard;
             $wallet->amount = $request->amount;
             $wallet->status = $request->status;

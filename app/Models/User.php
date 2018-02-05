@@ -48,7 +48,7 @@ class User extends Authenticatable implements AuditableContract, UserResolver
     */
     public function Drivers()
     {
-        return $this->hasMany('App\Models\Drivers', 'belongsTo', 'id');
+        return $this->hasMany('App\Models\Drivers', 'ownerid', 'id');
     }
 
     /**
@@ -56,7 +56,7 @@ class User extends Authenticatable implements AuditableContract, UserResolver
     */
     public function Cards()
     {
-        return $this->hasMany('App\Models\Cards', 'holder', 'id');
+        return $this->hasMany('App\Models\Cards', 'ownerid', 'id');
     }
 
     /**
@@ -64,13 +64,13 @@ class User extends Authenticatable implements AuditableContract, UserResolver
     */
     public function Wallets()
     {
-        return $this->hasMany('App\Models\Wallets', 'belongsTo', 'id');
+        return $this->hasMany('App\Models\Wallets', 'ownerid', 'id');
     }
 
     public static function ValidCards() {
         $result = self::with(['Cards' => function($q) {
             //$q->where('status', '=', 'Activate')
-              $q->where('holder', '=', 1);
+              $q->where('ownerid', '=', 1);
         }])->get();
         return $result;    
     }

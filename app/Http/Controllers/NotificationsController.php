@@ -29,7 +29,7 @@ class NotificationsController extends Controller
      * @return \Illuminate\Http\Response
     */
     public function messages() {
-        $notifications = Notifications::where('owner_id', Auth::id())->get();
+        $notifications = Notifications::where('ownerid', Auth::id())->get();
         return view("notifications.messages", ['notifications' => $notifications]);
     }
 
@@ -62,7 +62,7 @@ class NotificationsController extends Controller
     public function mycalendarevents(Request $request) {
         $calendarEntry =  new \App\Models\Calendars();
         $calendarEntry = $calendarEntry
-            ->where('owner', Auth::id())
+            ->where('ownerid', Auth::id())
             ->where('start', '>=', $request->input('start'))
             ->where('end', '<=', $request->input('end'))
             ->get();
@@ -92,7 +92,7 @@ class NotificationsController extends Controller
     public function newEvent(Request $request) {
         if ($request->isMethod('post')) {
             $calendarEntry = new \App\Models\Calendars();
-            $calendarEntry->owner = Auth::id();
+            $calendarEntry->ownerid = Auth::id();
             $calendarEntry->url = $request->input('url');
             $calendarEntry->end = $request->input('end');
             $calendarEntry->start = $request->input('start');
@@ -124,7 +124,7 @@ class NotificationsController extends Controller
             $recordid = $request->input('id');
 
             $calendarEntry = \App\Models\Calendars::find($recordid);
-            $calendarEntry->owner = Auth::id();
+            $calendarEntry->ownerid = Auth::id();
             $calendarEntry->url = $request->input('url');
             $calendarEntry->end = $request->input('end');
             $calendarEntry->start = $request->input('start');

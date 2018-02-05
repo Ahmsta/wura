@@ -20,14 +20,14 @@ class Vehicles extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['year', 'make', 'model', 'trim', 'color', 'owner', 'owner_name', 'car_details', 'purchase_date', 'license_plate_number', 'left_view', 'rear_view', 'right_view', 'frontal_view', 'assigned_to'];
+    protected $fillable = ['year', 'make', 'model', 'trim', 'color', 'ownerid', 'owner_name', 'car_details', 'purchase_date', 'license_plate_number', 'left_view', 'rear_view', 'right_view', 'frontal_view', 'assigned_to'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude = ['year', 'make', 'model', 'trim', 'color', 'owner', 'owner_name', 'car_details', 'purchase_date', 'license_plate_number', 'left_view', 'rear_view', 'right_view', 'frontal_view', 'assigned_to'];
+    protected $auditInclude = ['year', 'make', 'model', 'trim', 'color', 'ownerid', 'owner_name', 'car_details', 'purchase_date', 'license_plate_number', 'left_view', 'rear_view', 'right_view', 'frontal_view', 'assigned_to'];
 
     /**
      * {@inheritdoc}

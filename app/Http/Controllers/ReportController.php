@@ -33,7 +33,7 @@ class ReportController extends Controller
     */
     public function drivers()
     {
-        $recordset = \App\Models\Drivers::where("belongsTo", Auth::id())
+        $recordset = \App\Models\Drivers::where("ownerid", Auth::id())
                                         ->whereNull('deleted_at')
                                         ->get();
         return view('reports.driversreport', ['drivers' => $recordset]);
@@ -56,7 +56,7 @@ class ReportController extends Controller
     public function cards()
     {
         $recordset = \App\Models\Cards::whereNull('deleted_at')
-                                        ->where("holder", Auth::id())
+                                        ->where("ownerid", Auth::id())
                                         ->where('status', 'Activate')
                                         ->orWhere(function($query)
                                             {
@@ -74,7 +74,7 @@ class ReportController extends Controller
     */
     public function expired()
     {
-        $recordset = \App\Models\Cards::where("holder", Auth::id())
+        $recordset = \App\Models\Cards::where("ownerid", Auth::id())
                                         ->where('status', 'Expired')
                                         ->whereNull('deleted_at')
                                         ->orWhere(function($query)
@@ -93,7 +93,7 @@ class ReportController extends Controller
     */
     public function info()
     {
-        $recordset = \App\Models\Cards::where("holder", Auth::id())
+        $recordset = \App\Models\Cards::where("ownerid", Auth::id())
                                         ->where('status', 'Processing Request')
                                         ->whereNull('deleted_at')
                                         ->orWhere(function($query)

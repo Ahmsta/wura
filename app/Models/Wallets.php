@@ -20,14 +20,14 @@ class Wallets extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['walletname', 'oncard', 'amount', 'status', 'belongsTo'];
+    protected $fillable = ['walletname', 'oncard', 'amount', 'status', 'ownerid'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude =  ['walletname', 'oncard', 'amount', 'status', 'belongsTo'];
+    protected $auditInclude =  ['walletname', 'oncard', 'amount', 'status', 'ownerid'];
 
     /**
      * {@inheritdoc}

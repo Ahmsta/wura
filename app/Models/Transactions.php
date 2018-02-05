@@ -20,14 +20,14 @@ class Transactions extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['cardnos', 'amount', 'merchant'];
+    protected $fillable = ['cardnos', 'amount', 'merchant', 'ownerid'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude = ['cardnos', 'amount', 'merchant'];
+    protected $auditInclude = ['cardnos', 'amount', 'merchant', 'ownerid'];
 
     /**
      * {@inheritdoc}

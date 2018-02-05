@@ -20,14 +20,14 @@ class Calendars extends Model implements AuditableContract
      *
      * @var array
     */
-    protected $fillable = ['title', 'allDay', 'start', 'end', 'url', 'classname', 'owner'];
+    protected $fillable = ['title', 'allDay', 'start', 'end', 'url', 'classname', 'ownerid'];
 
     /**
      * Attributes to include in the Audit.
      *
      * @var array
      */
-    protected $auditInclude = ['title', 'allDay', 'start', 'end', 'url', 'classname', 'owner'];
+    protected $auditInclude = ['title', 'allDay', 'start', 'end', 'url', 'classname', 'ownerid'];
 
     /**
      * {@inheritdoc}

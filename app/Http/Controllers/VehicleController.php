@@ -36,7 +36,7 @@ class VehicleController extends Controller
     */
     public function index()
     {
-        $vehicles = Vehicles::where('owner', Auth::id())->get();
+        $vehicles = Vehicles::where('ownerid', Auth::id())->get();
         return view('vehicle.index', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
     }
 
@@ -106,7 +106,7 @@ class VehicleController extends Controller
             
             $vehicle = new Vehicles();
             $vehicle->assigned_to = 0;
-            $vehicle->owner = Auth::id();
+            $vehicle->ownerid = Auth::id();
             $vehicle->left_view = $left_view;
             $vehicle->rear_view = $rear_view;
             $vehicle->right_view = $right_view;
@@ -160,7 +160,7 @@ class VehicleController extends Controller
             }
             
             $vehicle->assigned_to = 0;
-            $vehicle->owner = Auth::id();
+            $vehicle->ownerid = Auth::id();
             $vehicle->year = $request->car_year;
             $vehicle->make = $request->car_type;
             $vehicle->model = $request->car_model;

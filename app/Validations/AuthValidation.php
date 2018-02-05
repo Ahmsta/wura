@@ -34,7 +34,7 @@ class AuthValidation
             'idnumber' => 'required|string|max:255',
             'mobile' => 'required|string|max:255',
             'DOB' => 'required|date',
-            'belongsTo' => 'required|numeric',
+            'ownerid' => 'required|numeric',
             'email' => 'required|string|email|max:255',
             'userrole' => 'required|string|min:3',
         ];
@@ -121,21 +121,6 @@ class AuthValidation
             'audit_source' => 'required|string|max:255',
             'audit_enddate' => 'required|date',
             'audit_startdate' => 'required|date',
-        ];
-    }
-
-    /**
-     * Validation for company register
-     * @return mixed
-     */
-    public static function registerCompanyRules()
-    {
-        return [
-            'company_name' => 'required|string|max:255',
-            'firstname' => 'required|string|max:255',
-            'lastname' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
         ];
     }
 
