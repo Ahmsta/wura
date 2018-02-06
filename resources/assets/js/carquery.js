@@ -2790,10 +2790,10 @@ $(document).ready(function () {
                         $("select#car_model_color").val(data.vehicleInfo.color);
                         $('#purchase_date').val(data.vehicleInfo.purchase_date);
                         $('#license_plate_number').val(data.vehicleInfo.license_plate_number);
-                        $("#left_view_preview").attr("src", data.vehicleInfo.left_view.replace('public', '/storage'));
-                        $("#rear_view_preview").attr("src", data.vehicleInfo.rear_view.replace('public', '/storage'));
-                        $("#right_view_preview").attr("src", data.vehicleInfo.right_view.replace('public', '/storage'));
-                        $("#front_view_preview").attr("src", data.vehicleInfo.frontal_view.replace('public', '/storage'));
+                        $("#left_view_preview").attr("src", data.vehicleInfo.left_view);
+                        $("#rear_view_preview").attr("src", data.vehicleInfo.rear_view);
+                        $("#right_view_preview").attr("src", data.vehicleInfo.right_view);
+                        $("#front_view_preview").attr("src", data.vehicleInfo.frontal_view);
                         $("select#car_type").html("<option value='" + data.vehicleInfo.make + "'>" + data.vehicleInfo.make + "</option>"); //.trigger('change');
                         $("select#car_model").html("<option value='" + data.vehicleInfo.model + "'>" + data.vehicleInfo.model + "</option>");//
                         $("select#car_model_trim").html("<option value='" + data.vehicleInfo.trim + "'>" + data.vehicleInfo.trim.split(':')[1] + "</option>");//

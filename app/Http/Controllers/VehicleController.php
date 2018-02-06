@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Auth;
 use Carbon\Carbon;
+use App\Http\S3Helper;
 use App\Models\Vehicles;
 use Illuminate\Http\File;
 use App\Models\VehicleDocs;
@@ -11,12 +12,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Validations\AuthValidation;
 use Illuminate\Support\Facades\Validator;
 
 class VehicleController extends Controller
 {
+    protected $s3 = null;
     protected $tag = 'Vehicles :: ';
 
     /**
@@ -27,6 +28,7 @@ class VehicleController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->s3 = new S3Helper();
     }
 
     /**
@@ -37,7 +39,7 @@ class VehicleController extends Controller
     public function index()
     {
         $vehicles = Vehicles::where('ownerid', Auth::id())->get();
-        return view('vehicle.index', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
+        return view('vehicle.index', ['vehicles' => $vehicles, 'defaultImg' => $this->s3->gets3upload()]);
     }
 
     /**
@@ -62,7 +64,7 @@ class VehicleController extends Controller
     */
     public function registerform()
     {
-        return view('vehicle.register')->with('defaultImg', Storage::url('upload_image.png'));
+        return view('vehicle.register')->with('defaultImg', $this->s3->gets3upload());
     }
 
     /**
@@ -84,24 +86,20 @@ class VehicleController extends Controller
                 return redirect()->back()->withErrors($validator)->withInput();
             }
 
-            $left_view = '/upload_image.png';
             if ($request->hasFile('left_view')) {
-                $left_view = Storage::putFile('public/cars', $request->file('left_view'));
+                $left_view = $this->s3->UploadImage('left_view' . Auth::id() . $_FILES['left_view']['name'], $_FILES['left_view']['tmp_name']);
             }
 
-            $rear_view = '/upload_image.png';
             if ($request->hasFile('rear_view')) {
-                $rear_view = Storage::putFile('public/cars', $request->file('rear_view'));
+                $rear_view = $this->s3->UploadImage('left_view' . Auth::id() . $_FILES['rear_view']['name'], $_FILES['rear_view']['tmp_name']);
             }
 
-            $right_view = '/upload_image.png';
             if ($request->hasFile('right_view')) {
-                $right_view = Storage::putFile('public/cars', $request->file('right_view'));
+                $right_view = $this->s3->UploadImage('left_view' . Auth::id() . $_FILES['right_view']['name'], $_FILES['right_view']['tmp_name']);
             }
 
-            $frontal_view = '/upload_image.png';
             if ($request->hasFile('front_view_image')) {
-                $frontal_view = Storage::putFile('public/cars', $request->file('front_view_image'));
+                $frontal_view = $this->s3->UploadImage('front_view_image' . Auth::id() . $_FILES['front_view_image']['name'], $_FILES['front_view_image']['tmp_name']);
             }
             
             $vehicle = new Vehicles();
@@ -144,21 +142,20 @@ class VehicleController extends Controller
             $vehicle = Vehicles::find($recordid);
             
             if ($request->hasFile('left_view')) {
-                $vehicle->left_view = Storage::putFile('public/cars', $request->file('left_view'));
+                $vehicle->left_view = $this->s3->UploadImage('left_view' . Auth::id() . $_FILES['left_view']['name'], $_FILES['left_view']['tmp_name']);
             }
 
             if ($request->hasFile('rear_view')) {
-                $vehicle->rear_view = Storage::putFile('public/cars', $request->file('rear_view'));
+                $vehicle->rear_view = $this->s3->UploadImage('left_view' . Auth::id() . $_FILES['rear_view']['name'], $_FILES['rear_view']['tmp_name']);
             }
 
             if ($request->hasFile('right_view')) {
-                $vehicle->right_view = Storage::putFile('public/cars', $request->file('right_view'));
+                $vehicle->right_view = $this->s3->UploadImage('left_view' . Auth::id() . $_FILES['right_view']['name'], $_FILES['right_view']['tmp_name']);
             }
 
             if ($request->hasFile('front_view_image')) {
-                $vehicle->frontal_view = Storage::putFile('public/cars', $request->file('front_view_image'));
+                $vehicle->frontal_view = $this->s3->UploadImage('front_view_image' . Auth::id() . $_FILES['front_view_image']['name'], $_FILES['front_view_image']['tmp_name']);
             }
-            
             $vehicle->assigned_to = 0;
             $vehicle->ownerid = Auth::id();
             $vehicle->year = $request->car_year;
@@ -183,7 +180,7 @@ class VehicleController extends Controller
 
     public function documents($id) {
         $vehicles = Vehicles::find($id);
-        return view('vehicle.documents', ['vehicles' => $vehicles, 'defaultImg' => Storage::url('upload_image.png')]);
+        return view('vehicle.documents', ['vehicles' => $vehicles, 'defaultImg' => $this->s3->gets3upload()]);
     }
 
     /**
@@ -225,9 +222,9 @@ class VehicleController extends Controller
 
             // Find or create a new object based on the primary key.
             $vehicledoc = VehicleDocs::findOrNew($request->id);
+
             if ($request->hasFile('file')) {
-                // $document = '/upload_image.png';
-                $vehicledoc->docpath = Storage::putFile('public/documents', $request->file('file'));
+                $vehicledoc->docpath = $this->s3->UploadImage('file' . Auth::id() . $_FILES['file']['name'], $_FILES['file']['tmp_name']);
             }
 
             $vehicledoc->status = 'Active';

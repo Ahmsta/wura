@@ -18442,8 +18442,8 @@ $(document).ready(function () {
                 }
                 $('#middlename').val(data.driverInfo.middlename);
                 $("#dateofbirth").val(moment(data.driverInfo.dateofbirth).format('D-MM-YYYY'));
-                $("#ImgPreview").attr("src", data.driverInfo.passportpath.replace('public', '/storage'));
-                $("#IDPreview").attr("src", data.driverInfo.identificationpath.replace('public', '/storage'));
+                $("#ImgPreview").attr("src", data.driverInfo.passportpath);
+                $("#IDPreview").attr("src", data.driverInfo.identificationpath);
                 $('#driverEditModal').modal('show');
             }
         });

@@ -3,17 +3,13 @@
 
 @section('content')
     <div class="row" style="margin-top:20px;">
-        @foreach ($drivers as $driver)
-            <?php
-                $imgPath = \Illuminate\Support\Facades\Storage::url($driver->passportpath);
-            ?>
-                     
+        @foreach ($drivers as $driver)                     
             <div class="col-md-6 col-lg-6 col-xlg-4">
                 <div class="card card-block">
                     <div class="row">
                         <div class="col-md-4 col-lg-3 text-center">
                             <a href="driverdetails?id={{ $driver->id }}">
-                                <img src="{{ $imgPath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-circle img-thumbnail"  />
+                                <img src="{{ $driver->passportpath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-circle img-thumbnail"  />
                             </a>
                         </div>
                         <div class="col-md-8 col-lg-9" style="text-align:left; color: black; line-height:30px;">

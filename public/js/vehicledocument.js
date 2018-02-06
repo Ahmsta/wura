@@ -54,7 +54,7 @@ $(document).ready(function () {
                         $.each(data.vehicledocs, function (key, value) {
                             var mockFile = { name: value.status.toLowerCase() + ' ' + value.doctypes + ' Document', size: 1, id: value.id };
                             thisDropzone.emit("addedfile", mockFile);
-                            thisDropzone.options.thumbnail.call(thisDropzone, mockFile, value.docpath.replace('public', '/storage'));
+                            thisDropzone.options.thumbnail.call(thisDropzone, mockFile, value.docpath);
 
                             $(mockFile.previewTemplate).find("input,select,hidden").filter(function() {
                                 $(this).val(value[this.id.toLowerCase()]);

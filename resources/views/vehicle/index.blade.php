@@ -26,11 +26,10 @@
                         <?php
                             $cnt++;
                             $trim_details = explode(":", $vehicle->trim)[1];
-                            $imgPath = \Illuminate\Support\Facades\Storage::url($vehicle->frontal_view);
                         ?>
                         <tr>
                             <td>{{ $cnt }}</td>
-                            <td><img src="{{ $imgPath}}" alt="{{ $vehicle->license_plate_number }}'s Picture" class="img-responsive img-thumbnail" style="width:50px; height:50px;" /></td>
+                            <td><img src="{{ $vehicle->frontal_view }}" alt="{{ $vehicle->license_plate_number }}'s Picture" class="img-responsive img-thumbnail" style="width:50px; height:50px;" /></td>
                             <td>{{ $vehicle->license_plate_number }}</td>
                             <td>{{ Carbon\Carbon::parse($vehicle->purchase_date)->toFormattedDateString() }}</td>
                             <td nowrap>{{ $vehicle->year . ' ' . $vehicle->make }}</td>

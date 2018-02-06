@@ -26,11 +26,10 @@
                         @foreach ($drivers as $driver)
                             <?php
                                 $cnt++;
-                                $imgPath = \Illuminate\Support\Facades\Storage::url($driver->passportpath);
                             ?>
                             <tr data-href="{{ $driver->id }}">
                                 <td>{{ $cnt }}</td>
-                                <td> <img src="{{ $imgPath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-thumbnail" style="width:50px; height:50px;" /></td>
+                                <td> <img src="{{ $driver->passportpath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-thumbnail" style="width:50px; height:50px;" /></td>
                                 <td>{{ $driver->idnumber }} </td>
                                 <td>{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }} </td>
                                 <td>{{ $driver->mobilenumber }} </td>

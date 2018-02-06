@@ -9,10 +9,9 @@
                 if ($driver == null) {
                     $driver = new \App\Models\Drivers();
                     $driver->id = 0;
-                    $imgPath = '\images\blank.jpg';
+                    $imgPath = 'https://s3-eu-west-1.amazonaws.com/wurafleet/blank.jpg';
                     $driver->fullname = "Not assigned to any driver";
                 } else {
-                    $imgPath = \Illuminate\Support\Facades\Storage::url($driver->passportpath);
                     $driver->fullname = $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname;
                 }
             ?>
@@ -22,7 +21,7 @@
                     <div class="row">
                         <div class="col-md-4 col-lg-3 text-center">
                             <a href="driverdetails?id={{ $driver->id }}" style="color:#01c0c8;">
-                                <img src="{{ $imgPath }}" title="{{ $driver->fullname }}'s Picture" alt="{{ $driver->fullname }}'s Picture" class="img-responsive img-circle img-thumbnail" style="width:91px; height:91px;" />
+                                <img src="{{ $driver->passportpath }}" title="{{ $driver->fullname }}'s Picture" alt="{{ $driver->fullname }}'s Picture" class="img-responsive img-circle img-thumbnail" style="width:91px; height:91px;" />
                             </a>
                         </div>
                         <div class="col-md-8 col-lg-9" style="text-align:left; color: black; line-height:30px;">

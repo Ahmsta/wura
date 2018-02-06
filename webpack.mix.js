@@ -35,7 +35,7 @@ mix.copy([
     'resources/assets/js/toastr.min.js'], 'public/js');
     
 // Utility files
-mix.copyDirectory('resources/assets/img', 'public/images');
+//mix.copyDirectory('resources/assets/img', 'public/images');
 // mix.copy('resources/assets/js/bootstrap-editable.js', 'public/js');
 // mix.copy('resources/assets/css/bootstrap-editable.css', 'public/css');
 
@@ -53,7 +53,7 @@ mix.js([
 // Copy DataTables files needed over to the public folder.
 mix.copyDirectory('vendor/datatables/datatables/media/js', 'public/js');
 mix.copyDirectory('vendor/datatables/datatables/media/css', 'public/css');
-mix.copyDirectory('vendor/datatables/datatables/media/images', 'public/images');
+// mix.copyDirectory('vendor/datatables/datatables/media/images', 'public/images');
 
 if (mix.inProduction()) {
     mix.version();

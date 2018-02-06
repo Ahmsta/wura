@@ -266,7 +266,7 @@
                         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                             <ul class="nav navbar-nav navbar-right">
                                 <li>
-                                    <img src="../images/blank.jpg" style="width:45px; height:45px; margin-top:-15px; padding-right:4px;" alt="{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}'s Logo'" />
+                                    <img src="https://s3-eu-west-1.amazonaws.com/wurafleet/blank.jpg" style="width:45px; height:45px; margin-top:-15px; padding-right:4px;" alt="{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}'s Logo'" />
                                     <span>
                                         <i class="standout">{{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}</i>
                                         <br />

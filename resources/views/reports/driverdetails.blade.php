@@ -5,7 +5,6 @@
 
     <?php
         $textcolor = "black"; 
-        $imgPath = \Illuminate\Support\Facades\Storage::url($driver->passportpath);
     ?>
 
     <div class="row" style="margin-top:20px;">
@@ -14,7 +13,7 @@
                 <img class="card-img" src="../images/socialbg.jpg" alt="Card image" />
                 <div class="card-img-overlay card-inverse social-profile d-flex ">
                     <div class="align-self-center"> 
-                        <img src="{{ $imgPath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-circle img-thumbnail" style="width:100px; height:100px;"  />
+                        <img src="{{ $driver->passportpath }}" alt="{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}'s Picture" class="img-responsive img-circle img-thumbnail" style="width:100px; height:100px;"  />
                         <h4 class="card-title">{{ $driver->firstname . ' ' . $driver->middlename . ' ' . $driver->lastname }}</h4>
                         <h6 class="card-subtitle">Driver</h6>
                         <p class="text-white">

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Carbon\Carbon;
 use App\Models\User;
+use App\Http\S3Helper;
 use App\Models\Drivers;
 use App\Http\SMSHelper;
 use Illuminate\Http\File;
@@ -14,12 +15,12 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Validations\AuthValidation;
 use Illuminate\Support\Facades\Validator;
 
 class DriversController extends Controller
 {
+    protected $s3 = null;
     protected $tag = 'Drivers :: ';
 
     /**
@@ -30,6 +31,7 @@ class DriversController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->s3 = new S3Helper();
     }
     
     /**
@@ -40,7 +42,7 @@ class DriversController extends Controller
     public function index()
     {            
         $drivers = User::find(Auth::id());
-        return view('drivers.mydrivers', ['drivers' => $drivers->Drivers])->with('defaultImg', Storage::url('upload.png'));
+        return view('drivers.mydrivers', ['drivers' => $drivers->Drivers])->with('defaultImg', $this->s3->gets3upload());
     }
 
     /**
@@ -50,7 +52,7 @@ class DriversController extends Controller
     */
     public function create()
     {
-        return view('drivers.driver')->with('defaultImg', Storage::url('upload.png'));
+        return view('drivers.driver')->with('defaultImg', $this->s3->gets3upload());
     }
 
     /**
@@ -94,8 +96,13 @@ class DriversController extends Controller
             $driver = new Drivers();
 
             $password = bin2hex(openssl_random_pseudo_bytes(4));
-            $StaffID = Storage::putFile('public/staffid', $request->file('StaffID'));
-            $passportpath = Storage::putFile('public/passports', $request->file('passpic'));
+            if ($request->hasFile('StaffID')) {
+                $StaffID = $this->s3->UploadImage('StaffID' . Auth::id() . $_FILES['StaffID']['name'], $_FILES['StaffID']['tmp_name']);
+            }
+            
+            if ($request->hasFile('passpic')) {
+                $passportpath = $this->s3->UploadImage('passpic' . Auth::id() . $_FILES['passpic']['name'], $_FILES['passpic']['tmp_name']);
+            }
 
             $driver->status = "Inactive";
             $driver->ownerid = Auth::id();
@@ -183,13 +190,13 @@ class DriversController extends Controller
             $driver->firstname = $request->firstname;
             $driver->mobilenumber = $request->mobile;
             $driver->middlename = $request->middlename;
-            
-            if ($request->hasFile('passpic')) {
-                $driver->passportpath = Storage::putFile('public/passports', $request->file('passpic'));
-            }
 
             if ($request->hasFile('StaffID')) {
-                $driver->identificationpath = Storage::putFile('public/staffid', $request->file('StaffID'));
+                $driver->identificationpath = $this->s3->UploadImage('StaffID' . Auth::id() . $_FILES['StaffID']['name'], $_FILES['StaffID']['tmp_name']);
+            }
+            
+            if ($request->hasFile('passpic')) {
+                $driver->passportpath = $this->s3->UploadImage('passpic' . Auth::id() . $_FILES['passpic']['name'], $_FILES['passpic']['tmp_name']);
             }
 
             // Save the driver to the DB.

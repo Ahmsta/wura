@@ -4,12 +4,6 @@
 @section('content')
     <div class="row" style="margin-top:20px;">
         @foreach ($vehicle as $info)
-            <?php
-                $left_view = \Illuminate\Support\Facades\Storage::url($info->left_view);
-                $rear_view = \Illuminate\Support\Facades\Storage::url($info->rear_view);
-                $right_view = \Illuminate\Support\Facades\Storage::url($info->right_view);
-                $frontal_view = \Illuminate\Support\Facades\Storage::url($info->frontal_view);
-            ?>
             <script>
                 var data = <?php echo json_encode($info->car_details); ?>;
             </script>
@@ -19,7 +13,7 @@
                     <div class="col-md-12 col-lg-12">
                         <label class="control-label" style="color:white;"> Front View </label>
                         <br />
-                        <img style="height: 100px;" src="{{ $frontal_view }}" alt="Front view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
+                        <img style="height: 100px;" src="{{ $info->frontal_view }}" alt="Front view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
                     </div>
                 </div>
 
@@ -27,7 +21,7 @@
                     <div class="col-md-12 col-lg-12">
                         <label class="control-label" style="color:white;"> Right Hand Side View </label>
                         <br />
-                        <img style="height: 100px;" src="{{ $right_view }}" alt="Right Hand side view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
+                        <img style="height: 100px;" src="{{ $info->right_view }}" alt="Right Hand side view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
                     </div>
                 </div>
 
@@ -35,7 +29,7 @@
                     <div class="col-md-12 col-lg-12">
                         <label class="control-label" style="color:white;"> Rear View </label>
                         <br />
-                        <img style="height: 100px;" src="{{ $rear_view }}" alt="Rear view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
+                        <img style="height: 100px;" src="{{ $info->rear_view }}" alt="Rear view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
                     </div>
                 </div>
 
@@ -43,7 +37,7 @@
                     <div class="col-md-12 col-lg-12">
                         <label class="control-label" style="color:white;"> Left Hand Side <br />View </label>
                         <br />
-                        <img style="height: 100px;" src="{{ $left_view }}" alt="Left Hand side view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
+                        <img style="height: 100px;" src="{{ $info->left_view }}" alt="Left Hand side view of {{ $info->license_plate_number }}." class="img-responsive img-thumbnail pull-left" />
                     </div>
                 </div>
 
