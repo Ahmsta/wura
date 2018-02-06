@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "aws/aws-php-sns-message-validator": "^1.4",
+        "aws/aws-sdk-php": "^3.52",
         "components/jquery": "^3.2",
         "datatables/datatables": "^1.10",
         "doctrine/dbal": "^2.6",
