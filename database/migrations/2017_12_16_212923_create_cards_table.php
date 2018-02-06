@@ -16,7 +16,7 @@ class CreateCardsTable extends Migration
         Schema::create('cards', function (Blueprint $table) {
             $table->increments('id');
             $table->string('cardnos')->unique();
-            $table->integer('holder');
+            $table->integer('ownerid');
             $table->string('status');
             $table->integer('assignedto');
             $table->datetime('valid_until');

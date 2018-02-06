@@ -18,6 +18,7 @@ class CreateTransactionsTable extends Migration
             $table->string('cardnos');
             $table->string('amount');
             $table->string('merchant');
+            $table->integer('ownerid');
             $table->softDeletesTz();
             $table->timestamps();
         });

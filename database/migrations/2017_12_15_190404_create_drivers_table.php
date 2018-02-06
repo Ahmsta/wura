@@ -23,7 +23,7 @@ class CreateDriversTable extends Migration
             $table->string('email', 45)->nullable();
             $table->date('dateofbirth');         
             $table->string('passportpath');
-            $table->integer('belongsTo');
+            $table->integer('ownerid');
             $table->string('identificationpath');
             $table->string('status');
             $table->softDeletesTz();         

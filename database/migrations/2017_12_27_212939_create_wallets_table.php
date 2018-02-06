@@ -19,7 +19,7 @@ class CreateWalletsTable extends Migration
             $table->integer('oncard')->unique();
             $table->unsignedDecimal('amount', 8, 2);
             $table->boolean('status');
-            $table->integer('belongsTo');
+            $table->integer('ownerid');
             $table->softDeletesTz();
             $table->timestamps();
         });

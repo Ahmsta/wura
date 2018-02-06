@@ -20,7 +20,7 @@ class CreateVehiclesTable extends Migration
             $table->text('model');
             $table->text('trim');
             $table->text('color');
-            $table->integer('owner');
+            $table->integer('ownerid');
             $table->text('owner_name');
             $table->date('purchase_date');
             $table->integer('assigned_to');
