@@ -21,7 +21,7 @@ class CreateCalendarsTable extends Migration
             $table->date('end')->nullable();
             $table->text('url')->nullable();
             $table->text('classname')->nullable();
-            $table->integer('ownerid');
+            $table->integer('owner');
             $table->softDeletesTz();
             $table->timestamps();
         });
