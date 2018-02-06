@@ -72,6 +72,7 @@ Route::get('/messages', 'NotificationsController@messages')->name('messages');
 Route::get('/calendar', 'NotificationsController@calendar')->name('calendar');
 
 Route::get('/chats', 'NotificationsController@chats')->name('chats');
+
 Route::get('/reminders', 'NotificationsController@calendar')->name('reminders');
 
 
